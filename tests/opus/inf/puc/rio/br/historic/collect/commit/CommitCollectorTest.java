@@ -1,22 +1,43 @@
 package opus.inf.puc.rio.br.historic.collect.commit;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
+import java.io.IOException;
+
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.api.errors.NoHeadException;
 import org.junit.Test;
 
 public class CommitCollectorTest {
 	
 	
 	/**
-	 * Current = df5619fea03be0805eea4934d44f7aaa6909ad36
-	 * Previous = 614f6634885965fe7bf882215acdbac41fcb6107
+	 * Current = a5a7f852e45c7cadc8d1524bd4d14a1e39785aa5
+	 * Previous = 0bb0526b70870d57cbac9fcc8c4a7346a4ce5879
 	 * 
-	 * Current = e6007c622f334dc46e159448cfad6ed6c4d4c7fd
+	 * Current = e6007c622f334dc46e159448cfad6ed6c4d4c7fd -- Missing Commit 
 	 * Previous = ccb73a7dc6bac0f497b04e325089ef334039ac1e
 	 * 
-	 * Current = d93f77b2aac1b22c733adb372f7e246fafd6a4ef
+	 * Current = d93f77b2aac1b22c733adb372f7e246fafd6a4ef -- Missing Commit 
 	 * Previous = 32f9682f7258371e212e18f428062ff230d110d7
+	 * 
+	 * Current  = c946700398fc43a437d124f027a9bd3ba25bcafc
+	 * Previous = 16be1426aeb34352ba5d97811f3a721b11e3ae00
+	 * 
 	 * */
+	
+	
+	@Test
+	public void shouldGetBranch() throws NoHeadException, GitAPIException, IOException {
+		
+	    	CommitCollector collector = new CommitCollector("refactoring-toy-example-1", 
+	    			 "/home/opus/eclipse-workspace/RefactoringMiner/build/distributions/RefactoringMiner-1.0/bin/refactoring-toy-example-1");
+	    	 
+	    	collector.printCommits();
+	 }
+	
+	
 	
     @Test
 	public void shouldGetPreviousCommit() {
@@ -24,17 +45,23 @@ public class CommitCollectorTest {
     	 CommitCollector collector = new CommitCollector("refactoring-toy-example-1", 
     			 "/home/opus/eclipse-workspace/RefactoringMiner/build/distributions/RefactoringMiner-1.0/bin/refactoring-toy-example-1");
     	 
-//    	 String previousCommit = collector.getPreviousCommit("df5619fea03be0805eea4934d44f7aaa6909ad36"); 		 
-//    	 assertEquals("614f6634885965fe7bf882215acdbac41fcb6107", previousCommit); 
-//    	 
-//    	 
-//    	 previousCommit = collector.getPreviousCommit("e6007c622f334dc46e159448cfad6ed6c4d4c7fd"); 	 
-//    	 assertEquals("ccb73a7dc6bac0f497b04e325089ef334039ac1e", previousCommit); 
-//    	 
-//    	 
-//    	 previousCommit = collector.getPreviousCommit("d93f77b2aac1b22c733adb372f7e246fafd6a4ef"); 	 
-//    	 assertEquals("32f9682f7258371e212e18f428062ff230d110d7", previousCommit); 
-//    	 
+    	 
+    	 
+    	 String previousCommit = collector.getPreviousCommit("a5a7f852e45c7cadc8d1524bd4d14a1e39785aa5"); 	
+    	 
+      	 assertEquals("0bb0526b70870d57cbac9fcc8c4a7346a4ce5879", previousCommit); 
+    	 
+    	 
+    	 previousCommit = collector.getPreviousCommit("e6007c622f334dc46e159448cfad6ed6c4d4c7fd");  //Missing Commit 
+    	 assertEquals("", previousCommit);
+    	 
+    	 
+    	 previousCommit = collector.getPreviousCommit("d93f77b2aac1b22c733adb372f7e246fafd6a4ef"); 	//Missing Commit 
+    	 assertEquals("", previousCommit); 
+   	 
+    	 
+    	 previousCommit = collector.getPreviousCommit("c946700398fc43a437d124f027a9bd3ba25bcafc"); 	
+    	 assertEquals("16be1426aeb34352ba5d97811f3a721b11e3ae00", previousCommit); 
 	}
 
 }

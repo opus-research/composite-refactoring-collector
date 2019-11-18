@@ -37,7 +37,7 @@ public class CommitCollector {
 	private String previousCommit;
 	private String projectName;
 	private String projectPath;
-	
+	private final static int PREVIOUS_COMMIT_INDEX = 1;
 	
 	
 	public CommitCollector(String projectName, String projectPath) {
@@ -47,7 +47,20 @@ public class CommitCollector {
 		openProject();
 	}
 	
-	public String getPreviousCommit(String commitHash){		
+	public String getPreviousCommit(String currentCommit){
+		
+		this.currentCommit = currentCommit;
+
+		List<RevCommit> commits = gitLogFromCurrentCommit();
+        
+		if(commits != null && commits.size() > 1) {
+			RevCommit previousCommitObj = commits.get(PREVIOUS_COMMIT_INDEX);
+			previousCommit = previousCommitObj.getName();
+		}
+		else {
+			previousCommit = "";
+		}
+		
 		
 		return previousCommit;
 	}
@@ -58,7 +71,7 @@ public class CommitCollector {
 				projectGit = Git.open(new File(projectPath));
 			
 				projectGit.checkout()
-				.setCreateBranch(true)
+				.setCreateBranch(false)
 				.setName("master")
 				.call();
 				
@@ -71,38 +84,53 @@ public class CommitCollector {
 	   
 	}
 	
-	private void gitLog() {
+	public void printCommits() throws NoHeadException, GitAPIException, IOException {
 		
-		Iterable<RevCommit> logs;
+		
+		Iterable<RevCommit> commits = projectGit.log().all().call(); 
+
+		List<RevCommit> commitList = new ArrayList<RevCommit>();  
+		commits.iterator().forEachRemaining(n -> commitList.add(n));
+
+		System.out.println(commitList.size());
+	}
+	
+	
+	
+	
+	
+	private List<RevCommit> gitLogFromCurrentCommit() {
+		
+		
+		List<RevCommit> commitList = new ArrayList<RevCommit>();  
 		
 		try {
 			
 			ObjectId objectId =  projectGit.getRepository().resolve(currentCommit);
-			Iterable<RevCommit> commits = projectGit.log().add(objectId).call(); 
-
-			List<RevCommit> commitList = new ArrayList<RevCommit>();  
+			Iterable<RevCommit> commits = projectGit.log().add(objectId).call(); 		
 			commits.iterator().forEachRemaining(n -> commitList.add(n));
 
-	
-			 for (RevCommit rev : commitList) {
-			        System.out.print(rev.getName());
-			        System.out.print(": ");
-			        System.out.print(rev.getFullMessage());
-			        System.out.println();
-			        System.out.println(rev.getId().getName());
-			        System.out.print(rev.getAuthorIdent().getName());
-			        System.out.println(rev.getAuthorIdent().getEmailAddress());
-			        System.out.println("-------------------------");
-			      }
-			 
-			 
+//			for (RevCommit rev : commits) {
+//				System.out.print(rev.getName());
+//				System.out.print(": ");
+//				System.out.print(rev.getFullMessage());
+//				System.out.println();
+//				System.out.println(rev.getId().getName());
+//				System.out.print(rev.getAuthorIdent().getName());
+//				System.out.println(rev.getAuthorIdent().getEmailAddress());
+//				System.out.println("-------------------------");
+//			}
+ 
 			
 		} catch (GitAPIException
 				| IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.print(e.getMessage());
 		}
 		
+		
+		
+		return commitList;
 		
 	     
 	}
