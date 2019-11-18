@@ -46,7 +46,6 @@ public class CommitCollectorTest {
     			 "/home/opus/eclipse-workspace/RefactoringMiner/build/distributions/RefactoringMiner-1.0/bin/refactoring-toy-example-1");
     	 
     	 
-    	 
     	 String previousCommit = collector.getPreviousCommit("a5a7f852e45c7cadc8d1524bd4d14a1e39785aa5"); 	
     	 
       	 assertEquals("0bb0526b70870d57cbac9fcc8c4a7346a4ce5879", previousCommit); 
