@@ -309,18 +309,39 @@ public class RefactoringAttributeParser {
 	*/
 	public void getSplitVariable() {} 
 	
+	/*
+	  Split Parameter value : String to [content : String, group : String] in method public ConfigChangedEvent(key String, group String, content String) in class org.apache.dubbo.common.config.configcenter.ConfigChangedEvent																																								
+	*/
 	public void getSplitParameter() {} 
 	
+	/*
+	  Split Attribute value : String to [content : String, group : String] in class org.apache.dubbo.common.config.configcenter.ConfigChangedEvent																																									
+	*/
 	public void getSplitAttribute() {} 
 	
+	/*
+	   Change Variable Type	dst : Ref to dst : DhtRef in method private resolve(ref DhtRef"	depth int	loose RefList<DhtRef>) : DhtRef in class org.eclipse.jgit.storage.dht.DhtRefDatabase																																														
+	*/
 	public void getChangeVariableType() {}
 	
+	/*
+	   Change Parameter Type environment : CoreEnvironment to ctx : CoreContext in method public KeyValueFeatureHandler(ctx CoreContext) in class com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler																																																						
+	*/
 	public void getChangeParameterType() {} 
 	
+	/*
+	   Change Return Type Builder to SELF in method public requestBufferWaitStrategy(waitStrategy WaitStrategyFactory) : SELF in class com.couchbase.client.core.env.DefaultCoreEnvironment.Builder																																																							
+	*/
 	public void getChangeReturnType() {} 
 	
+	/*
+	  Change Attribute Type	userAgent : String to ctx : CoreContext in class com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler
+	*/
 	public void getChangeAttributeType() {} 
 	
+	/*
+	  Extract Attribute private CHARSET : Charset in class com.couchbase.client.core.endpoint.config.ConfigHandlerTest	
+	*/
 	public void getExtractAttribute() {}
 	
 
