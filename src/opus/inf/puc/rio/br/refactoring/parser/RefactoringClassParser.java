@@ -230,9 +230,10 @@ public class RefactoringClassParser {
 //			mainElement = element1;
 //		}
 	
-	
+	/*Extract Class	com.couchbase.client.core.endpoint.dcp.DCPConnectionHandler from class com.couchbase.client.core.endpoint.dcp.DCPHandler																																																				*/
 	public void getExtractClass() {}
 	
+	/*Extract Subclass	org.eclipse.jgit.lib.LocalObjectToPack from class org.eclipse.jgit.lib.ObjectToPack*/
 	public void getExtractSubClass() {}
 	
 	
