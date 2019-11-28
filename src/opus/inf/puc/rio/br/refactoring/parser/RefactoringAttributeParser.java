@@ -239,43 +239,88 @@ public class RefactoringAttributeParser {
 //			elements.add(element1);
 //			elements.add(element2);
 //		}
-	
-	public void ExtractVariable() {
+	/*
+	  Extract Variable builder : DefaultCoreEnvironment.Builder in method public connect() : void from class com.couchbase.client.core.ThreadCleanupTest
+	*/
+	public void getExtractVariable() {
 		
 	} 
-	
-	public void InlineVariable() {
+	/*
+	   Inline Variable addrs : InetAddress[] in method package NetworkAddress(input String, reverseDns boolean) from class com.couchbase.client.core.utils.NetworkAddress
+	*/
+	public void getInlineVariable() {
 		
 	}
 	
-	public void ParameterizeVariable () {
+	/*
+	  Parameterize Variable	stream : DCPStream to connection : DCPConnection in method private handleDCPRequest(ctx ChannelHandlerContext, connection DCPConnection, msg FullBinaryMemcacheResponse) : void in class com.couchbase.client.core.endpoint.dcp.DCPHandler
+	*/
+	public void getParameterizeVariable() {
+		
+	} 
+	/*
+	  Rename Variable newStreamId : int to streamId : int in method public addStream(connectionName String) : int in class com.couchbase.client.core.endpoint.dcp.DCPConnection
+	*/
+	public void getRenameVariable() {
 		
 	} 
 	
-	public void RenameVariable() {
-		
-	} 
-	
-	public void RenameParameter() {
+	/*
+	  Rename Parameter id : int to name : String in method public DCPConnection(env CoreEnvironment, name String, bucket String) in class com.couchbase.client.core.endpoint.dcp.DCPConnection
+	*/
+	public void getRenameParameter() {
 		
 	}  
 	
-	public void RenameAttribute() {
+	/*
+	   Rename Attribute stream : Observable<DCPRequest> to connection : DCPConnection in class com.couchbase.client.core.message.dcp.StreamRequestResponse		
+	*/
+	public void getRenameAttribute() {
 		
 	} 
-
+       
+	/*
+	   Replace Variable With Attribute executor : Executor to disruptorExecutor : ExecutorService in method public CouchbaseCluster(environment Environment) in class com.couchbase.client.core.cluster.CouchbaseCluster
+	*/
 	public void getReplaceVariableWithAttribute() {}
+	
+	/*
+	   Replace Attribute	private file : RandomAccessFile from class org.eclipse.jgit.internal.storage.file.PackInserter.Reader.StreamLoader with private packOut : PackStream from class org.eclipse.jgit.internal.storage.file.PackInserter
+	*/
 	public void getReplaceAttribute() {}
+	
+	/*
+	    Merge Variable [type : int"	position : int	packedSize : long	inflatedSize : long] to b : GitStore.ObjectInfo.Builder in method private insertStream(type int	inflatedSize long	in InputStream) : ObjectId in class org.eclipse.jgit.storage.dht.DhtInserter								
+	*/
 	public void getMergeVariable() {}
+	
+	/*
+	  Merge Parameter [bucket : String, rawConfig : String] to ctx : ProposedBucketConfigContext in method public proposeBucketConfig(ctx ProposedBucketConfigContext) : void in class com.couchbase.client.core.config.DefaultConfigurationProvider																							
+	*/
 	public void getMergeParameter() {}
+	
+	/*
+	  Merge Attribute [env : CoreEnvironment, responseBuffer : RingBuffer<ResponseEvent>] to ctx : CoreContext in class com.couchbase.client.core.service.AbstractDynamicService																																	 
+	*/
 	public void getMergeAttribute() {}
+	
+	/*
+	  Split Variable config : ReferenceConfig<?> to [proxiesOfType : ConcurrentMap<String,Object>, key : String] in method public get(referenceConfig ReferenceConfig<T>) : T in class org.apache.dubbo.bootstrap.ReferenceConfigCache																																						
+	*/
 	public void getSplitVariable() {} 
+	
 	public void getSplitParameter() {} 
+	
 	public void getSplitAttribute() {} 
+	
 	public void getChangeVariableType() {}
+	
 	public void getChangeParameterType() {} 
+	
 	public void getChangeReturnType() {} 
+	
 	public void getChangeAttributeType() {} 
+	
 	public void getExtractAttribute() {}
 	
 
