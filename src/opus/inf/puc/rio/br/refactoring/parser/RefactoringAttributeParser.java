@@ -243,7 +243,14 @@ public class RefactoringAttributeParser {
 	  Extract Variable builder : DefaultCoreEnvironment.Builder in method public connect() : void from class com.couchbase.client.core.ThreadCleanupTest
 	*/
 	public void getExtractVariable() {
+		String variableName;
+		String methodName; 
+		String className;
 		
+		int variableStartIndex = refactoringDetails.lastIndex("Extract Variable ");
+		int variableEndIndex = refactoringDetails.lastIndex("in method"); 
+		
+		variableName =  refactoringDetails.substring(variableStartIndex, variableEndIndex);
 	} 
 	/*
 	   Inline Variable addrs : InetAddress[] in method package NetworkAddress(input String, reverseDns boolean) from class com.couchbase.client.core.utils.NetworkAddress
