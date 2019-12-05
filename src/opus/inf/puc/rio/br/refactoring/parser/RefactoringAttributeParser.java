@@ -247,10 +247,18 @@ public class RefactoringAttributeParser {
 		String methodName; 
 		String className;
 		
-		int variableStartIndex = refactoringDetails.lastIndex("Extract Variable ");
-		int variableEndIndex = refactoringDetails.lastIndex("in method"); 
+		int variableStartIndex = refactoringDetails.lastIndexOf("Extract Variable ");
+		int variableEndIndex = refactoringDetails.lastIndexOf("in method"); 
 		
 		variableName =  refactoringDetails.substring(variableStartIndex, variableEndIndex);
+		
+		
+		int methodStartIndex = variableEndIndex;
+		int methodEndIndex = refactoringDetails.lastIndexOf("from");
+		
+                methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
+		
+		
 	} 
 	/*
 	   Inline Variable addrs : InetAddress[] in method package NetworkAddress(input String, reverseDns boolean) from class com.couchbase.client.core.utils.NetworkAddress
