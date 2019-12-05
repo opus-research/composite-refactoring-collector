@@ -258,6 +258,9 @@ public class RefactoringAttributeParser {
 		
                 methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
 		
+		int classIndex = methodEndIndex; 
+		
+                className = refactoringDetails.substring(classIndex);
 		
 	} 
 	/*
