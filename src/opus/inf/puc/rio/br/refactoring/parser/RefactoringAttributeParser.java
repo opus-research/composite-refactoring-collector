@@ -322,6 +322,30 @@ public class RefactoringAttributeParser {
 	  Rename Variable newStreamId : int to streamId : int in method public addStream(connectionName String) : int in class com.couchbase.client.core.endpoint.dcp.DCPConnection
 	*/
 	public void getRenameVariable() {
+		String sourceVariableName;
+		String targetVariableName;
+		
+		String methodName; 
+		String className;
+		
+		int sourceVariableStartIndex = refactoringDetails.lastIndexOf("Rename Variable ");
+		int sourceVariableEndIndex = refactoringDetails.lastIndexOf("to"); 
+		
+		sourceVariableName =  refactoringDetails.substring(variableStartIndex, variableEndIndex);
+		
+		int targetVariableStartIndex = sourceVariableEndIndex;
+		int targetVariableEndIndex = refactoringDetails.lastIndexOf("in method"); 
+		
+	
+		
+		int methodStartIndex = targetVariableEndIndex;
+		int methodEndIndex = refactoringDetails.lastIndexOf("in class");
+		
+                methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
+		
+		int classIndex = methodEndIndex; 
+		
+                className = refactoringDetails.substring(classIndex);
 		
 	} 
 	
