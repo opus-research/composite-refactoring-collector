@@ -254,7 +254,7 @@ public class RefactoringAttributeParser {
 		
 		
 		int methodStartIndex = variableEndIndex;
-		int methodEndIndex = refactoringDetails.lastIndexOf("from");
+		int methodEndIndex = refactoringDetails.lastIndexOf("from class");
 		
                 methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
 		
@@ -268,6 +268,24 @@ public class RefactoringAttributeParser {
 	*/
 	public void getInlineVariable() {
 		
+		String variableName;
+		String methodName; 
+		String className;
+		
+		int variableStartIndex = refactoringDetails.lastIndexOf("Inline Variable ");
+		int variableEndIndex = refactoringDetails.lastIndexOf("in method"); 
+		
+		variableName =  refactoringDetails.substring(variableStartIndex, variableEndIndex);
+		
+		
+		int methodStartIndex = variableEndIndex;
+		int methodEndIndex = refactoringDetails.lastIndexOf("from class");
+		
+                methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
+		
+		int classIndex = methodEndIndex; 
+		
+                className = refactoringDetails.substring(classIndex);
 	}
 	
 	/*
@@ -275,6 +293,30 @@ public class RefactoringAttributeParser {
 	*/
 	public void getParameterizeVariable() {
 		
+		String sourceVariableName;
+		String targetVariableName;
+		
+		String methodName; 
+		String className;
+		
+		int sourceVariableStartIndex = refactoringDetails.lastIndexOf("Parameterize Variable ");
+		int sourceVariableEndIndex = refactoringDetails.lastIndexOf("to"); 
+		
+		sourceVariableName =  refactoringDetails.substring(variableStartIndex, variableEndIndex);
+		
+		int targetVariableStartIndex = sourceVariableEndIndex;
+		int targetVariableEndIndex = refactoringDetails.lastIndexOf("in method"); 
+		
+	
+		
+		int methodStartIndex = targetVariableEndIndex;
+		int methodEndIndex = refactoringDetails.lastIndexOf("in class");
+		
+                methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
+		
+		int classIndex = methodEndIndex; 
+		
+                className = refactoringDetails.substring(classIndex);
 	} 
 	/*
 	  Rename Variable newStreamId : int to streamId : int in method public addStream(connectionName String) : int in class com.couchbase.client.core.endpoint.dcp.DCPConnection
