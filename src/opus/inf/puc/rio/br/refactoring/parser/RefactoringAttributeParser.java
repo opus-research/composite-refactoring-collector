@@ -383,13 +383,62 @@ public class RefactoringAttributeParser {
 	   Rename Attribute stream : Observable<DCPRequest> to connection : DCPConnection in class com.couchbase.client.core.message.dcp.StreamRequestResponse		
 	*/
 	public void getRenameAttribute() {
+		String sourceParameterName;
+		String targetParameterName;
 		
+		String methodName; 
+		String className;
+		
+		int sourceParameterStartIndex = refactoringDetails.lastIndexOf("Rename Attribute ");
+		int sourceParameterEndIndex = refactoringDetails.lastIndexOf("to"); 
+		
+		sourceParameterName =  refactoringDetails.substring(sourceParameterStartIndex, targetParameterEndIndex);
+		
+		int targetParametertartIndex = sourceParameterEndIndex;
+		int targetParameterEndIndex = refactoringDetails.lastIndexOf("in method"); 
+		
+	        targetParameterName =  refactoringDetails.substring(targetParameterStartIndex, targetParameterEndIndex);
+		
+		int methodStartIndex = targetParameterEndIndex;
+		int methodEndIndex = refactoringDetails.lastIndexOf("in class");
+		
+                methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
+		
+		int classIndex = methodEndIndex; 
+		
+                className = refactoringDetails.substring(classIndex);
 	} 
        
 	/*
 	   Replace Variable With Attribute executor : Executor to disruptorExecutor : ExecutorService in method public CouchbaseCluster(environment Environment) in class com.couchbase.client.core.cluster.CouchbaseCluster
 	*/
-	public void getReplaceVariableWithAttribute() {}
+	public void getReplaceVariableWithAttribute() {
+	    
+	       String sourceParameterName;
+		String targetParameterName;
+		
+		String methodName; 
+		String className;
+		
+		int sourceParameterStartIndex = refactoringDetails.lastIndexOf("Replace Variable With Attribute ");
+		int sourceParameterEndIndex = refactoringDetails.lastIndexOf("to"); 
+		
+		sourceParameterName =  refactoringDetails.substring(sourceParameterStartIndex, targetParameterEndIndex);
+		
+		int targetParametertartIndex = sourceParameterEndIndex;
+		int targetParameterEndIndex = refactoringDetails.lastIndexOf("in method"); 
+		
+	        targetParameterName =  refactoringDetails.substring(targetParameterStartIndex, targetParameterEndIndex);
+		
+		int methodStartIndex = targetParameterEndIndex;
+		int methodEndIndex = refactoringDetails.lastIndexOf("in class");
+		
+                methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
+		
+		int classIndex = methodEndIndex; 
+		
+                className = refactoringDetails.substring(classIndex);
+	}
 	
 	/*
 	   Replace Attribute	private file : RandomAccessFile from class org.eclipse.jgit.internal.storage.file.PackInserter.Reader.StreamLoader with private packOut : PackStream from class org.eclipse.jgit.internal.storage.file.PackInserter
