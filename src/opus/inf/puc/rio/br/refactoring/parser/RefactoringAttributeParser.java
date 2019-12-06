@@ -353,7 +353,30 @@ public class RefactoringAttributeParser {
 	  Rename Parameter id : int to name : String in method public DCPConnection(env CoreEnvironment, name String, bucket String) in class com.couchbase.client.core.endpoint.dcp.DCPConnection
 	*/
 	public void getRenameParameter() {
+		String sourceParameterName;
+		String targetParameterName;
 		
+		String methodName; 
+		String className;
+		
+		int sourceParameterStartIndex = refactoringDetails.lastIndexOf("Rename Parameter ");
+		int sourceParameterEndIndex = refactoringDetails.lastIndexOf("to"); 
+		
+		sourceParameterName =  refactoringDetails.substring(sourceParameterStartIndex, targetParameterEndIndex);
+		
+		int targetParametertartIndex = sourceParameterEndIndex;
+		int targetParameterEndIndex = refactoringDetails.lastIndexOf("in method"); 
+		
+	        targetParameterName =  refactoringDetails.substring(targetParameterStartIndex, targetParameterEndIndex);
+		
+		int methodStartIndex = targetParameterEndIndex;
+		int methodEndIndex = refactoringDetails.lastIndexOf("in class");
+		
+                methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
+		
+		int classIndex = methodEndIndex; 
+		
+                className = refactoringDetails.substring(classIndex);
 	}  
 	
 	/*
