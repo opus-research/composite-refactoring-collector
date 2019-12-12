@@ -8,7 +8,7 @@ public abstract class RefactoringParser {
 	
 	
 	private List<CodeElement> elements;
-    
+    protected String refactoringDetails;
 	
 	
 	

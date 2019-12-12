@@ -1,6 +1,6 @@
 package opus.inf.puc.rio.br.refactoring.parser;
 
-public class RefactoringMethodParser {
+public class RefactoringMethodParser extends RefactoringParser{
 	//Rename Method  -> "Rename Method	public shouldReplaceWithCAS() : void 
 		//renamed to public shouldReplaceWithFailingCAS() : void in class com.couchbase.client.core.cluster.BinaryMessageTest"
 //		public void getElementRenameMethod(){

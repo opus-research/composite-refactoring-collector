@@ -2,7 +2,7 @@ package opus.inf.puc.rio.br.refactoring.parser;
 
 import opus.inf.puc.rio.br.historic.CodeElement;
 
-public class RefactoringAttributeParser {
+public class RefactoringAttributeParser extends RefactoringParser{
 	
 
 //			// "Push Down Attribute	private resetType : ResetType from class org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog 
