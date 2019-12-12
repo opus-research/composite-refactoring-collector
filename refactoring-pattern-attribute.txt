@@ -1,0 +1,48 @@
+Push Down Attribute private resetType : ResetType from class org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog  to class org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog
+Pull Up Attribute private password :  String from class com.couchbase.client.core.message.cluster.OpenBucketRequest  to class com.couchbase.client.core.message.AbstractCouchbaseRequest
+Move Attribute	public SSL_ENABLED : boolean from class com.couchbase.client.core.env.DefaultCoreProperties  to class com.couchbase.client.core.env.DefaultCoreEnvironment
+
+Pattern1 - refactoringType attributeName “from class” className “to” className 
+
+
+Extract Variable builder : DefaultCoreEnvironment.Builder in method public connect() : void from class com.couchbase.client.core.ThreadCleanupTest
+Inline Variable addrs : InetAddress[] in method package NetworkAddress(input String, reverseDns boolean) from class com.couchbase.client.core.utils.NetworkAddress
+
+Pattern2 - refactoringType attributeName "in method" methodName "from class" className
+
+
+Parameterize Variable	stream : DCPStream to connection : DCPConnection in method private handleDCPRequest(ctx ChannelHandlerContext, connection DCPConnection, msg FullBinaryMemcacheResponse) : void in class com.couchbase.client.core.endpoint.dcp.DCPHandler
+Rename Variable newStreamId : int to streamId : int in method public addStream(connectionName String) : int in class com.couchbase.client.core.endpoint.dcp.DCPConnection
+Rename Parameter id : int to name : String in method public DCPConnection(env CoreEnvironment, name String, bucket1 String) in class com.couchbase.client.core.endpoint.dcp.DCPConnection
+Replace Variable With Attribute executor : Executor to disruptorExecutor : ExecutorService in method public CouchbaseCluster(environment Environment) in class com.couchbase.client.core.cluster.CouchbaseCluster
+Split Variable config : ReferenceConfig<?> to [proxiesOfType : ConcurrentMap<String,Object>, key : String] in method public get(referenceConfig ReferenceConfig<T>) : T in class org.apache.dubbo.bootstrap.ReferenceConfigCache																																						
+Change Variable Type	dst : Ref to dst : DhtRef in method private resolve(ref DhtRef"	depth int	loose RefList<DhtRef>) : DhtRef in class org.eclipse.jgit.storage.dht.DhtRefDatabase																																														
+Change Parameter Type environment : CoreEnvironment to ctx : CoreContext in method public KeyValueFeatureHandler(ctx CoreContext) in class com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler																																																						
+Split Parameter value : String to [content : String, group : String] in method public ConfigChangedEvent(key String, group String, content String) in class org.apache.dubbo.common.config.configcenter.ConfigChangedEvent																																								
+ 		  
+	
+Pattern3  - refactoringType sourceAttributeName "to" targetAttributeName "in method" methodName "in class" 
+
+
+
+Rename Attribute stream : Observable<DCPRequest> to connection : DCPConnection in class com.couchbase.client.core.message.dcp.StreamRequestResponse
+Merge Attribute [env : CoreEnvironment, responseBuffer : RingBuffer<ResponseEvent>] to ctx : CoreContext in class com.couchbase.client.core.service.AbstractDynamicService																																	 
+Split Attribute value : String to [content : String, group : String] in class org.apache.dubbo.common.config.configcenter.ConfigChangedEvent																																									
+Change Attribute Type	userAgent : String to ctx : CoreContext in class com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler
+
+Pattern4 - refactoringType sourceAttributeName "to" targetAttributeName "in class" 
+
+
+Replace Attribute private file : RandomAccessFile from class org.eclipse.jgit.internal.storage.file.PackInserter.Reader.StreamLoader with private packOut : PackStream from class org.eclipse.jgit.internal.storage.file.PackInserter
+
+Pattern4 - refactoringType sourceAttributeName "from class" sourceClassName "with" targetAttributeName "from class" targetClassName 
+
+
+Extract Attribute private CHARSET : Charset in class com.couchbase.client.core.endpoint.config.ConfigHandlerTest	
+Pattern5 - refactoringType sourceAttributeName "in class" className  
+
+Change Return Type Builder to SELF in method public requestBufferWaitStrategy(waitStrategy WaitStrategyFactory) : SELF in class com.couchbase.client.core.env.DefaultCoreEnvironment.Builder																																																							
+Pattern5 - refactoringType sourceClassType "to" targetClassType "in method" methodName "in class" className  
+
+
+	

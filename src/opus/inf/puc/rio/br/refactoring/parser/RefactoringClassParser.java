@@ -6,7 +6,7 @@ public class RefactoringClassParser {
 	
 	
 	//Move Class	com.couchbase.client.core.service.SelectionStrategy 
-		// moved to com.couchbase.client.core.service.strategies.SelectionStrategy
+	// moved to com.couchbase.client.core.service.strategies.SelectionStrategy
 //		public void getElementMoveClass(){
 //			int classStartIndex = refactoringDetail.indexOf("Move Class ");
 //			int classLastIndex = refactoringDetail.indexOf("moved to");
@@ -32,7 +32,9 @@ public class RefactoringClassParser {
 //			
 //			elements.add(element1);
 //			elements.add(element2);
-//		}//"Rename Class	net.spy.memcached.MembaseClient renamed to com.couchbase.client.CouchbaseClient"
+//		}
+	
+	   //"Rename Class	net.spy.memcached.MembaseClient renamed to com.couchbase.client.CouchbaseClient"
 //		public void getElementRenameClass(){
 //			int classStartIndex = refactoringDetail.indexOf("Rename Class ");
 //			int classLastIndex = refactoringDetail.indexOf("renamed to");
@@ -133,7 +135,9 @@ public class RefactoringClassParser {
 //	    	}
 //	    	
 //	    	//"Extract Superclass	com.couchbase.client.core.message.AbstractCouchbaseResponse 
-//	    	// from classes [com.couchbase.client.core.message.binary.GetBucketConfigResponse, com.couchbase.client.core.message.binary.GetResponse, com.couchbase.client.core.message.binary.UpsertResponse, com.couchbase.client.core.message.cluster.SeedNodesResponse]"
+//	    	// from classes [com.couchbase.client.core.message.binary.GetBucketConfigResponse, 
+//          //com.couchbase.client.core.message.binary.GetResponse, com.couchbase.client.core.message.binary.UpsertResponse, 
+//          //com.couchbase.client.core.message.cluster.SeedNodesResponse]"
 //	    	public void getElementExtractSuperClass(){
 //	    		int classStartIndex = refactoringDetail.indexOf("Extract Superclass ");
 //	    		int classLastIndex = refactoringDetail.indexOf("from classes");
