@@ -9,42 +9,42 @@ public class RefactoringAttributeParser extends RefactoringParser{
 //	Pull Up Attribute private password :  String from class com.couchbase.client.core.message.cluster.OpenBucketRequest  to class com.couchbase.client.core.message.AbstractCouchbaseRequest
 //	Move Attribute	public SSL_ENABLED : boolean from class com.couchbase.client.core.env.DefaultCoreProperties  to class com.couchbase.client.core.env.DefaultCoreEnvironment	
 //	public void getAttributePattern1(){
-//				int attributeStartIndex = refactoringDetail.indexOf("Push Down Attribute ");
-//				int attributeLastIndex = refactoringDetail.indexOf("from class");
-//				
-//				String attributeName = refactoringDetail.substring(attributeStartIndex + "Push Down Attribute ".length() ,
-//																attributeLastIndex);
-//				
-//				int oldClassStartIndex = refactoringDetail.indexOf("from class");
-//				int oldClassLastIndex = refactoringDetail.indexOf(" to ");
-//				
-//				
-//				String oldClassName = refactoringDetail.substring(oldClassStartIndex + "from class".length() ,
-//																  oldClassLastIndex);
-//				
-//			
-//				int newClassStartIndex = refactoringDetail.lastIndexOf(" to ");
-//				
-//				String newClassName = refactoringDetail.substring(newClassStartIndex + " to class".length());
-//				
-//				mainElementCompletePath =  new CodeElement(null, attributeName.trim(), oldClassName.trim());
-//				
-//				attributeName = attributeName.replaceAll("[^a-zA-Z0-9]+","");
-//				oldClassName = oldClassName.replaceAll("[^a-zA-Z0-9]+","");
-//				
-//				attributeName = attributeName.replaceAll("[^a-zA-Z0-9]+","");
-//				newClassName = newClassName.replaceAll("[^a-zA-Z0-9]+","");
-//				
-//				
-//				
-//				CodeElement element1 = new CodeElement(null, attributeName.trim(), oldClassName.trim());
-//				CodeElement element2 = new CodeElement(null, attributeName.trim(), newClassName.trim());
-//			
-//				mainElement = element1;
-//				elements.add(element1);
-//				elements.add(element2);
-//			}
-//			
+				int attributeStartIndex = refactoringDetail.indexOf("Push Down Attribute ");
+				int attributeLastIndex = refactoringDetail.indexOf("from class");
+				
+				String attributeName = refactoringDetail.substring(attributeStartIndex + "Push Down Attribute ".length() ,
+																attributeLastIndex);
+				
+				int oldClassStartIndex = refactoringDetail.indexOf("from class");
+				int oldClassLastIndex = refactoringDetail.indexOf(" to ");
+				
+				
+				String oldClassName = refactoringDetail.substring(oldClassStartIndex + "from class".length() ,
+																  oldClassLastIndex);
+				
+			
+				int newClassStartIndex = refactoringDetail.lastIndexOf(" to ");
+				
+				String newClassName = refactoringDetail.substring(newClassStartIndex + " to class".length());
+				
+				mainElementCompletePath =  new CodeElement(null, attributeName.trim(), oldClassName.trim());
+				
+				attributeName = attributeName.replaceAll("[^a-zA-Z0-9]+","");
+				oldClassName = oldClassName.replaceAll("[^a-zA-Z0-9]+","");
+				
+				attributeName = attributeName.replaceAll("[^a-zA-Z0-9]+","");
+				newClassName = newClassName.replaceAll("[^a-zA-Z0-9]+","");
+				
+				
+				
+				CodeElement element1 = new CodeElement(null, attributeName.trim(), oldClassName.trim());
+				CodeElement element2 = new CodeElement(null, attributeName.trim(), newClassName.trim());
+			
+				mainElement = element1;
+				elements.add(element1);
+				elements.add(element2);
+			}
+			
 
 //	Extract Variable builder : DefaultCoreEnvironment.Builder in method public connect() : void from class com.couchbase.client.core.ThreadCleanupTest
 //	Inline Variable addrs : InetAddress[] in method package NetworkAddress(input String, reverseDns boolean) from class com.couchbase.client.core.utils.NetworkAddress
