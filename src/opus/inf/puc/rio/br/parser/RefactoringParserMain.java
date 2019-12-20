@@ -5,7 +5,7 @@ import java.util.List;
 
 import opus.inf.puc.rio.br.refactoring.Refactoring;
 
-public class RefactoringParser {
+public class RefactoringParserMain {
 	
 	
 	public List<Refactoring> parser(String refactoringsPath){
@@ -24,14 +24,14 @@ public class RefactoringParser {
 	}
 	
 	private Refactoring getRefactoring(String refactoringLine){
-	    Refactoring ref;
+	    Refactoring ref = null;
 		//GetRefactoringType
 		//GetCommit 
 		//GetLastCommit
 		//GetCodeElements
 		//GetDetails 
 		
-            return ref; 
+        return ref; 
 	   
 	}
 

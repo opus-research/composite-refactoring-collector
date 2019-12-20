@@ -5,16 +5,15 @@ import java.util.List;
 import opus.inf.puc.rio.br.historic.CodeElement;
 
 public abstract class RefactoringParser {
-	
-	
-	private List<CodeElement> elements;
-    protected String refactoringDetails;
-    protected String refactoring type; 
-	private RefactoringAttributeParser attributeParser; 
-	private RefactoringMethodParser methodParser; 
-	private RefactoringClassParser classParser; 
-	
-	public List<CodeElement> getCodeElements(String refactoring type, String details){
+
+	protected List<CodeElement> elements;
+	protected String refactoringDetails;
+	protected String refactoringType;
+	private RefactoringAttributeParser attributeParser;
+	private RefactoringMethodParser methodParser;
+	private RefactoringClassParser classParser;
+
+	public List<CodeElement> getCodeElements(String refactoringType, String details){
 		try {
 
 			if (refactoringType != null) {
@@ -50,13 +49,13 @@ public abstract class RefactoringParser {
 					refactoringType.trim().equals("Change Attribute")) {
 					attributeParser.getAttributePattern4();
 				} 
-				if (refactoringType.trim().equals("Replace Attribute"))
+				if (refactoringType.trim().equals("Replace Attribute")) {
 					attributeParser.getAttributePattern5();
 				}
-				if (refactoringType.trim().equals("Extract Attribute"))
+				if (refactoringType.trim().equals("Extract Attribute")) {
 					attributeParser.getAttributePattern6();
 				}
-				if (refactoringType.trim().equals("Change Return Type"))
+				if (refactoringType.trim().equals("Change Return Type")) {
 					attributeParser.getAttributePattern7();
 				}
 			
@@ -95,12 +94,12 @@ public abstract class RefactoringParser {
 					classParser.getClassPattern3();
 				} 
 
-			}
-		} catch (IndexOutOfBoundsException e) {
+			
+		}catch(IndexOutOfBoundsException e){
 			System.out.println(refactoringType + " : " + e.getMessage());
-		}
+	    }
+      
+		return elements;
 	}
 
-	
-
-} 
+}
