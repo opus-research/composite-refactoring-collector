@@ -4,7 +4,7 @@ import java.util.List;
 
 import opus.inf.puc.rio.br.historic.CodeElement;
 
-public abstract class RefactoringParser {
+public class RefactoringParser {
 
 	protected List<CodeElement> elements;
 	protected String refactoringDetails;
