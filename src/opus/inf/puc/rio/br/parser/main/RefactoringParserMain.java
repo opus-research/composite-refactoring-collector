@@ -1,4 +1,4 @@
-package opus.inf.puc.rio.br.parser;
+package opus.inf.puc.rio.br.parser.main;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,21 +20,26 @@ public class RefactoringParserMain {
 	private List<Refactoring> refactorings = new ArrayList<Refactoring>();
 	private RefactoringParser refParser;
     private CommitCollector commitCollector; 
+    private String projectName; 
+    private String projectPath;
     
-    private RefactoringParserMain() {
-    	commitCollector = new CommitCollector("projectName", "projectPath");
+    public RefactoringParserMain(String projectName, String projectPath) {
+    	this.projectName = projectName; 
+    	this.projectPath = projectPath;
+    	commitCollector = new CommitCollector(projectName, projectName);
     }
     
 	public static void main(String[] args) {
 		
+		RefactoringParserMain parserMain = new RefactoringParserMain("dubbo-test", "dubbo-teste.csv");
 		
-		
+	    List<Refactoring> refactorings = parserMain.getRefactorings();
 		
 		
 	}
 	
 	
-	private List<Refactoring> getRefactorings(String refactoringPath) {
+	private List<Refactoring> getRefactorings() {
 		//for 
 		  //GetLine 
 		    //GetRefactoring() 
@@ -50,7 +55,7 @@ public class RefactoringParserMain {
 		FileReader fileReader;
 		List<Refactoring> refactorings = new ArrayList<Refactoring>();
 		try {
-			fileReader = new FileReader(refactoringPath);
+			fileReader = new FileReader(projectPath);
 
 			CSVParser csvFileParser;
 			csvFileParser = new CSVParser(fileReader, csvFileFormat);
@@ -62,7 +67,7 @@ public class RefactoringParserMain {
 				CSVRecord record = (CSVRecord) csvRecords.get(i);
 				String commit = record.get(COMMIT_KEY);
 				
-				System.out.println(refactoringPath);
+				System.out.println(projectPath);
 				String refactoringType = record.get(REFACT_KEY);
 				
 				
@@ -70,31 +75,11 @@ public class RefactoringParserMain {
 				String project = "";
 				
 				
-				refact = getRefactoring(project, String.valueOf(i), commit, refactoringType, details);
+				refact = getRefactoring(String.valueOf(i), commit, refactoringType, details);
 				
 				refactorings.add(refact);
 				
-				/*if(refactoringType.equals("Extract And Move Method")){
-					
-					//Get Extract Method
-					numberRef = i;
-					
-					Refactoring refactEM = new Refactoring(commit, "Extract Method", detail, refId);
-					
-					refactEM.setSpecialExtractMethod();
-					refactEM.addRevision(revision);
-					refactorings.add(refactEM);
-					
-					//Get Move Method
-					numberRef++;
-					refId = revision.revisionId + "_" + numberRef;
-					Refactoring refactMM = new Refactoring(commit, "Move Method", detail, refId);
-					
-					refactMM.setSpecialMoveMethod();
-					refactMM.addRevision(revision);
-					refactorings.add(refactMM);
-				}*/
-				
+			
 			}
 
 		} catch (IOException e) {
@@ -105,7 +90,7 @@ public class RefactoringParserMain {
 
 	}
 	
-	private Refactoring getRefactoring(String project, String refId, String commit,
+	private Refactoring getRefactoring(String refId, String commit,
 			String refactoringType, String details){
 	    
 		Refactoring ref = null;
@@ -114,8 +99,8 @@ public class RefactoringParserMain {
 		//GetRefactoringType
 		//GetCommit
 		//GetDetails 
-		refId =  project + "_" + refId;
-		ref = new Refactoring(refId, project, commit, refactoringType, details);
+		refId =  projectName + "_" + refId;
+		ref = new Refactoring(refId, projectName, commit, refactoringType, details);
 		
 		//GetCodeElements
 	    refParser = new RefactoringParser();

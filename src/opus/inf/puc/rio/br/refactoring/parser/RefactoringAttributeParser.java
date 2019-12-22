@@ -199,6 +199,21 @@ public class RefactoringAttributeParser extends RefactoringParser {
 	 * com.couchbase.client.core.endpoint.config.ConfigHandlerTest
 	 */
 	public void getAttributePattern6() {
+	//	Pattern6 - refactoringType sourceAttributeName "in class" className  
+
+		String sourceAttributeName;
+
+		String sourceClassName;
+	
+		int sourceAttributeStartIndex = refactoringDetails.lastIndexOf("Extract Attribute ");
+		int sourceAttributeEndIndex = refactoringDetails.indexOf("in class");
+
+		sourceAttributeName = refactoringDetails.substring(sourceAttributeStartIndex, sourceAttributeEndIndex);
+
+		int sourceClassStartIndex = sourceAttributeEndIndex;
+		
+		sourceClassName = refactoringDetails.substring(sourceClassStartIndex);
+
 	}
 
 	/*
@@ -206,7 +221,33 @@ public class RefactoringAttributeParser extends RefactoringParser {
 	 * requestBufferWaitStrategy(waitStrategy WaitStrategyFactory) : SELF in class
 	 * com.couchbase.client.core.env.DefaultCoreEnvironment.Builder
 	 */
-	public void getAttributePattern7() {}
+	public void getAttributePattern7() {
+		//Pattern7 - refactoringType sourceClassType "to" targetClassType "in method" methodName "in class" className  
+       
+		String sourceClassName;
+		String targetClassName;
+
+		String methodName;
+		String className;
+		
+		int sourceClassStartIndex = refactoringDetails.lastIndexOf("Change Return Type ");
+		int sourceClassEndIndex = refactoringDetails.indexOf("to");
+
+		sourceClassName = refactoringDetails.substring(sourceClassStartIndex, sourceClassEndIndex);
+
+		int targetClassStartIndex = sourceClassEndIndex;
+		int targetClassEndIndex = refactoringDetails.indexOf("in method ");
+
+		targetClassName = refactoringDetails.substring(targetClassStartIndex, targetClassEndIndex);
+
+		int methodNameStartIndex = targetClassEndIndex;
+		int methodNameEndIndex= refactoringDetails.lastIndexOf("in class");
+
+		methodName = refactoringDetails.substring(methodNameStartIndex, methodNameEndIndex);
+
+		int classStartIndex = methodNameStartIndex;
+		className = refactoringDetails.substring(classStartIndex);
+	}
 
 	
 
