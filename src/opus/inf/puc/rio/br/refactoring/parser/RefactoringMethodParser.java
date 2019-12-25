@@ -3,6 +3,13 @@ package opus.inf.puc.rio.br.refactoring.parser;
 import opus.inf.puc.rio.br.historic.CodeElement;
 
 public class RefactoringMethodParser extends RefactoringParser {
+	
+	
+	public RefactoringMethodParser(String refactoringType, String details) {
+		super(refactoringType, details);
+		// TODO Auto-generated constructor stub
+	}
+
 	// Rename Method -> "Rename Method public shouldReplaceWithCAS() : void
 	// renamed to public shouldReplaceWithFailingCAS() : void in class
 	// com.couchbase.client.core.cluster.BinaryMessageTest"

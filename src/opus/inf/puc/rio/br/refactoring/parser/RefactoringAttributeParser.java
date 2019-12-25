@@ -4,7 +4,14 @@ import opus.inf.puc.rio.br.historic.CodeElement;
 
 public class RefactoringAttributeParser extends RefactoringParser {
 
-//	Push Down Attribute private resetType : ResetType from class org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog  to class org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog
+
+	
+	public RefactoringAttributeParser(String refactoringType, String details) {
+		super(refactoringType, details);
+		// TODO Auto-generated constructor stub
+	}
+
+	//	Push Down Attribute private resetType : ResetType from class org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog  to class org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog
 //	Pull Up Attribute private password :  String from class com.couchbase.client.core.message.cluster.OpenBucketRequest  to class com.couchbase.client.core.message.AbstractCouchbaseRequest
 //	Move Attribute	public SSL_ENABLED : boolean from class com.couchbase.client.core.env.DefaultCoreProperties  to class com.couchbase.client.core.env.DefaultCoreEnvironment	
 	public void getAttributePattern1() {

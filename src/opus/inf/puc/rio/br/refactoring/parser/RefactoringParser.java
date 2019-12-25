@@ -12,8 +12,14 @@ public class RefactoringParser {
 	private RefactoringAttributeParser attributeParser;
 	private RefactoringMethodParser methodParser;
 	private RefactoringClassParser classParser;
+	
+	public RefactoringParser(String refactoringType, String details) {
+		
+		this.refactoringType = refactoringType;
+		this.refactoringDetails = refactoringDetails;
+	}
 
-	public List<CodeElement> getCodeElements(String refactoringType, String details){
+	public List<CodeElement> getCodeElements(){
 		try {
 
 			if (refactoringType != null) {

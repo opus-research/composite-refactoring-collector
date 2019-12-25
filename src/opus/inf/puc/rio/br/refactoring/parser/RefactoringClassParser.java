@@ -5,7 +5,12 @@ import opus.inf.puc.rio.br.historic.CodeElement;
 public class RefactoringClassParser extends RefactoringParser{
 	
 	
-	//Move Class	com.couchbase.client.core.service.SelectionStrategy 
+	public RefactoringClassParser(String refactoringType, String details) {
+		super(refactoringType, details);
+		// TODO Auto-generated constructor stub
+	}
+
+		//Move Class	com.couchbase.client.core.service.SelectionStrategy 
 	// moved to com.couchbase.client.core.service.strategies.SelectionStrategy
 		public void getClassPattern1(){
 			int classStartIndex = refactoringDetails.indexOf("Move Class ");
