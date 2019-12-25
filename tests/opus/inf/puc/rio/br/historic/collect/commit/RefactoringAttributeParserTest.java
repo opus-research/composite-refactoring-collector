@@ -82,8 +82,8 @@ public class RefactoringAttributeParserTest {
 	@Test
 	public void shouldExtractVariable(){	
 		
-		RefactoringParser parserEV = new RefactoringAttributeParser("Move Attribute",
-				"Move Attribute	builder : DefaultCoreEnvironment.Builder in method "
+		RefactoringParser parserEV = new RefactoringAttributeParser("Extract Variable",
+				"Extract Variable	builder : DefaultCoreEnvironment.Builder in method "
 				+ "public connect() : void from class com.couchbase.client.core.ThreadCleanupTest");
 
 		List<CodeElement> elements = parserEV.getCodeElements();
@@ -96,8 +96,8 @@ public class RefactoringAttributeParserTest {
 	@Test
 	public void shouldInlineVariable(){	
 		
-		RefactoringParser parserIV = new RefactoringAttributeParser("Move Attribute",
-				"Move Attribute	addrs : InetAddress[] in method package NetworkAddress(input String, reverseDns boolean) "
+		RefactoringParser parserIV = new RefactoringAttributeParser("Inline Variable",
+				"Inline Variable addrs : InetAddress[] in method package NetworkAddress(input String, reverseDns boolean) "
 				+ "from class com.couchbase.client.core.utils.NetworkAddress");
 
 		List<CodeElement> elements = parserIV.getCodeElements();
@@ -111,8 +111,8 @@ public class RefactoringAttributeParserTest {
 	@Test
 	public void shouldParameterizeVariable(){	
 		
-		RefactoringParser parserPV = new RefactoringAttributeParser("Move Attribute",
-				"Move Attribute	stream : DCPStream to connection : DCPConnection "
+		RefactoringParser parserPV = new RefactoringAttributeParser("Parameterize Variable",
+				"Parameterize Variable	stream : DCPStream to connection : DCPConnection "
 				+ "in method private handleDCPRequest(ctx ChannelHandlerContext, connection DCPConnection, msg FullBinaryMemcacheResponse) : void "
 				+ "in class com.couchbase.client.core.endpoint.dcp.DCPHandler");
 
