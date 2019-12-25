@@ -64,10 +64,41 @@ public class RefactoringClassParserTest {
 	
 	@Test
 	public void shouldGetCodeElementExtractInterface(){
-		RefactoringParser parserEI = new RefactoringClassParser("Extract Superclass",
+		RefactoringParser parserEI = new RefactoringClassParser("Extract Interface",
 				"Extract Interface	com.couchbase.client.core.message.binary.BinaryStoreRequest"
 						+ " from classes [com.couchbase.client.core.message.binary.InsertRequest, "
 						+ "com.couchbase.client.core.message.binary.InsertA]");
+		
+		List<CodeElement> elements = parserEI.getCodeElements();
+        
+        assertEquals(3, elements.size());
+        assertEquals("comcouchbaseclientcoremessagebinaryBinaryStoreRequest", elements.get(0).className);
+		
+        assertEquals("comcouchbaseclientcoremessagebinaryInsertRequest", elements.get(1).className);
+        assertEquals("comcouchbaseclientcoremessagebinaryInsertA", elements.get(2).className);
+	}
+	
+	
+	@Test
+	public void shouldGetCodeElementExtractClass(){
+		RefactoringParser parserEI = new RefactoringClassParser("Extract Class",
+				"Extract Class com.couchbase.client.core.endpoint.dcp.DCPConnectionHandler "
+				+ "from class com.couchbase.client.core.endpoint.dcp.DCPHandler");
+		
+		List<CodeElement> elements = parserEI.getCodeElements();
+        
+        assertEquals(3, elements.size());
+        assertEquals("comcouchbaseclientcoremessagebinaryBinaryStoreRequest", elements.get(0).className);
+		
+        assertEquals("comcouchbaseclientcoremessagebinaryInsertRequest", elements.get(1).className);
+        assertEquals("comcouchbaseclientcoremessagebinaryInsertA", elements.get(2).className);
+	}
+	
+	@Test
+	public void shouldGetCodeElementExtractSubclass(){
+		RefactoringParser parserEI = new RefactoringClassParser("Extract Subclass",
+				"Extract Subclass org.eclipse.jgit.lib.LocalObjectToPack "
+				+ "from class org.eclipse.jgit.lib.ObjectToPack	]");
 		
 		List<CodeElement> elements = parserEI.getCodeElements();
         
