@@ -1,24 +1,30 @@
 package opus.inf.puc.rio.br.refactoring.parser;
 
+import java.util.ArrayList;
+
 import opus.inf.puc.rio.br.historic.CodeElement;
 
 public class RefactoringAttributeParser extends RefactoringParser {
 
 
 	
-	public RefactoringAttributeParser(String refactoringType, String details) {
-		super(refactoringType, details);
-		// TODO Auto-generated constructor stub
+	public RefactoringAttributeParser(String refactoringType, String refactoringDetails) {
+		this.refactoringType = refactoringType;
+		this.refactoringDetails = refactoringDetails;
+		this.elements = new ArrayList<CodeElement>();
+		
 	}
+	
+
 
 	//	Push Down Attribute private resetType : ResetType from class org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog  to class org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog
 //	Pull Up Attribute private password :  String from class com.couchbase.client.core.message.cluster.OpenBucketRequest  to class com.couchbase.client.core.message.AbstractCouchbaseRequest
 //	Move Attribute	public SSL_ENABLED : boolean from class com.couchbase.client.core.env.DefaultCoreProperties  to class com.couchbase.client.core.env.DefaultCoreEnvironment	
 	public void getAttributePattern1() {
-		int attributeStartIndex = refactoringDetails.indexOf("Push Down Attribute ");
+		int attributeStartIndex = refactoringDetails.indexOf(refactoringType);
 		int attributeLastIndex = refactoringDetails.indexOf("from class");
 
-		String attributeName = refactoringDetails.substring(attributeStartIndex + "Push Down Attribute ".length(),
+		String attributeName = refactoringDetails.substring(attributeStartIndex + refactoringType.length(),
 				attributeLastIndex);
 
 		int oldClassStartIndex = refactoringDetails.indexOf("from class");
@@ -32,12 +38,6 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		String newClassName = refactoringDetails.substring(newClassStartIndex + " to class".length());
 
 		CodeElement mainElementCompletePath = new CodeElement(null, attributeName.trim(), oldClassName.trim());
-
-		attributeName = attributeName.replaceAll("[^a-zA-Z0-9]+", "");
-		oldClassName = oldClassName.replaceAll("[^a-zA-Z0-9]+", "");
-
-		attributeName = attributeName.replaceAll("[^a-zA-Z0-9]+", "");
-		newClassName = newClassName.replaceAll("[^a-zA-Z0-9]+", "");
 
 		CodeElement element1 = new CodeElement(null, attributeName.trim(), oldClassName.trim());
 		CodeElement element2 = new CodeElement(null, attributeName.trim(), newClassName.trim());
@@ -54,20 +54,22 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		String methodName;
 		String className;
 
-		int variableStartIndex = refactoringDetails.lastIndexOf("Extract Variable ");
+		int variableStartIndex = refactoringDetails.lastIndexOf(refactoringType);
 		int variableEndIndex = refactoringDetails.lastIndexOf("in method");
 
-		variableName = refactoringDetails.substring(variableStartIndex, variableEndIndex);
-
+		variableName = refactoringDetails.substring(refactoringType.length() + variableStartIndex, variableEndIndex);
+		
 		int methodStartIndex = variableEndIndex;
 		int methodEndIndex = refactoringDetails.lastIndexOf("from class");
 
-		methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
-
+		methodName = refactoringDetails.substring("in method".length() + methodStartIndex, methodEndIndex);
+	
 		int classIndex = methodEndIndex;
 
-		className = refactoringDetails.substring(classIndex);
+		className = refactoringDetails.substring("from class".length() + classIndex);
 
+		CodeElement element1 = new CodeElement(methodName.trim(), variableName.trim(), className.trim());
+		elements.add(element1);
 	}
 
 	/*
@@ -111,7 +113,7 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		String methodName;
 		String className;
 
-		int sourceVariableStartIndex = refactoringDetails.lastIndexOf("Parameterize Variable ");
+		int sourceVariableStartIndex = refactoringDetails.lastIndexOf(refactoringType);
 		int sourceVariableEndIndex = refactoringDetails.lastIndexOf("to");
 
 		sourceVariableName = refactoringDetails.substring(sourceVariableStartIndex, sourceVariableEndIndex);
@@ -147,7 +149,7 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		String methodName;
 		String className;
 
-		int sourceParameterStartIndex = refactoringDetails.lastIndexOf("Rename Attribute ");
+		int sourceParameterStartIndex = refactoringDetails.lastIndexOf(refactoringType);
 		int sourceParameterEndIndex = refactoringDetails.lastIndexOf("to");
 
 		sourceParameterName = refactoringDetails.substring(sourceParameterStartIndex, sourceParameterEndIndex);
@@ -181,7 +183,7 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		String sourceClassName;
 		String targetClassName;
 
-		int sourceAttributeStartIndex = refactoringDetails.lastIndexOf("Replace Attribute ");
+		int sourceAttributeStartIndex = refactoringDetails.lastIndexOf(refactoringType);
 		int sourceAttributeEndIndex = refactoringDetails.indexOf("from class");
 
 		sourceAttributeName = refactoringDetails.substring(sourceAttributeStartIndex, sourceAttributeEndIndex);
@@ -212,7 +214,7 @@ public class RefactoringAttributeParser extends RefactoringParser {
 
 		String sourceClassName;
 	
-		int sourceAttributeStartIndex = refactoringDetails.lastIndexOf("Extract Attribute ");
+		int sourceAttributeStartIndex = refactoringDetails.lastIndexOf(refactoringType);
 		int sourceAttributeEndIndex = refactoringDetails.indexOf("in class");
 
 		sourceAttributeName = refactoringDetails.substring(sourceAttributeStartIndex, sourceAttributeEndIndex);
@@ -237,7 +239,7 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		String methodName;
 		String className;
 		
-		int sourceClassStartIndex = refactoringDetails.lastIndexOf("Change Return Type ");
+		int sourceClassStartIndex = refactoringDetails.lastIndexOf(refactoringType);
 		int sourceClassEndIndex = refactoringDetails.indexOf("to");
 
 		sourceClassName = refactoringDetails.substring(sourceClassStartIndex, sourceClassEndIndex);

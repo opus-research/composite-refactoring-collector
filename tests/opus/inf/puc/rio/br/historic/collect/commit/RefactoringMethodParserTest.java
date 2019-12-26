@@ -18,18 +18,18 @@ public class RefactoringMethodParserTest {
 	public void shouldGetCodeElementFromRenameMethod(){
 		
 		
-        RefactoringParser parserRM = new RefactoringMethodParser("Rename Method", "Rename Method	public shouldReplaceWithCAS() : void "
+        RefactoringParser parserRM = new RefactoringParser();
+		
+		List<CodeElement> elements = parserRM.getCodeElements("Rename Method", "Rename Method	public shouldReplaceWithCAS() : void "
 				+ "renamed to public shouldReplaceWithFailingCAS() : void "
 				+ "in class com.couchbase.client.core.cluster.BinaryMessageTest");
-		
-		List<CodeElement> elements = parserRM.getCodeElements();
         
         assertEquals(2, elements.size());
-        assertEquals("publicshouldReplaceWithCASvoid", elements.get(0).methodName);
-        assertEquals("comcouchbaseclientcoreclusterBinaryMessageTest", elements.get(0).className);
+        assertEquals("public shouldReplaceWithCAS() : void", elements.get(0).methodName);
+        assertEquals("com.couchbase.client.core.cluster.BinaryMessageTest", elements.get(0).className);
 		
-        assertEquals("publicshouldReplaceWithFailingCASvoid", elements.get(1).methodName);
-        assertEquals("comcouchbaseclientcoreclusterBinaryMessageTest", elements.get(1).className);
+        assertEquals("public shouldReplaceWithFailingCAS() : void", elements.get(1).methodName);
+        assertEquals("com.couchbase.client.core.cluster.BinaryMessageTest", elements.get(1).className);
 		
 	}
 
@@ -38,18 +38,18 @@ public class RefactoringMethodParserTest {
 	public void shouldGetCodeElementFromInlineMethod(){
 	
 		
-		RefactoringParser parserIM = new RefactoringMethodParser("Inline Method", 
+		RefactoringParser parserIM = new RefactoringParser();
+		
+		List<CodeElement> elements = parserIM.getCodeElements("Inline Method", 
                 "Inline Method	public create(properties CoreProperties) : DefaultCoreEnvironment inlined to public create() :"
                 + " DefaultCoreEnvironment in class  com.couchbase.client.core.cluster.BinaryMessageTest");
-		
-		List<CodeElement> elements = parserIM.getCodeElements();
         
         assertEquals(2, elements.size());
-        assertEquals("publiccreatepropertiesCorePropertiesDefaultCoreEnvironment", elements.get(0).methodName);
-        assertEquals("comcouchbaseclientcoreclusterBinaryMessageTest", elements.get(0).className);
+        assertEquals("public create(properties CoreProperties) : DefaultCoreEnvironment", elements.get(0).methodName);
+        assertEquals("com.couchbase.client.core.cluster.BinaryMessageTest", elements.get(0).className);
 		
-        assertEquals("publiccreateDefaultCoreEnvironment", elements.get(1).methodName);
-        assertEquals("comcouchbaseclientcoreclusterBinaryMessageTest", elements.get(1).className);
+        assertEquals("public create() : DefaultCoreEnvironment", elements.get(1).methodName);
+        assertEquals("com.couchbase.client.core.cluster.BinaryMessageTest", elements.get(1).className);
 		
 	}
 	
@@ -58,21 +58,21 @@ public class RefactoringMethodParserTest {
 	public void shouldGetCodeElementFromMoveMethod(){
 		
 
-		RefactoringParser parserMM = new RefactoringMethodParser("Move Method", "Move Method	public bootstrapCarrierEnabled() : boolean "
-						+ "from class com.couchbase.client.core.env.DynamicCoreProperties "
-						+ "to public bootstrapCarrierEnabled() : boolean "
-						+ "from class com.couchbase.client.core.env.DefaultCoreEnvironment");
+		RefactoringParser parserMM = new RefactoringParser();
 		
 		
-		List<CodeElement> elements = parserMM.getCodeElements();
+		List<CodeElement> elements = parserMM.getCodeElements("Move Method", "Move Method	public bootstrapCarrierEnabled() : boolean "
+				+ "from class com.couchbase.client.core.env.DynamicCoreProperties "
+				+ "to public bootstrapCarrierEnabled() : boolean "
+				+ "from class com.couchbase.client.core.env.DefaultCoreEnvironment");
         
         
         assertEquals(2, elements.size());
-        assertEquals("publicbootstrapCarrierEnabledboolean", elements.get(0).methodName);
-        assertEquals("comcouchbaseclientcoreenvDynamicCoreProperties", elements.get(0).className);
+        assertEquals("public bootstrapCarrierEnabled() : boolean", elements.get(0).methodName);
+        assertEquals("com.couchbase.client.core.env.DynamicCoreProperties", elements.get(0).className);
 		
-        assertEquals("publicbootstrapCarrierEnabledboolean", elements.get(1).methodName);
-        assertEquals("comcouchbaseclientcoreenvDefaultCoreEnvironment", elements.get(1).className);
+        assertEquals("public bootstrapCarrierEnabled() : boolean", elements.get(1).methodName);
+        assertEquals("com.couchbase.client.core.env.DefaultCoreEnvironment", elements.get(1).className);
 		
 	}
 	
@@ -81,40 +81,39 @@ public class RefactoringMethodParserTest {
 	@Test 
 	public void shouldGetCodeElementExtractMethod(){
 		
-		RefactoringParser parserEM = new RefactoringMethodParser("Extract Method", 
-				        "Extract Method	protected doConnect(observable Subject<LifecycleState,LifecycleState>) : void "
-						+ "extracted from public connect() : Observable<LifecycleState> "
-						+ "in class com.couchbase.client.core.endpoint.AbstractEndpoint");
+		RefactoringParser parserEM = new RefactoringParser();
 		
-		List<CodeElement> elements = parserEM.getCodeElements();
+		List<CodeElement> elements = parserEM.getCodeElements("Extract Method", 
+		        "Extract Method	protected doConnect(observable Subject<LifecycleState,LifecycleState>) : void "
+				+ "extracted from public connect() : Observable<LifecycleState> "
+				+ "in class com.couchbase.client.core.endpoint.AbstractEndpoint");
         
         
         assertEquals(2, elements.size());
-        assertEquals("protecteddoConnectobservableSubjectLifecycleStateLifecycleStatevoid", elements.get(1).methodName);
-        assertEquals("comcouchbaseclientcoreendpointAbstractEndpoint", elements.get(1).className);
+        assertEquals("protected doConnect(observable Subject<LifecycleState,LifecycleState>) : void", elements.get(1).methodName);
+        assertEquals("com.couchbase.client.core.endpoint.AbstractEndpoint", elements.get(1).className);
 		
-        assertEquals("publicconnectObservableLifecycleState", elements.get(0).methodName);
-        assertEquals("comcouchbaseclientcoreendpointAbstractEndpoint", elements.get(0).className);
-	
+        assertEquals("public connect() : Observable<LifecycleState>", elements.get(0).methodName);
+        assertEquals("com.couchbase.client.core.endpoint.AbstractEndpoint", elements.get(0).className);
 	}
 	
 	@Test
 	public void shouldGetCodeElementPushDownMethod(){
 
-		RefactoringParser parserDM = new RefactoringMethodParser("Push Down Method",
+		RefactoringParser parserDM = new RefactoringParser();
+		
+		List<CodeElement> elements = parserDM.getCodeElements("Push Down Method",
 				"Push Down Method	private buildResetGroup(parent Composite) : void "
 						+ "from class org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog "
 						+ "to protected createCustomArea(parent Composite) : void "
 						+ "from class org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog");
-		
-		List<CodeElement> elements = parserDM.getCodeElements();
         
         assertEquals(2, elements.size());
-        assertEquals("privatebuildResetGroupparentCompositevoid", elements.get(0).methodName);
-        assertEquals("orgeclipseegituiinternaldialogsBranchSelectionDialog", elements.get(0).className);
+        assertEquals("private buildResetGroup(parent Composite) : void", elements.get(0).methodName);
+        assertEquals("org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog", elements.get(0).className);
 		
-        assertEquals("protectedcreateCustomAreaparentCompositevoid", elements.get(1).methodName);
-        assertEquals("orgeclipseegituiinternaldialogsResetTargetSelectionDialog", elements.get(1).className);
+        assertEquals("protected createCustomArea(parent Composite) : void", elements.get(1).methodName);
+        assertEquals("org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog", elements.get(1).className);
 	
 	}
 	
@@ -122,19 +121,19 @@ public class RefactoringMethodParserTest {
 	@Test
 	public void shouldGetCodeElementPullUpMethod(){
 
-		RefactoringParser parserUM = new RefactoringMethodParser("Pull Up Method", "Pull Up Method	public key() : String "
-						+ "from class com.couchbase.client.core.message.binary.GetRequest "
-						+ "to public key() : String "
-						+ "from class com.couchbase.client.core.message.binary.AbstractBinaryRequest");
+		RefactoringParser parserUM = new RefactoringParser();
        
-		List<CodeElement> elements = parserUM.getCodeElements();
+		List<CodeElement> elements = parserUM.getCodeElements("Pull Up Method", "Pull Up Method	public key() : String "
+				+ "from class com.couchbase.client.core.message.binary.GetRequest "
+				+ "to public key() : String "
+				+ "from class com.couchbase.client.core.message.binary.AbstractBinaryRequest");
         
         assertEquals(2, elements.size());
-        assertEquals("publickeyString", elements.get(0).methodName);
-        assertEquals("comcouchbaseclientcoremessagebinaryGetRequest", elements.get(0).className);
+        assertEquals("public key() : String", elements.get(0).methodName);
+        assertEquals("com.couchbase.client.core.message.binary.GetRequest", elements.get(0).className);
 		
-        assertEquals("publickeyString", elements.get(1).methodName);
-        assertEquals("comcouchbaseclientcoremessagebinaryAbstractBinaryRequest", elements.get(1).className);
+        assertEquals("public key() : String", elements.get(1).methodName);
+        assertEquals("com.couchbase.client.core.message.binary.AbstractBinaryRequest", elements.get(1).className);
 	
 	}
 }

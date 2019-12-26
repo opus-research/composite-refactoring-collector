@@ -1,14 +1,19 @@
 package opus.inf.puc.rio.br.refactoring.parser;
 
+import java.util.ArrayList;
+
 import opus.inf.puc.rio.br.historic.CodeElement;
 
 public class RefactoringMethodParser extends RefactoringParser {
 	
 	
-	public RefactoringMethodParser(String refactoringType, String details) {
-		super(refactoringType, details);
-		// TODO Auto-generated constructor stub
+	public RefactoringMethodParser(String refactoringType, String refactoringDetails) {
+		this.refactoringType = refactoringType;
+		this.refactoringDetails = refactoringDetails;
+		this.elements = new ArrayList<CodeElement>(); 
+		
 	}
+	
 
 	// Rename Method -> "Rename Method public shouldReplaceWithCAS() : void
 	// renamed to public shouldReplaceWithFailingCAS() : void in class
@@ -31,10 +36,6 @@ public class RefactoringMethodParser extends RefactoringParser {
 
 		CodeElement mainElementCompletePath = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 
-		methodNameOrigin = methodNameOrigin.replaceAll("[^a-zA-Z0-9]+", "");
-		className = className.replaceAll("[^a-zA-Z0-9]+", "");
-
-		methodNameNew = methodNameNew.replaceAll("[^a-zA-Z0-9]+", "");
 
 		CodeElement element1 = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 		CodeElement element2 = new CodeElement(methodNameNew.trim(), null, className.trim());
@@ -66,11 +67,6 @@ public class RefactoringMethodParser extends RefactoringParser {
 
 		CodeElement mainElementCompletePath = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 
-		methodNameOrigin = methodNameOrigin.replaceAll("[^a-zA-Z0-9]+", "");
-		className = className.replaceAll("[^a-zA-Z0-9]+", "");
-
-		methodNameNew = methodNameNew.replaceAll("[^a-zA-Z0-9]+", "");
-
 		CodeElement element1 = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 		CodeElement element2 = new CodeElement(methodNameNew.trim(), null, className.trim());
 
@@ -100,10 +96,6 @@ public class RefactoringMethodParser extends RefactoringParser {
 
 		CodeElement mainElementCompletePath = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 
-		methodNameOrigin = methodNameOrigin.replaceAll("[^a-zA-Z0-9]+", "");
-		className = className.replaceAll("[^a-zA-Z0-9]+", "");
-
-		methodNameNew = methodNameNew.replaceAll("[^a-zA-Z0-9]+", "");
 
 		CodeElement element1 = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 		CodeElement element2 = new CodeElement(methodNameNew.trim(), null, className.trim());
@@ -112,6 +104,12 @@ public class RefactoringMethodParser extends RefactoringParser {
 
 		elements.add(element1);
 		elements.add(element2);
+		
+		System.out.println(elements.size());
+
+		
+		
+		
 	}
 
 //	Move Method	public bootstrapCarrierEnabled() : boolean from class com.couchbase.client.core.env.DynamicCoreProperties to public bootstrapCarrierEnabled() : boolean from class com.couchbase.client.core.env.DefaultCoreEnvironment
@@ -119,10 +117,10 @@ public class RefactoringMethodParser extends RefactoringParser {
 //	Pull Up Method	public key() : String from class com.couchbase.client.core.message.binary.GetRequest  to public key() : String from class com.couchbase.client.core.message.binary.AbstractBinaryRequest
 
 	public void getMethodPattern4() {
-		int methodStartIndex = refactoringDetails.indexOf("Move Method ");
+		int methodStartIndex = refactoringDetails.indexOf(refactoringType);
 		int methodLastIndex = refactoringDetails.indexOf("from class");
 
-		String methodName = refactoringDetails.substring(methodStartIndex + "Move Method ".length(), methodLastIndex);
+		String methodName = refactoringDetails.substring(methodStartIndex + refactoringType.length(), methodLastIndex);
 
 		int oldClassStartIndex = refactoringDetails.indexOf("from class");
 		int oldClassLastIndex = refactoringDetails.indexOf(" to ");
@@ -140,11 +138,6 @@ public class RefactoringMethodParser extends RefactoringParser {
 
 		CodeElement mainElementCompletePath = new CodeElement(methodName.trim(), null, oldClassName.trim());
 
-		methodName = methodName.replaceAll("[^a-zA-Z0-9]+", "");
-		oldClassName = oldClassName.replaceAll("[^a-zA-Z0-9]+", "");
-
-		newMethodName = newMethodName.replaceAll("[^a-zA-Z0-9]+", "");
-		newClassName = newClassName.replaceAll("[^a-zA-Z0-9]+", "");
 
 		CodeElement element1 = new CodeElement(methodName.trim(), null, oldClassName.trim());
 		CodeElement element2 = new CodeElement(newMethodName.trim(), null, newClassName.trim());

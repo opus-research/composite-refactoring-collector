@@ -16,11 +16,11 @@ public class RefactoringClassParserTest {
 	
 	@Test
 	public void shouldGetCodeElementMoveClass(){
-		RefactoringParser parserMC = new RefactoringClassParser ("Move Class",
-				          "Move Class	com.couchbase.client.core.service.SelectionStrategy "
-						+ "moved to com.couchbase.client.core.service.strategies.SelectionStrategy");
+		RefactoringParser parserMC = new RefactoringParser();
 		
-		List<CodeElement> elements = parserMC.getCodeElements();
+		List<CodeElement> elements = parserMC.getCodeElements("Move Class",
+		          "Move Class	com.couchbase.client.core.service.SelectionStrategy "
+				+ "moved to com.couchbase.client.core.service.strategies.SelectionStrategy");
         
         assertEquals(2, elements.size());
         assertEquals("comcouchbaseclientcoreserviceSelectionStrategy", elements.get(0).className);
@@ -30,11 +30,11 @@ public class RefactoringClassParserTest {
 	
 	@Test
 	public void shouldGetCodeElementRenameClass(){
-		RefactoringParser parserRC = new RefactoringClassParser("Rename Class",
+		RefactoringParser parserRC = new RefactoringParser();
+		
+		List<CodeElement> elements = parserRC.getCodeElements("Rename Class",
 				"Rename Class	net.spy.memcached.MembaseClient "
 						+ "renamed to com.couchbase.client.CouchbaseClient");
-		
-		List<CodeElement> elements = parserRC.getCodeElements();
         
         assertEquals(2, elements.size());
         assertEquals("netspymemcachedMembaseClient", elements.get(0).className);
@@ -45,14 +45,14 @@ public class RefactoringClassParserTest {
 	
 	@Test
 	public void shouldGetCodeElementExtractSuperclass(){
-		RefactoringParser parserES = new RefactoringClassParser("Extract Superclass",
+		RefactoringParser parserES = new RefactoringParser();
+		
+		List<CodeElement> elements = parserES.getCodeElements("Extract Superclass",
 				"Extract Superclass	com.couchbase.client.core.message.AbstractCouchbaseResponse "
 						+ "from classes [com.couchbase.client.core.message.binary.GetBucketConfigResponse, "
 						+ "com.couchbase.client.core.message.binary.GetResponse, "
 						+ "com.couchbase.client.core.message.binary.UpsertResponse, "
 						+ "com.couchbase.client.core.message.cluster.SeedNodesResponse]");
-		
-		List<CodeElement> elements = parserES.getCodeElements();
         
         assertEquals(5, elements.size());
         assertEquals("comcouchbaseclientcoremessageAbstractCouchbaseResponse", elements.get(0).className);
@@ -64,12 +64,12 @@ public class RefactoringClassParserTest {
 	
 	@Test
 	public void shouldGetCodeElementExtractInterface(){
-		RefactoringParser parserEI = new RefactoringClassParser("Extract Interface",
+		RefactoringParser parserEI = new RefactoringParser();
+		
+		List<CodeElement> elements = parserEI.getCodeElements("Extract Interface",
 				"Extract Interface	com.couchbase.client.core.message.binary.BinaryStoreRequest"
 						+ " from classes [com.couchbase.client.core.message.binary.InsertRequest, "
 						+ "com.couchbase.client.core.message.binary.InsertA]");
-		
-		List<CodeElement> elements = parserEI.getCodeElements();
         
         assertEquals(3, elements.size());
         assertEquals("comcouchbaseclientcoremessagebinaryBinaryStoreRequest", elements.get(0).className);
@@ -81,11 +81,11 @@ public class RefactoringClassParserTest {
 	
 	@Test
 	public void shouldGetCodeElementExtractClass(){
-		RefactoringParser parserEI = new RefactoringClassParser("Extract Class",
+		RefactoringParser parserEI = new RefactoringParser();
+		
+		List<CodeElement> elements = parserEI.getCodeElements("Extract Class",
 				"Extract Class com.couchbase.client.core.endpoint.dcp.DCPConnectionHandler "
 				+ "from class com.couchbase.client.core.endpoint.dcp.DCPHandler");
-		
-		List<CodeElement> elements = parserEI.getCodeElements();
         
         assertEquals(3, elements.size());
         assertEquals("comcouchbaseclientcoremessagebinaryBinaryStoreRequest", elements.get(0).className);
@@ -96,11 +96,11 @@ public class RefactoringClassParserTest {
 	
 	@Test
 	public void shouldGetCodeElementExtractSubclass(){
-		RefactoringParser parserEI = new RefactoringClassParser("Extract Subclass",
+		RefactoringParser parserEI = new RefactoringParser();
+		
+		List<CodeElement> elements = parserEI.getCodeElements("Extract Subclass",
 				"Extract Subclass org.eclipse.jgit.lib.LocalObjectToPack "
 				+ "from class org.eclipse.jgit.lib.ObjectToPack	]");
-		
-		List<CodeElement> elements = parserEI.getCodeElements();
         
         assertEquals(3, elements.size());
         assertEquals("comcouchbaseclientcoremessagebinaryBinaryStoreRequest", elements.get(0).className);

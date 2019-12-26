@@ -5,10 +5,12 @@ import opus.inf.puc.rio.br.historic.CodeElement;
 public class RefactoringGeralParser extends RefactoringParser {
 
 	
-	public RefactoringGeralParser(String refactoringType, String details) {
-		super(refactoringType, details);
-		// TODO Auto-generated constructor stub
+	public RefactoringGeralParser(String refactoringType, String refactoringDetails) {
+		this.refactoringType = refactoringType;
+		this.refactoringDetails = refactoringDetails;
+		
 	}
+	
 
 	//"Rename Package	net.spy.memcached to com.couchbase.client"
 	public void getElementRenamePackage(){

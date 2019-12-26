@@ -5,9 +5,10 @@ import opus.inf.puc.rio.br.historic.CodeElement;
 public class RefactoringClassParser extends RefactoringParser{
 	
 	
-	public RefactoringClassParser(String refactoringType, String details) {
-		super(refactoringType, details);
-		// TODO Auto-generated constructor stub
+	public RefactoringClassParser(String refactoringType, String refactoringDetails) {
+		this.refactoringType = refactoringType;
+		this.refactoringDetails = refactoringDetails;
+		
 	}
 
 		//Move Class	com.couchbase.client.core.service.SelectionStrategy 
