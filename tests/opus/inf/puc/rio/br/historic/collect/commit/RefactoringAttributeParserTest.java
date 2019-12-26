@@ -378,12 +378,16 @@ public class RefactoringAttributeParserTest {
 
 		List<CodeElement> elements = parserRA.getCodeElements("Replace Attribute",
 				"Replace Attribute private file : RandomAccessFile "
-						+ "from class org.eclipse.jgit.internal.storage.file.PackInserter.Reader.StreamLoader with private packOut : PackStream "
+						+ "from class org.eclipse.jgit.internal.storage.file.PackInserter.Reader.StreamLoader "
+						+ "with private packOut : PackStream "
 						+ "from class org.eclipse.jgit.internal.storage.file.PackInserter");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("private file : RandomAccessFile", elements.get(0).attributeName);
+		assertEquals("org.eclipse.jgit.internal.storage.file.PackInserter.Reader.StreamLoader", elements.get(0).className);
+		
+		assertEquals("private packOut : PackStream", elements.get(1).attributeName);
+		assertEquals("org.eclipse.jgit.internal.storage.file.PackInserter", elements.get(1).className);
 	}
 
 	// ------------------------ PATTERN 6 ----------------------------------//
@@ -394,9 +398,9 @@ public class RefactoringAttributeParserTest {
 		List<CodeElement> elements = parserEA.getCodeElements("Extract Attribute",
 				"Extract Attribute	private CHARSET : Charset in class com.couchbase.client.core.endpoint.config.ConfigHandlerTest");
 
-		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals(1, elements.size());
+		assertEquals("private CHARSET : Charset", elements.get(0).attributeName);
+		assertEquals("com.couchbase.client.core.endpoint.config.ConfigHandlerTest", elements.get(0).className);
 
 	}
 
@@ -409,9 +413,11 @@ public class RefactoringAttributeParserTest {
 				"Change Return Type	Builder to SELF in method public requestBufferWaitStrategy(waitStrategy WaitStrategyFactory) : SELF "
 						+ "in class com.couchbase.client.core.env.DefaultCoreEnvironment.Builder");
 
-		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals(1, elements.size());
+		
+		assertEquals("Builder to SELF", elements.get(0).getDetails());
+		assertEquals("public requestBufferWaitStrategy(waitStrategy WaitStrategyFactory) : SELF", elements.get(0).methodName);
+		assertEquals("com.couchbase.client.core.env.DefaultCoreEnvironment.Builder", elements.get(0).className);
 
 	}
 

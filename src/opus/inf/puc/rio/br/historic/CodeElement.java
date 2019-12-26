@@ -7,6 +7,7 @@ public class CodeElement {
 	public final String className;
 	
 	private String packageName;
+	private String details;
 	
 	
 	public CodeElement(String methodName, String attributeName, String className) {
@@ -30,6 +31,16 @@ public class CodeElement {
 		return packageName;
 	}
 	
+	public void setDetails(String details) {
+		
+		if(this.details == null){
+			this.details = details;
+		}
+	}
+	
+	public String getDetails() {
+		return details;
+	}
 	
 	
 	

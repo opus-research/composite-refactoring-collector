@@ -197,20 +197,27 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		int sourceAttributeStartIndex = refactoringDetails.lastIndexOf(refactoringType);
 		int sourceAttributeEndIndex = refactoringDetails.indexOf("from class");
 
-		sourceAttributeName = refactoringDetails.substring(sourceAttributeStartIndex, sourceAttributeEndIndex);
+		sourceAttributeName = refactoringDetails.substring(refactoringType.length() + sourceAttributeStartIndex, sourceAttributeEndIndex);
 
 		int sourceClassStartIndex = sourceAttributeEndIndex;
 		int sourceClassEndIndex = refactoringDetails.indexOf(" with ");
 
-		sourceClassName = refactoringDetails.substring(sourceClassStartIndex, sourceClassEndIndex);
+		sourceClassName = refactoringDetails.substring("from class".length() + sourceClassStartIndex, sourceClassEndIndex);
 
 		int targetAttributeStartIndex = sourceClassEndIndex;
 		int targetAttributeEndIndex = refactoringDetails.lastIndexOf("from class");
 
-		targetAttributeName = refactoringDetails.substring(targetAttributeStartIndex, targetAttributeEndIndex);
+		targetAttributeName = refactoringDetails.substring(" with ".length() + targetAttributeStartIndex, targetAttributeEndIndex);
 
 		int targetClassStartIndex = targetAttributeEndIndex;
-		targetClassName = refactoringDetails.substring(targetClassStartIndex);
+		targetClassName = refactoringDetails.substring("from class".length() + targetClassStartIndex);
+		
+		
+		CodeElement element1 = new CodeElement(null, sourceAttributeName.trim(), sourceClassName.trim());
+		CodeElement element2 = new CodeElement(null, targetAttributeName.trim(), targetClassName.trim());
+		
+		elements.add(element1);
+		elements.add(element2);
 
 	}
 
@@ -228,12 +235,15 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		int sourceAttributeStartIndex = refactoringDetails.lastIndexOf(refactoringType);
 		int sourceAttributeEndIndex = refactoringDetails.indexOf("in class");
 
-		sourceAttributeName = refactoringDetails.substring(sourceAttributeStartIndex, sourceAttributeEndIndex);
+		sourceAttributeName = refactoringDetails.substring(refactoringType.length() + sourceAttributeStartIndex, sourceAttributeEndIndex);
 
 		int sourceClassStartIndex = sourceAttributeEndIndex;
 		
-		sourceClassName = refactoringDetails.substring(sourceClassStartIndex);
+		sourceClassName = refactoringDetails.substring("in class".length() + sourceClassStartIndex);
 
+		CodeElement element1 = new CodeElement(null, sourceAttributeName.trim(), sourceClassName.trim());	
+		elements.add(element1);
+	
 	}
 
 	/*
@@ -251,22 +261,28 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		String className;
 		
 		int sourceClassStartIndex = refactoringDetails.lastIndexOf(refactoringType);
-		int sourceClassEndIndex = refactoringDetails.indexOf("to");
+		int sourceClassEndIndex = refactoringDetails.indexOf(" to ");
 
-		sourceClassName = refactoringDetails.substring(sourceClassStartIndex, sourceClassEndIndex);
+		sourceClassName = refactoringDetails.substring(refactoringType.length() + sourceClassStartIndex, sourceClassEndIndex);
 
 		int targetClassStartIndex = sourceClassEndIndex;
 		int targetClassEndIndex = refactoringDetails.indexOf("in method ");
 
-		targetClassName = refactoringDetails.substring(targetClassStartIndex, targetClassEndIndex);
+		targetClassName = refactoringDetails.substring(" to ".length() + targetClassStartIndex, targetClassEndIndex);
 
 		int methodNameStartIndex = targetClassEndIndex;
 		int methodNameEndIndex= refactoringDetails.lastIndexOf("in class");
 
-		methodName = refactoringDetails.substring(methodNameStartIndex, methodNameEndIndex);
+		methodName = refactoringDetails.substring("in method ".length() + methodNameStartIndex, methodNameEndIndex);
 
-		int classStartIndex = methodNameStartIndex;
-		className = refactoringDetails.substring(classStartIndex);
+		int classStartIndex = methodNameEndIndex;
+		className = refactoringDetails.substring("in class".length() + classStartIndex);
+		
+		
+		CodeElement element1 = new CodeElement(methodName.trim(), null , className.trim());
+		
+		element1.setDetails(sourceClassName.trim() + " to " + targetClassName.trim());
+		elements.add(element1);
 	}
 
 	
