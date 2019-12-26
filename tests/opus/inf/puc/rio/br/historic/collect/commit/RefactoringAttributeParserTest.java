@@ -314,8 +314,11 @@ public class RefactoringAttributeParserTest {
 						+ "in class com.couchbase.client.core.message.dcp.StreamRequestResponse");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("stream : Observable<DCPRequest>", elements.get(0).attributeName);
+		assertEquals("com.couchbase.client.core.message.dcp.StreamRequestResponse", elements.get(0).className);
+		
+		assertEquals("connection : DCPConnection", elements.get(1).attributeName);
+		assertEquals("com.couchbase.client.core.message.dcp.StreamRequestResponse", elements.get(1).className);
 	}
 
 	@Test
@@ -327,9 +330,11 @@ public class RefactoringAttributeParserTest {
 						+ "in class com.couchbase.client.core.service.AbstractDynamicService");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
-
+		assertEquals("[env : CoreEnvironment, responseBuffer : RingBuffer<ResponseEvent>]", elements.get(0).attributeName);
+		assertEquals("com.couchbase.client.core.service.AbstractDynamicService", elements.get(0).className);
+		
+		assertEquals("ctx : CoreContext", elements.get(1).attributeName);
+		assertEquals("com.couchbase.client.core.service.AbstractDynamicService", elements.get(1).className);
 	}
 
 	@Test
@@ -341,8 +346,11 @@ public class RefactoringAttributeParserTest {
 						+ "in class org.apache.dubbo.common.config.configcenter.ConfigChangedEvent");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("value : String", elements.get(0).attributeName);
+		assertEquals("org.apache.dubbo.common.config.configcenter.ConfigChangedEvent", elements.get(0).className);
+		
+		assertEquals("[content : String, group : String]", elements.get(1).attributeName);
+		assertEquals("org.apache.dubbo.common.config.configcenter.ConfigChangedEvent", elements.get(1).className);
 
 	}
 
@@ -355,8 +363,11 @@ public class RefactoringAttributeParserTest {
 						+ "com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("userAgent : String", elements.get(0).attributeName);
+		assertEquals("com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler", elements.get(0).className);
+		
+		assertEquals("ctx : CoreContext", elements.get(1).attributeName);
+		assertEquals("com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler", elements.get(1).className);
 
 	}
 

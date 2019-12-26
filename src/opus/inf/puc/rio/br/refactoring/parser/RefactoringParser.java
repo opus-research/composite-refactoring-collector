@@ -60,7 +60,7 @@ public class RefactoringParser {
 				if (refactoringType.trim().equals("Rename Attribute")
 						|| refactoringType.trim().equals("Merge Attribute")
 						|| refactoringType.trim().equals("Split Attribute")
-						|| refactoringType.trim().equals("Change Attribute")) {
+						|| refactoringType.trim().equals("Change Attribute Type")) {
 					attributeParser.getAttributePattern4();
 					System.out.println(refactoringType);
 					return attributeParser.elements;

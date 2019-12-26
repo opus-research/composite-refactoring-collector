@@ -157,27 +157,27 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		String sourceParameterName;
 		String targetParameterName;
 
-		String methodName;
 		String className;
 
 		int sourceParameterStartIndex = refactoringDetails.lastIndexOf(refactoringType);
-		int sourceParameterEndIndex = refactoringDetails.lastIndexOf("to");
+		int sourceParameterEndIndex = refactoringDetails.lastIndexOf(" to ");
 
-		sourceParameterName = refactoringDetails.substring(sourceParameterStartIndex, sourceParameterEndIndex);
+		sourceParameterName = refactoringDetails.substring(refactoringType.length() + sourceParameterStartIndex, sourceParameterEndIndex);
 
 		int targetParameterStartIndex = sourceParameterEndIndex;
-		int targetParameterEndIndex = refactoringDetails.lastIndexOf("in method");
+		int targetParameterEndIndex = refactoringDetails.lastIndexOf("in class");
 
-		targetParameterName = refactoringDetails.substring(targetParameterStartIndex, targetParameterEndIndex);
+		targetParameterName = refactoringDetails.substring(" to ".length() + targetParameterStartIndex, targetParameterEndIndex);
 
-		int methodStartIndex = targetParameterEndIndex;
-		int methodEndIndex = refactoringDetails.lastIndexOf("in class");
+		int classIndex = refactoringDetails.lastIndexOf("in class");
 
-		methodName = refactoringDetails.substring(methodStartIndex, methodEndIndex);
-
-		int classIndex = methodEndIndex;
-
-		className = refactoringDetails.substring(classIndex);
+		className = refactoringDetails.substring("in class".length() + classIndex);
+		
+		CodeElement element1 = new CodeElement(null, sourceParameterName.trim(), className.trim());
+		CodeElement element2 = new CodeElement(null, targetParameterName.trim(), className.trim());
+		
+		elements.add(element1);
+		elements.add(element2);
 	}
 
 	/*
