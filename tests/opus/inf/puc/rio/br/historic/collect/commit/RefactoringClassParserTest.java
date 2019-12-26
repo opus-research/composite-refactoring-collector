@@ -23,9 +23,9 @@ public class RefactoringClassParserTest {
 				+ "moved to com.couchbase.client.core.service.strategies.SelectionStrategy");
         
         assertEquals(2, elements.size());
-        assertEquals("comcouchbaseclientcoreserviceSelectionStrategy", elements.get(0).className);
+        assertEquals("com.couchbase.client.core.service.SelectionStrategy", elements.get(0).className);
 		
-        assertEquals("comcouchbaseclientcoreservicestrategiesSelectionStrategy", elements.get(1).className);
+        assertEquals("com.couchbase.client.core.service.strategies.SelectionStrategy", elements.get(1).className);
 	}
 	
 	@Test
@@ -37,9 +37,9 @@ public class RefactoringClassParserTest {
 						+ "renamed to com.couchbase.client.CouchbaseClient");
         
         assertEquals(2, elements.size());
-        assertEquals("netspymemcachedMembaseClient", elements.get(0).className);
+        assertEquals("net.spy.memcached.MembaseClient", elements.get(0).className);
 		
-        assertEquals("comcouchbaseclientCouchbaseClient", elements.get(1).className);
+        assertEquals("com.couchbase.client.CouchbaseClient", elements.get(1).className);
 	}
 	
 	

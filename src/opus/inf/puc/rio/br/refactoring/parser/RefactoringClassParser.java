@@ -1,5 +1,7 @@
 package opus.inf.puc.rio.br.refactoring.parser;
 
+import java.util.ArrayList;
+
 import opus.inf.puc.rio.br.historic.CodeElement;
 
 public class RefactoringClassParser extends RefactoringParser{
@@ -8,6 +10,7 @@ public class RefactoringClassParser extends RefactoringParser{
 	public RefactoringClassParser(String refactoringType, String refactoringDetails) {
 		this.refactoringType = refactoringType;
 		this.refactoringDetails = refactoringDetails;
+		this.elements = new ArrayList<CodeElement>();
 		
 	}
 
@@ -25,10 +28,6 @@ public class RefactoringClassParser extends RefactoringParser{
 			String newClassName = refactoringDetails.substring(newClassNameStartIndex + "moved to".length());
 			
 			CodeElement mainElementCompletePath =  new CodeElement(null, null, className.trim());
-			
-			className = className.replaceAll("[^a-zA-Z0-9]+","");
-			
-			newClassName = newClassName.replaceAll("[^a-zA-Z0-9]+","");
 			
 			
 			CodeElement element1 = new CodeElement(null, null, className.trim());
@@ -54,8 +53,6 @@ public class RefactoringClassParser extends RefactoringParser{
 			
 			CodeElement mainElementCompletePath = new CodeElement(null, null, className.trim());
 			
-			className = className.replaceAll("[^a-zA-Z0-9]+","");
-			newClassName = newClassName.replaceAll("[^a-zA-Z0-9]+","");
 			
 			CodeElement element1 = new CodeElement(null, null, className.trim());
 			CodeElement element2 = new CodeElement(null, null, newClassName.trim());
