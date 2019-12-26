@@ -28,11 +28,11 @@ public class RefactoringAttributeParserTest {
 						+ "to class com.couchbase.client.core.message.AbstractCouchbaseRequest");
 
 		assertEquals(2, elements.size());
-		// assertEquals("privatepasswordString", elements.attributeName);
-		assertEquals("comcouchbaseclientcoremessageclusterOpenBucketRequest", elements.get(0).className);
+		assertEquals("private password : String", elements.get(0).attributeName);
+		assertEquals("com.couchbase.client.core.message.cluster.OpenBucketRequest", elements.get(0).className);
 
-		// assertEquals("privatepasswordString", elements.attributeName);
-		assertEquals("comcouchbaseclientcoremessageAbstractCouchbaseRequest", elements.get(1).className);
+		assertEquals("private password : String", elements.get(1).attributeName);
+		assertEquals("com.couchbase.client.core.message.AbstractCouchbaseRequest", elements.get(1).className);
 
 	}
 
@@ -47,11 +47,11 @@ public class RefactoringAttributeParserTest {
 						+ "to class org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog");
 
 		assertEquals(2, elements.size());
-		assertEquals("privateresetTypeResetType", elements.get(0).attributeName);
-		assertEquals("orgeclipseegituiinternaldialogsBranchSelectionDialog", elements.get(0).className);
+		assertEquals("private resetType : ResetType", elements.get(0).attributeName);
+		assertEquals("org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog", elements.get(0).className);
 
-		assertEquals("privateresetTypeResetType", elements.get(1).attributeName);
-		assertEquals("orgeclipseegituiinternaldialogsResetTargetSelectionDialog", elements.get(1).className);
+		assertEquals("private resetType : ResetType", elements.get(1).attributeName);
+		assertEquals("org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog", elements.get(1).className);
 
 	}
 
@@ -66,11 +66,11 @@ public class RefactoringAttributeParserTest {
 						+ "to class com.couchbase.client.core.env.DefaultCoreEnvironment");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("public SSL_ENABLED : boolean", elements.get(0).attributeName);
+		assertEquals("com.couchbase.client.core.env.DefaultCoreProperties", elements.get(0).className);
 
-		assertEquals("publicSSLENABLEDboolean", elements.get(1).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreEnvironment", elements.get(1).className);
+		assertEquals("public SSL_ENABLED : boolean", elements.get(1).attributeName);
+		assertEquals("com.couchbase.client.core.env.DefaultCoreEnvironment", elements.get(1).className);
 
 	}
 
@@ -86,11 +86,11 @@ public class RefactoringAttributeParserTest {
 
 		assertEquals(1, elements.size());
 
-		assertEquals("builderDefaultCoreEnvironmentBuilder", elements.get(0).attributeName);
+		assertEquals("builder : DefaultCoreEnvironment.Builder", elements.get(0).attributeName);
 
-		assertEquals("publicconnectvoid", elements.get(0).methodName);
+		assertEquals("public connect() : void", elements.get(0).methodName);
 
-		assertEquals("comcouchbaseclientcoreThreadCleanupTest", elements.get(0).className);
+		assertEquals("com.couchbase.client.core.ThreadCleanupTest", elements.get(0).className);
 
 	}
 
@@ -103,9 +103,10 @@ public class RefactoringAttributeParserTest {
 		"Inline Variable addrs : InetAddress[] in method package NetworkAddress(input String, reverseDns boolean) "
 		+ "from class com.couchbase.client.core.utils.NetworkAddress");
 		 
-		assertEquals(1, elements.size()); assertEquals("addrsInetAddress", elements.get(0).attributeName);
-		assertEquals("NetworkAddressinputStringreverseDnsboolean", elements.get(0).methodName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);		 
+		assertEquals(1, elements.size());
+		assertEquals("addrs : InetAddress[]", elements.get(0).attributeName);
+		assertEquals("package NetworkAddress(input String, reverseDns boolean)", elements.get(0).methodName);
+		assertEquals("com.couchbase.client.core.utils.NetworkAddress", elements.get(0).className);		 
 	}
 
 	// ------------------------ PATTERN 3 ----------------------------------//
@@ -120,8 +121,15 @@ public class RefactoringAttributeParserTest {
 						+ "in class com.couchbase.client.core.endpoint.dcp.DCPHandler");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("stream : DCPStream", elements.get(0).attributeName);
+		assertEquals("private handleDCPRequest(ctx ChannelHandlerContext, connection DCPConnection, msg FullBinaryMemcacheResponse) : void", elements.get(0).methodName);
+		assertEquals("com.couchbase.client.core.endpoint.dcp.DCPHandler", elements.get(0).className);
+		
+		assertEquals("connection : DCPConnection", elements.get(1).attributeName);
+		assertEquals("private handleDCPRequest(ctx ChannelHandlerContext, connection DCPConnection, msg FullBinaryMemcacheResponse) : void", elements.get(1).methodName);
+		assertEquals("com.couchbase.client.core.endpoint.dcp.DCPHandler", elements.get(1).className);
+		
+		
 
 	}
 
@@ -130,13 +138,18 @@ public class RefactoringAttributeParserTest {
 		RefactoringParser parserRV = new RefactoringParser();
 
 		List<CodeElement> elements = parserRV.getCodeElements("Rename Variable",
-				"MRename Variable	newStreamId : int to streamId : int in method public addStream(connectionName String) : int"
+				"Rename Variable	newStreamId : int to streamId : int in method public addStream(connectionName String) : int"
 						+ " in class com.couchbase.client.core.endpoint.dcp.DCPConnectiont");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
-
+		assertEquals("newStreamId : int", elements.get(0).attributeName);
+		assertEquals("public addStream(connectionName String) : int", elements.get(0).methodName);
+		assertEquals("com.couchbase.client.core.endpoint.dcp.DCPConnectiont", elements.get(0).className);
+		
+		assertEquals("streamId : int", elements.get(1).attributeName);
+		assertEquals("public addStream(connectionName String) : int", elements.get(1).methodName);
+		assertEquals("com.couchbase.client.core.endpoint.dcp.DCPConnectiont", elements.get(1).className);
+		
 	}
 
 	@Test
@@ -148,23 +161,33 @@ public class RefactoringAttributeParserTest {
 						+ "in class com.couchbase.client.core.endpoint.dcp.DCPConnection");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
-
+		assertEquals("id : int", elements.get(0).attributeName);
+		assertEquals("public DCPConnection(env CoreEnvironment, name String, bucket1 String)", elements.get(0).methodName);
+		assertEquals("com.couchbase.client.core.endpoint.dcp.DCPConnection", elements.get(0).className);
+		
+		assertEquals("name : String", elements.get(1).attributeName);
+		assertEquals("public DCPConnection(env CoreEnvironment, name String, bucket1 String)", elements.get(1).methodName);
+		assertEquals("com.couchbase.client.core.endpoint.dcp.DCPConnection", elements.get(1).className);
+		
 	}
 
 	@Test
 	public void shouldReplaceVariable() {
 		RefactoringParser parserRV = new RefactoringParser();
 
-		List<CodeElement> elements = parserRV.getCodeElements("Replace Variable",
+		List<CodeElement> elements = parserRV.getCodeElements("Replace Variable With Attribute",
 				"Replace Variable With Attribute executor : Executor to disruptorExecutor : ExecutorService "
 						+ "in method public CouchbaseCluster(environment Environment) "
 						+ "in class com.couchbase.client.core.cluster.CouchbaseCluster");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("executor : Executor", elements.get(0).attributeName);
+		assertEquals("public CouchbaseCluster(environment Environment)", elements.get(0).methodName);
+		assertEquals("com.couchbase.client.core.cluster.CouchbaseCluster", elements.get(0).className);
+		
+		assertEquals("disruptorExecutor : ExecutorService", elements.get(1).attributeName);
+		assertEquals("public CouchbaseCluster(environment Environment)", elements.get(1).methodName);
+		assertEquals("com.couchbase.client.core.cluster.CouchbaseCluster", elements.get(1).className);
 	}
 
 	@Test
@@ -176,20 +199,31 @@ public class RefactoringAttributeParserTest {
 						+ "in method public get(referenceConfig ReferenceConfig<T>) : T in class org.apache.dubbo.bootstrap.ReferenceConfigCache");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("config : ReferenceConfig<?>", elements.get(0).attributeName);
+		assertEquals("public get(referenceConfig ReferenceConfig<T>) : T", elements.get(0).methodName);
+		assertEquals("org.apache.dubbo.bootstrap.ReferenceConfigCache", elements.get(0).className);
+		
+		assertEquals("[proxiesOfType : ConcurrentMap<String,Object>, key : String]", elements.get(1).attributeName);
+		assertEquals("public get(referenceConfig ReferenceConfig<T>) : T", elements.get(1).methodName);
+		assertEquals("org.apache.dubbo.bootstrap.ReferenceConfigCache", elements.get(1).className);
 	}
 
 	@Test
 	public void shouldChangeVariableType() {
 		RefactoringParser parserCV = new RefactoringParser();
 		List<CodeElement> elements = parserCV.getCodeElements("Change Variable Type",
-				"Change Variable Type	dst : Ref to dst : DhtRef in method private resolve(ref DhtRef, depth int, loose RefList<DhtRef>) : DhtRef "
+				"Change Variable Type	dst : Ref to dst : DhtRef "
+				+ "in method private resolve(ref DhtRef, depth int, loose RefList<DhtRef>) : DhtRef "
 						+ "in class org.eclipse.jgit.storage.dht.DhtRefDatabase");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("dst : Ref", elements.get(0).attributeName);
+		assertEquals("private resolve(ref DhtRef, depth int, loose RefList<DhtRef>) : DhtRef", elements.get(0).methodName);
+		assertEquals("org.eclipse.jgit.storage.dht.DhtRefDatabase", elements.get(0).className);
+		
+		assertEquals("dst : DhtRef", elements.get(1).attributeName);
+		assertEquals("private resolve(ref DhtRef, depth int, loose RefList<DhtRef>) : DhtRef", elements.get(1).methodName);
+		assertEquals("org.eclipse.jgit.storage.dht.DhtRefDatabase", elements.get(1).className);
 	}
 
 	@Test
@@ -201,8 +235,13 @@ public class RefactoringAttributeParserTest {
 						+ "in class com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("environment : CoreEnvironment", elements.get(0).attributeName);
+		assertEquals("public KeyValueFeatureHandler(ctx CoreContext)", elements.get(0).methodName);
+		assertEquals("com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler", elements.get(0).className);
+		
+		assertEquals("ctx : CoreContext", elements.get(1).attributeName);
+		assertEquals("public KeyValueFeatureHandler(ctx CoreContext)", elements.get(1).methodName);
+		assertEquals("com.couchbase.client.core.endpoint.kv.KeyValueFeatureHandler", elements.get(1).className);
 	}
 
 	@Test
@@ -215,8 +254,13 @@ public class RefactoringAttributeParserTest {
 						+ "in class org.apache.dubbo.common.config.configcenter.ConfigChangedEvent");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("value : String", elements.get(0).attributeName);
+		assertEquals("public ConfigChangedEvent(key String, group String, content String)", elements.get(0).methodName);
+		assertEquals("org.apache.dubbo.common.config.configcenter.ConfigChangedEvent", elements.get(0).className);
+		
+		assertEquals("[content : String, group : String]", elements.get(1).attributeName);
+		assertEquals("public ConfigChangedEvent(key String, group String, content String)", elements.get(1).methodName);
+		assertEquals("org.apache.dubbo.common.config.configcenter.ConfigChangedEvent", elements.get(1).className);
 	}
 
 	@Test
@@ -225,12 +269,19 @@ public class RefactoringAttributeParserTest {
 
 		List<CodeElement> elements = parserMV.getCodeElements("Merge Variable",
 				"Merge Variable	[type : int	position : int	packedSize : long	inflatedSize : long] "
-						+ "to b : GitStore.ObjectInfo.Builder in method private insertStream(type int	inflatedSize long	in InputStream) : ObjectId"
+						+ "to b : GitStore.ObjectInfo.Builder "
+						+ "in method private insertStream(type int	inflatedSize long	in InputStream) : ObjectId"
 						+ " in class org.eclipse.jgit.storage.dht.DhtInserter");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("[type : int	position : int	packedSize : long	inflatedSize : long]", elements.get(0).attributeName);
+		assertEquals("private insertStream(type int	inflatedSize long	in InputStream) : ObjectId", elements.get(0).methodName);
+		assertEquals("org.eclipse.jgit.storage.dht.DhtInserter", elements.get(0).className);
+		
+		assertEquals("b : GitStore.ObjectInfo.Builder", elements.get(1).attributeName);
+		assertEquals("private insertStream(type int	inflatedSize long	in InputStream) : ObjectId", elements.get(1).methodName);
+		assertEquals("org.eclipse.jgit.storage.dht.DhtInserter", elements.get(1).className);
+
 	}
 
 	@Test
@@ -243,8 +294,13 @@ public class RefactoringAttributeParserTest {
 						+ "in class com.couchbase.client.core.config.DefaultConfigurationProvider");
 
 		assertEquals(2, elements.size());
-		assertEquals("publicSSLENABLEDboolean", elements.get(0).attributeName);
-		assertEquals("comcouchbaseclientcoreenvDefaultCoreProperties", elements.get(0).className);
+		assertEquals("[bucket : String, rawConfig : String]", elements.get(0).attributeName);
+		assertEquals("public proposeBucketConfig(ctx ProposedBucketConfigContext) : void", elements.get(0).methodName);
+		assertEquals("com.couchbase.client.core.config.DefaultConfigurationProvider", elements.get(0).className);
+		
+		assertEquals("ctx : ProposedBucketConfigContext", elements.get(1).attributeName);
+		assertEquals("public proposeBucketConfig(ctx ProposedBucketConfigContext) : void", elements.get(1).methodName);
+		assertEquals("com.couchbase.client.core.config.DefaultConfigurationProvider", elements.get(1).className);
 	}
 
 	// ------------------------ PATTERN 4 ----------------------------------//
