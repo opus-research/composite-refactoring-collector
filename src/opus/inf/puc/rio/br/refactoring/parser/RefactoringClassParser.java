@@ -64,40 +64,38 @@ public class RefactoringClassParser extends RefactoringParser{
 		}
 		
 		//"Extract Superclass	com.couchbase.client.core.message.AbstractCouchbaseResponse 
-		// from classes [com.couchbase.client.core.message.binary.GetBucketConfigResponse, com.couchbase.client.core.message.binary.GetResponse, com.couchbase.client.core.message.binary.UpsertResponse, com.couchbase.client.core.message.cluster.SeedNodesResponse]"
+		// from classes [com.couchbase.client.core.message.binary.GetBucketConfigResponse, 
+		// com.couchbase.client.core.message.binary.GetResponse, com.couchbase.client.core.message.binary.UpsertResponse, 
+		// com.couchbase.client.core.message.cluster.SeedNodesResponse]"
 		public void getClassPattern3(){
-			int classStartIndex = refactoringDetails.indexOf("Extract Superclass ");
-			int classLastIndex = refactoringDetails.indexOf("from classes");
 			
-			String className = refactoringDetails.substring(classStartIndex + "Extract Superclass ".length() ,
-														   classLastIndex);
-		
-			className = className.replaceAll("[^a-zA-Z0-9]+","");
+			int targetClassStartIndex = refactoringDetails.indexOf(refactoringType);
+			int targetClassEndIndex; 
+			String indicatorSourceClass;
 			
-	        CodeElement element1 = new CodeElement(null, null, className.trim());
+			String sourceClass;
+			String targetClass;
 			
-	        
+			if(refactoringDetails.contains("from classes")){
+				targetClassEndIndex = refactoringDetails.indexOf("from classes");
+				indicatorSourceClass = "from classes";
+			}
+			else {
+				targetClassEndIndex = refactoringDetails.indexOf("from class ");
+				indicatorSourceClass = "from class ";
+			}
+			
+			
+			targetClass = refactoringDetails.substring(targetClassStartIndex + refactoringType.length() , targetClassEndIndex);	
+			int sourceClassStartIndex = targetClassEndIndex;
+			
+			sourceClass = refactoringDetails.substring(indicatorSourceClass.length() +  sourceClassStartIndex);
+			
+		    CodeElement element1 = new CodeElement(null, null, targetClass.trim());
+		    CodeElement element2 = new CodeElement(null, null, sourceClass.trim());
+				
 			elements.add(element1);
-			CodeElement mainElementCompletePath = new CodeElement(null, null, className.trim());
-			
-			int extractedClassesStartIndex = refactoringDetails.indexOf("[");
-			int extractedClassesLastIndex = refactoringDetails.indexOf("]");
-			
-			String extractedClassesList = refactoringDetails.substring(extractedClassesStartIndex + 1, 
-																	  extractedClassesLastIndex - 1);
-			String[] extractedClasses = extractedClassesList.split(",");	
-		    
-			for(int i = 0; i < extractedClasses.length; i++) {
-				
-				String oldClassName = extractedClasses[i];
-				
-				oldClassName = oldClassName.replaceAll("[^a-zA-Z0-9]+","");
-				
-				CodeElement element = new CodeElement(null, null, oldClassName.trim());
-				elements.add(element);
-				
-			}	
-			CodeElement mainElement = element1;
+			elements.add(element2);
 		}
 
 	

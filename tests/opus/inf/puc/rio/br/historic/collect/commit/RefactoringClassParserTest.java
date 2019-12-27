@@ -49,17 +49,19 @@ public class RefactoringClassParserTest {
 		
 		List<CodeElement> elements = parserES.getCodeElements("Extract Superclass",
 				"Extract Superclass	com.couchbase.client.core.message.AbstractCouchbaseResponse "
-						+ "from classes [com.couchbase.client.core.message.binary.GetBucketConfigResponse, "
-						+ "com.couchbase.client.core.message.binary.GetResponse, "
-						+ "com.couchbase.client.core.message.binary.UpsertResponse, "
+						+ "from classes [com.couchbase.client.core.message.binary.GetBucketConfigResponse,"
+						+ "com.couchbase.client.core.message.binary.GetResponse,"
+						+ "com.couchbase.client.core.message.binary.UpsertResponse,"
 						+ "com.couchbase.client.core.message.cluster.SeedNodesResponse]");
         
-        assertEquals(5, elements.size());
-        assertEquals("comcouchbaseclientcoremessageAbstractCouchbaseResponse", elements.get(0).className);
+        assertEquals(2, elements.size());
+        assertEquals("com.couchbase.client.core.message.AbstractCouchbaseResponse", elements.get(0).className);
 		
-        assertEquals("comcouchbaseclientcoremessagebinaryGetResponse", elements.get(2).className);
-       
-        assertEquals("comcouchbaseclientcoremessagebinaryUpsertResponse", elements.get(3).className);
+        assertEquals("[com.couchbase.client.core.message.binary.GetBucketConfigResponse,"
+        		+ "com.couchbase.client.core.message.binary.GetResponse,"
+        		+ "com.couchbase.client.core.message.binary.UpsertResponse,"
+        		+ "com.couchbase.client.core.message.cluster.SeedNodesResponse]", elements.get(1).className);
+      
 	}
 	
 	@Test
@@ -68,14 +70,15 @@ public class RefactoringClassParserTest {
 		
 		List<CodeElement> elements = parserEI.getCodeElements("Extract Interface",
 				"Extract Interface	com.couchbase.client.core.message.binary.BinaryStoreRequest"
-						+ " from classes [com.couchbase.client.core.message.binary.InsertRequest, "
+						+ " from classes [com.couchbase.client.core.message.binary.InsertRequest,"
 						+ "com.couchbase.client.core.message.binary.InsertA]");
         
-        assertEquals(3, elements.size());
-        assertEquals("comcouchbaseclientcoremessagebinaryBinaryStoreRequest", elements.get(0).className);
+        assertEquals(2, elements.size());
+        assertEquals("com.couchbase.client.core.message.binary.BinaryStoreRequest", elements.get(0).className);
 		
-        assertEquals("comcouchbaseclientcoremessagebinaryInsertRequest", elements.get(1).className);
-        assertEquals("comcouchbaseclientcoremessagebinaryInsertA", elements.get(2).className);
+        assertEquals("[com.couchbase.client.core.message.binary.InsertRequest,"
+                   + "com.couchbase.client.core.message.binary.InsertA]", elements.get(1).className);
+  
 	}
 	
 	
@@ -87,11 +90,11 @@ public class RefactoringClassParserTest {
 				"Extract Class com.couchbase.client.core.endpoint.dcp.DCPConnectionHandler "
 				+ "from class com.couchbase.client.core.endpoint.dcp.DCPHandler");
         
-        assertEquals(3, elements.size());
-        assertEquals("comcouchbaseclientcoremessagebinaryBinaryStoreRequest", elements.get(0).className);
+        assertEquals(2, elements.size());
+        assertEquals("com.couchbase.client.core.endpoint.dcp.DCPConnectionHandler", elements.get(0).className);
 		
-        assertEquals("comcouchbaseclientcoremessagebinaryInsertRequest", elements.get(1).className);
-        assertEquals("comcouchbaseclientcoremessagebinaryInsertA", elements.get(2).className);
+        assertEquals("com.couchbase.client.core.endpoint.dcp.DCPHandler", elements.get(1).className);
+       
 	}
 	
 	@Test
@@ -100,13 +103,13 @@ public class RefactoringClassParserTest {
 		
 		List<CodeElement> elements = parserEI.getCodeElements("Extract Subclass",
 				"Extract Subclass org.eclipse.jgit.lib.LocalObjectToPack "
-				+ "from class org.eclipse.jgit.lib.ObjectToPack	]");
+				+ "from class org.eclipse.jgit.lib.ObjectToPack");
         
-        assertEquals(3, elements.size());
-        assertEquals("comcouchbaseclientcoremessagebinaryBinaryStoreRequest", elements.get(0).className);
+        assertEquals(2, elements.size());
+        assertEquals("org.eclipse.jgit.lib.LocalObjectToPack", elements.get(0).className);
 		
-        assertEquals("comcouchbaseclientcoremessagebinaryInsertRequest", elements.get(1).className);
-        assertEquals("comcouchbaseclientcoremessagebinaryInsertA", elements.get(2).className);
+        assertEquals("org.eclipse.jgit.lib.ObjectToPack", elements.get(1).className);
+      
 	}
 	
 }
