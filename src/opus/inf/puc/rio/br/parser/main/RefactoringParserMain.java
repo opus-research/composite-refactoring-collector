@@ -39,7 +39,7 @@ public class RefactoringParserMain {
 	}
 	
 	
-	private List<Refactoring> getRefactorings() {
+	public List<Refactoring> getRefactorings() {
 		//for 
 		  //GetLine 
 		    //GetRefactoring() 
