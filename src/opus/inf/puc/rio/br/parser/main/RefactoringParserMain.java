@@ -1,5 +1,6 @@
 package opus.inf.puc.rio.br.parser.main;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +9,10 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import opus.inf.puc.rio.br.historic.CodeElement;
 import opus.inf.puc.rio.br.historic.collect.commit.CommitCollector;
@@ -34,19 +39,15 @@ public class RefactoringParserMain {
 		RefactoringParserMain parserMain = new RefactoringParserMain("dubbo-test", "dubbo-test.csv");
 		
 	    List<Refactoring> refactorings = parserMain.getRefactorings();
+	    ObjectMapper mapper = new ObjectMapper();
 	    
-	    refactorings.forEach( ref -> {
-			  System.out.println("Refactoring ");
-			  System.out.println(ref.refactoringType);
-			  
-			  ref.getElements().forEach( elem -> {
-				  System.out.println(elem.className);
-			  });
-			  
-			  System.out.println();
-			  
-		  });
+	    try {
+			mapper.writeValue(new File("refactorings-test.json"), refactorings);
 		
+	    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
