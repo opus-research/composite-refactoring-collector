@@ -17,20 +17,19 @@ public class CodeElement {
 		this.className = className;
 	}
 	
-	public CodeElement(String methodName, String attributeName,
-			           String className, String packageName) {
-		
-		this.methodName = methodName;
-		this.attributeName = attributeName;
-		this.className = className;
-		this.packageName = packageName;
-	}
-
 	public String getPackageName() {
 		// TODO Auto-generated method stub
 		return packageName;
 	}
 	
+	
+	public void setPackageName(String packageName) {
+		
+		if(this.packageName == null){
+			this.packageName = packageName;
+		}
+	}
+
 	public void setDetails(String details) {
 		
 		if(this.details == null){

@@ -22,7 +22,7 @@ public class RefactoringMainTest {
 	  
 	  refactorings.forEach( ref -> {
 		  System.out.println("Refactoring ");
-		  System.out.println(ref.getType());
+		  System.out.println(ref.refactoringType);
 		  
 		  ref.getElements().forEach( elem -> {
 			  System.out.println(elem.className);

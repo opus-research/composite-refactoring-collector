@@ -24,15 +24,16 @@ public class RefactoringGeralParser extends RefactoringParser {
 		
 		String newPackageName = refactoringDetails.substring(newPackageNameStartIndex + " to ".length());
 		
-		CodeElement mainElementCompletePath =  new CodeElement(null, null, null, packageName.trim());
 		
         packageName = packageName.replaceAll("[^a-zA-Z0-9]+","");
 		newPackageName = newPackageName.replaceAll("[^a-zA-Z0-9]+","");
 		
-		CodeElement element1 = new CodeElement(null, null, null, packageName.trim());
-		CodeElement element2 = new CodeElement(null, null, null, newPackageName.trim());
-	
-		CodeElement mainElement = element1;
+		CodeElement element1 = new CodeElement(null, null, null);
+		element1.setPackageName(packageName);
+		
+		CodeElement element2 = new CodeElement(null, null, null);
+		element1.setPackageName(newPackageName);
+		
 		
 		elements.add(element1);
 		elements.add(element2);

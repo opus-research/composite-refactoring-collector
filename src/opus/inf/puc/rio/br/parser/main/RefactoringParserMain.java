@@ -31,9 +31,21 @@ public class RefactoringParserMain {
     
 	public static void main(String[] args) {
 		
-		RefactoringParserMain parserMain = new RefactoringParserMain("dubbo-test", "dubbo-teste.csv");
+		RefactoringParserMain parserMain = new RefactoringParserMain("dubbo-test", "dubbo-test.csv");
 		
 	    List<Refactoring> refactorings = parserMain.getRefactorings();
+	    
+	    refactorings.forEach( ref -> {
+			  System.out.println("Refactoring ");
+			  System.out.println(ref.refactoringType);
+			  
+			  ref.getElements().forEach( elem -> {
+				  System.out.println(elem.className);
+			  });
+			  
+			  System.out.println();
+			  
+		  });
 		
 		
 	}

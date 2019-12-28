@@ -10,13 +10,15 @@ import opus.inf.puc.rio.br.historic.CodeElement;
 
 public class Refactoring {
 	
-	private String refactoringType;
+	public final String refactoringType;
 	public final String refactoringId;
-	private String refactoringDetail;
-	private List<CodeElement> elements;
-	private String currentCommit;
+	public final String refactoringDetail;
+	public final String currentCommit;
+	public final String project;
+	
 	private String previousCommit;
-    private String project;
+	private List<CodeElement> elements;
+    
 	
 	
 
@@ -47,11 +49,6 @@ public class Refactoring {
 		
 	}
 	
-	public String getType() {
-		// TODO Auto-generated method stub
-		return refactoringType;
-	}
-	
 	@Override
 	public String toString() {
 		return refactoringType;
@@ -61,11 +58,9 @@ public class Refactoring {
 		return elements;
 	}
 	
-	public String getCommit(){
-		return currentCommit;
+	public String getPreviousCommit() {
+		return previousCommit;
 	}
-	
-	
 
 
 
