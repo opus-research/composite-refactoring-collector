@@ -26,14 +26,23 @@ public class RefactoringParser {
 			if (refactoringType != null) {
 
 				// ---------------ATTRIBUTE-----------------------------
-				if (refactoringType.trim().equals("Move Attribute")
-						|| refactoringType.trim().equals("Pull Up Attribute")
+				
+				if (refactoringType.trim().equals("Pull Up Attribute")
 						|| refactoringType.trim().equals("Push Down Attribute")) {
+
+						attributeParser.getAttributePattern0();
+						System.out.println(refactoringType);
+						return attributeParser.elements;
+				}
+				
+				if (refactoringType.trim().equals("Move Attribute")) {
 
 					attributeParser.getAttributePattern1();
 					System.out.println(refactoringType);
 					return attributeParser.elements;
 				}
+				
+				
 
 				if (refactoringType.trim().equals("Extract Variable")
 						|| refactoringType.trim().equals("Inline Variable")) {

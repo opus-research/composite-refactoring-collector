@@ -17,8 +17,45 @@ public class RefactoringAttributeParser extends RefactoringParser {
 	
 
 
-	//	Push Down Attribute private resetType : ResetType from class org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog  to class org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog
-//	Pull Up Attribute private password :  String from class com.couchbase.client.core.message.cluster.OpenBucketRequest  to class com.couchbase.client.core.message.AbstractCouchbaseRequest
+//	Push Down Attribute	protected mPendingReleasables : Set<Releasable> from class com.facebook.drawee.components.DeferredReleaser to protected mPendingReleasables : Set<Releasable> from class com.facebook.drawee.components.DeferredReleaserLegacyImpl
+//	Pull Up Attribute private statement : Statement from class com.couchbase.client.java.query.ParametrizedQuery to private statement : Statement from class com.couchbase.client.java.query.AbstractQuery
+	public void getAttributePattern0() {
+		
+		String sourceAttributeName;
+		String targetAttributeName;
+
+		String sourceClassName;
+		String targetClassName;
+
+		int sourceAttributeStartIndex = refactoringDetails.lastIndexOf(refactoringType);
+		int sourceAttributeEndIndex = refactoringDetails.indexOf("from class");
+
+		sourceAttributeName = refactoringDetails.substring(refactoringType.length() + sourceAttributeStartIndex, sourceAttributeEndIndex);
+
+		int sourceClassStartIndex = sourceAttributeEndIndex;
+		int sourceClassEndIndex = refactoringDetails.indexOf(" to ");
+
+		sourceClassName = refactoringDetails.substring("from class".length() + sourceClassStartIndex, sourceClassEndIndex);
+
+		int targetAttributeStartIndex = sourceClassEndIndex;
+		int targetAttributeEndIndex = refactoringDetails.lastIndexOf("from class");
+
+		targetAttributeName = refactoringDetails.substring(" to ".length() + targetAttributeStartIndex, targetAttributeEndIndex);
+
+		int targetClassStartIndex = targetAttributeEndIndex;
+		targetClassName = refactoringDetails.substring("from class".length() + targetClassStartIndex);
+		
+		
+		CodeElement element1 = new CodeElement(null, sourceAttributeName.trim(), sourceClassName.trim());
+		CodeElement element2 = new CodeElement(null, targetAttributeName.trim(), targetClassName.trim());
+		
+		elements.add(element1);
+		elements.add(element2);
+		
+	}
+	
+	
+	
 //	Move Attribute	public SSL_ENABLED : boolean from class com.couchbase.client.core.env.DefaultCoreProperties  to class com.couchbase.client.core.env.DefaultCoreEnvironment	
 	public void getAttributePattern1() {
 		int attributeStartIndex = refactoringDetails.indexOf(refactoringType);

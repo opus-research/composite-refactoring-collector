@@ -26,7 +26,7 @@ public class RefactoringParserMain {
     public RefactoringParserMain(String projectName, String projectPath) {
     	this.projectName = projectName; 
     	this.projectPath = projectPath;
-    	commitCollector = new CommitCollector(projectName, projectName);
+    //	commitCollector = new CommitCollector(projectName, projectName);
     }
     
 	public static void main(String[] args) {
@@ -110,8 +110,8 @@ public class RefactoringParserMain {
 		
 		//GetLastCommit
 		
-	    String previousCommit = commitCollector.getPreviousCommit(commit);
-		ref.setPreviousCommit(previousCommit); 
+//	    String previousCommit = commitCollector.getPreviousCommit(commit);
+//		ref.setPreviousCommit(previousCommit); 
 		
         return ref; 
 	   

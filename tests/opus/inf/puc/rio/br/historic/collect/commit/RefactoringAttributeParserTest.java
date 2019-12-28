@@ -23,16 +23,15 @@ public class RefactoringAttributeParserTest {
 		RefactoringParser parserUA = new RefactoringParser();
 
 		List<CodeElement> elements = parserUA.getCodeElements("Pull Up Attribute",
-				"Pull Up Attribute	private password : String "
-						+ "from class com.couchbase.client.core.message.cluster.OpenBucketRequest "
-						+ "to class com.couchbase.client.core.message.AbstractCouchbaseRequest");
+				"Pull Up Attribute private statement : Statement from class com.couchbase.client.java.query.ParametrizedQuery "
+				+ "to private statement : Statement from class com.couchbase.client.java.query.AbstractQuery");
 
 		assertEquals(2, elements.size());
-		assertEquals("private password : String", elements.get(0).attributeName);
-		assertEquals("com.couchbase.client.core.message.cluster.OpenBucketRequest", elements.get(0).className);
+		assertEquals("private statement : Statement", elements.get(0).attributeName);
+		assertEquals("com.couchbase.client.java.query.ParametrizedQuery", elements.get(0).className);
 
-		assertEquals("private password : String", elements.get(1).attributeName);
-		assertEquals("com.couchbase.client.core.message.AbstractCouchbaseRequest", elements.get(1).className);
+		assertEquals("private statement : Statement", elements.get(1).attributeName);
+		assertEquals("com.couchbase.client.java.query.AbstractQuery", elements.get(1).className);
 
 	}
 
@@ -42,16 +41,15 @@ public class RefactoringAttributeParserTest {
 		RefactoringParser parserDA = new RefactoringParser();
 
 		List<CodeElement> elements = parserDA.getCodeElements("Push Down Attribute",
-				"Push Down Attribute	private resetType : ResetType "
-						+ "from class org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog "
-						+ "to class org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog");
+				"Push Down Attribute	protected mPendingReleasables : Set<Releasable> from class com.facebook.drawee.components.DeferredReleaser "
+				+ "to protected mPendingReleasables : Set<Releasable> from class com.facebook.drawee.components.DeferredReleaserLegacyImpl");
 
 		assertEquals(2, elements.size());
-		assertEquals("private resetType : ResetType", elements.get(0).attributeName);
-		assertEquals("org.eclipse.egit.ui.internal.dialogs.BranchSelectionDialog", elements.get(0).className);
+		assertEquals("protected mPendingReleasables : Set<Releasable>", elements.get(0).attributeName);
+		assertEquals("com.facebook.drawee.components.DeferredReleaser", elements.get(0).className);
 
-		assertEquals("private resetType : ResetType", elements.get(1).attributeName);
-		assertEquals("org.eclipse.egit.ui.internal.dialogs.ResetTargetSelectionDialog", elements.get(1).className);
+		assertEquals("protected mPendingReleasables : Set<Releasable>", elements.get(1).attributeName);
+		assertEquals("com.facebook.drawee.components.DeferredReleaserLegacyImpl", elements.get(1).className);
 
 	}
 
