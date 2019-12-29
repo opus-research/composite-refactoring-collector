@@ -45,6 +45,11 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		int targetClassStartIndex = targetAttributeEndIndex;
 		targetClassName = refactoringDetails.substring("from class".length() + targetClassStartIndex);
 		
+		sourceAttributeName = sourceAttributeName.replaceAll("\"", "");
+		sourceClassName = sourceClassName.replaceAll("\"", "");
+		
+		targetAttributeName = targetAttributeName.replaceAll("\"", "");
+		targetClassName = targetClassName.replaceAll("\"", "");
 		
 		CodeElement element1 = new CodeElement(null, sourceAttributeName.trim(), sourceClassName.trim());
 		CodeElement element2 = new CodeElement(null, targetAttributeName.trim(), targetClassName.trim());
@@ -76,6 +81,12 @@ public class RefactoringAttributeParser extends RefactoringParser {
 
 		CodeElement mainElementCompletePath = new CodeElement(null, attributeName.trim(), oldClassName.trim());
 
+		attributeName = attributeName.replaceAll("\"", "");
+		oldClassName = oldClassName.replaceAll("\"", "");
+		
+		
+		newClassName = newClassName.replaceAll("\"", "");
+		
 		CodeElement element1 = new CodeElement(null, attributeName.trim(), oldClassName.trim());
 		CodeElement element2 = new CodeElement(null, attributeName.trim(), newClassName.trim());
 
@@ -104,7 +115,12 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		int classIndex = methodEndIndex;
 
 		className = refactoringDetails.substring("from class".length() + classIndex);
-
+		
+		methodName = methodName.replaceAll("\"", "");
+		variableName = variableName.replaceAll("\"", "");
+		
+		className = className.replaceAll("\"", "");
+		
 		CodeElement element1 = new CodeElement(methodName.trim(), variableName.trim(), className.trim());
 		elements.add(element1);
 	}
@@ -169,6 +185,13 @@ public class RefactoringAttributeParser extends RefactoringParser {
 
 		className = refactoringDetails.substring("in class".length() + classIndex);
 		
+		
+		methodName = methodName.replaceAll("\"", "");
+		sourceVariableName = sourceVariableName.replaceAll("\"", "");
+		
+		targetVariableName = targetVariableName.replaceAll("\"", "");
+		className = className.replaceAll("\"", "");
+		
 		CodeElement element1 = new CodeElement(methodName.trim(), sourceVariableName.trim(), className.trim());
 		CodeElement element2 = new CodeElement(methodName.trim(), targetVariableName.trim(), className.trim());
 		
@@ -209,7 +232,12 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		int classIndex = refactoringDetails.lastIndexOf("in class");
 
 		className = refactoringDetails.substring("in class".length() + classIndex);
-		
+
+		sourceParameterName = sourceParameterName.replaceAll("\"", "");
+		className = className.replaceAll("\"", "");
+				
+		targetParameterName = targetParameterName.replaceAll("\"", "");
+
 		CodeElement element1 = new CodeElement(null, sourceParameterName.trim(), className.trim());
 		CodeElement element2 = new CodeElement(null, targetParameterName.trim(), className.trim());
 		
@@ -249,7 +277,13 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		int targetClassStartIndex = targetAttributeEndIndex;
 		targetClassName = refactoringDetails.substring("from class".length() + targetClassStartIndex);
 		
-		
+
+		sourceAttributeName = sourceAttributeName.replaceAll("\"", "");
+		sourceClassName = sourceClassName.replaceAll("\"", "");
+				
+		targetAttributeName = targetAttributeName.replaceAll("\"", "");
+		targetClassName = targetClassName.replaceAll("\"", "");
+
 		CodeElement element1 = new CodeElement(null, sourceAttributeName.trim(), sourceClassName.trim());
 		CodeElement element2 = new CodeElement(null, targetAttributeName.trim(), targetClassName.trim());
 		
@@ -277,6 +311,11 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		int sourceClassStartIndex = sourceAttributeEndIndex;
 		
 		sourceClassName = refactoringDetails.substring("in class".length() + sourceClassStartIndex);
+
+
+		sourceAttributeName = sourceAttributeName.replaceAll("\"", "");
+		sourceClassName = sourceClassName.replaceAll("\"", "");
+				
 
 		CodeElement element1 = new CodeElement(null, sourceAttributeName.trim(), sourceClassName.trim());	
 		elements.add(element1);
@@ -315,6 +354,9 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		int classStartIndex = methodNameEndIndex;
 		className = refactoringDetails.substring("in class".length() + classStartIndex);
 		
+
+		methodName = methodName.replaceAll("\"", "");
+		className = className.replaceAll("\"", "");
 		
 		CodeElement element1 = new CodeElement(methodName.trim(), null , className.trim());
 		

@@ -29,7 +29,10 @@ public class RefactoringClassParser extends RefactoringParser{
 			
 			CodeElement mainElementCompletePath =  new CodeElement(null, null, className.trim());
 			
-			
+
+			className = className.replaceAll("\"", "");
+			newClassName = newClassName.replaceAll("\"", "");
+					
 			CodeElement element1 = new CodeElement(null, null, className.trim());
 			CodeElement element2 = new CodeElement(null, null, newClassName.trim());
 		
@@ -53,6 +56,8 @@ public class RefactoringClassParser extends RefactoringParser{
 			
 			CodeElement mainElementCompletePath = new CodeElement(null, null, className.trim());
 			
+			className = className.replaceAll("\"", "");
+			newClassName = newClassName.replaceAll("\"", "");
 			
 			CodeElement element1 = new CodeElement(null, null, className.trim());
 			CodeElement element2 = new CodeElement(null, null, newClassName.trim());
@@ -90,6 +95,9 @@ public class RefactoringClassParser extends RefactoringParser{
 			int sourceClassStartIndex = targetClassEndIndex;
 			
 			sourceClass = refactoringDetails.substring(indicatorSourceClass.length() +  sourceClassStartIndex);
+			
+			targetClass = targetClass.replaceAll("\"", "");
+			sourceClass = sourceClass.replaceAll("\"", "");
 			
 		    CodeElement element1 = new CodeElement(null, null, targetClass.trim());
 		    CodeElement element2 = new CodeElement(null, null, sourceClass.trim());

@@ -1,4 +1,4 @@
-package opus.inf.puc.rio.br.parser.main;
+      package opus.inf.puc.rio.br.parser.main;
 
 import java.io.File;
 import java.io.FileReader;
@@ -36,13 +36,13 @@ public class RefactoringParserMain {
     
 	public static void main(String[] args) {
 		
-		RefactoringParserMain parserMain = new RefactoringParserMain("dubbo-test", "dubbo-test.csv");
+		RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv");
 		
 	    List<Refactoring> refactorings = parserMain.getRefactorings();
 	    ObjectMapper mapper = new ObjectMapper();
 	    
 	    try {
-			mapper.writeValue(new File("refactorings-test.json"), refactorings);
+			mapper.writeValue(new File("presto.json"), refactorings);
 		
 	    } catch (IOException e) {
 			// TODO Auto-generated catch block

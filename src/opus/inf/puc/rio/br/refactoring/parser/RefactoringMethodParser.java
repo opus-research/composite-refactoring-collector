@@ -37,6 +37,12 @@ public class RefactoringMethodParser extends RefactoringParser {
 		CodeElement mainElementCompletePath = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 
 
+		methodNameOrigin = methodNameOrigin.replaceAll("\"", "");
+		className = className.replaceAll("\"", "");
+		
+		methodNameNew = methodNameNew.replaceAll("\"", "");
+		
+		
 		CodeElement element1 = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 		CodeElement element2 = new CodeElement(methodNameNew.trim(), null, className.trim());
 
@@ -67,6 +73,12 @@ public class RefactoringMethodParser extends RefactoringParser {
 
 		CodeElement mainElementCompletePath = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 
+		methodNameOrigin = methodNameOrigin.replaceAll("\"", "");
+		className = className.replaceAll("\"", "");
+		
+		methodNameNew = methodNameNew.replaceAll("\"", "");
+		
+		
 		CodeElement element1 = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 		CodeElement element2 = new CodeElement(methodNameNew.trim(), null, className.trim());
 
@@ -96,6 +108,10 @@ public class RefactoringMethodParser extends RefactoringParser {
 
 		CodeElement mainElementCompletePath = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 
+		methodNameOrigin = methodNameOrigin.replaceAll("\"", "");
+		className = className.replaceAll("\"", "");
+		
+		methodNameNew = methodNameNew.replaceAll("\"", "");
 
 		CodeElement element1 = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 		CodeElement element2 = new CodeElement(methodNameNew.trim(), null, className.trim());
@@ -139,6 +155,11 @@ public class RefactoringMethodParser extends RefactoringParser {
 		CodeElement mainElementCompletePath = new CodeElement(methodName.trim(), null, oldClassName.trim());
 
 
+		newClassName = newClassName.replaceAll("\"", "");
+		oldClassName = oldClassName.replaceAll("\"", "");
+		
+		newMethodName = newMethodName.replaceAll("\"", "");
+		
 		CodeElement element1 = new CodeElement(methodName.trim(), null, oldClassName.trim());
 		CodeElement element2 = new CodeElement(newMethodName.trim(), null, newClassName.trim());
 
