@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import opus.inf.puc.rio.br.historic.CodeElement;
+import opus.inf.puc.rio.br.historic.Commit;
 import opus.inf.puc.rio.br.historic.collect.commit.CommitCollector;
 import opus.inf.puc.rio.br.refactoring.Refactoring;
 import opus.inf.puc.rio.br.refactoring.parser.RefactoringParser;
@@ -31,7 +32,7 @@ public class RefactoringParserMain {
     public RefactoringParserMain(String projectName, String projectPath) {
     	this.projectName = projectName; 
     	this.projectPath = projectPath;
-    //	commitCollector = new CommitCollector(projectName, projectName);
+    	commitCollector = new CommitCollector(projectName, "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\ICPC2020\\Projects\\presto");
     }
     
 	public static void main(String[] args) {
@@ -109,22 +110,22 @@ public class RefactoringParserMain {
 		Refactoring ref = null;
 	       
 		
-		//GetRefactoringType
-		//GetCommit
-		//GetDetails 
+		//Refactoring ID
 		refId =  projectName + "_" + refId;
-		ref = new Refactoring(refId, projectName, commit, refactoringType, details);
+		
+		
+		//GetCommit
+	    Commit commitObj = commitCollector.getPreviousCommit(commit);
+		
+	    //Get Refactoring
+		ref = new Refactoring(refId, projectName, commitObj, refactoringType, details);
+		
 		
 		//GetCodeElements
 	    refParser = new RefactoringParser();
 		List<CodeElement> elements = refParser.getCodeElements(refactoringType, details);
 		ref.setCodeElements(elements);
 		
-		
-		//GetLastCommit
-		
-//	    String previousCommit = commitCollector.getPreviousCommit(commit);
-//		ref.setPreviousCommit(previousCommit); 
 		
         return ref; 
 	   

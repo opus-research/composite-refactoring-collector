@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import opus.inf.puc.rio.br.historic.CodeElement;
+import opus.inf.puc.rio.br.historic.Commit;
 
 
 
@@ -13,10 +14,9 @@ public class Refactoring {
 	public final String refactoringType;
 	public final String refactoringId;
 	public final String refactoringDetail;
-	public final String currentCommit;
+	public final Commit currentCommit;
 	public final String project;
 	
-	private String previousCommit;
 	private List<CodeElement> elements;
     
 	
@@ -24,7 +24,7 @@ public class Refactoring {
 
 	public Refactoring(String id, 
 			           String project, 
-			           String commit, 
+			           Commit commit, 
 					   String refactoringType, 
 				       String refactoringDetail){
 		
@@ -58,19 +58,10 @@ public class Refactoring {
 		return elements;
 	}
 	
-	public String getPreviousCommit() {
-		return previousCommit;
-	}
 
 
 
-	public void setPreviousCommit(String previousCommit) {
-		// TODO Auto-generated method stub
-		if(previousCommit == null) {
-			this.previousCommit = previousCommit;		
-		}
-	    
-	}
+
 	
 	
 

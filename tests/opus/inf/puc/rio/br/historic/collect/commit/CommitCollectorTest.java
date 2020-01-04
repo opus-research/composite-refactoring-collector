@@ -9,6 +9,8 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.junit.Test;
 
+import opus.inf.puc.rio.br.historic.Commit;
+
 public class CommitCollectorTest {
 	
 	
@@ -43,24 +45,26 @@ public class CommitCollectorTest {
 	public void shouldGetPreviousCommit() {
 	
     	 CommitCollector collector = new CommitCollector("refactoring-toy-example-1", 
-    			 "/home/opus/eclipse-workspace/RefactoringMiner/build/distributions/RefactoringMiner-1.0/bin/refactoring-toy-example-1");
+    			 "C:\\Users\\anaca\\eclipse-workspace\\refactoring-toy-example");
     	 
     	 
-    	 String previousCommit = collector.getPreviousCommit("a5a7f852e45c7cadc8d1524bd4d14a1e39785aa5"); 	
+    	 Commit commit = collector.getPreviousCommit("a5a7f852e45c7cadc8d1524bd4d14a1e39785aa5"); 	
     	 
-      	 assertEquals("0bb0526b70870d57cbac9fcc8c4a7346a4ce5879", previousCommit); 
-    	 
-    	 
-    	 previousCommit = collector.getPreviousCommit("e6007c622f334dc46e159448cfad6ed6c4d4c7fd");  //Missing Commit 
-    	 assertEquals("", previousCommit);
+      	 assertEquals("0bb0526b70870d57cbac9fcc8c4a7346a4ce5879", commit.previousCommit); 
     	 
     	 
-    	 previousCommit = collector.getPreviousCommit("d93f77b2aac1b22c733adb372f7e246fafd6a4ef"); 	//Missing Commit 
-    	 assertEquals("", previousCommit); 
+    	 commit = collector.getPreviousCommit("e6007c622f334dc46e159448cfad6ed6c4d4c7fd");  //Missing Commit 
+    	 assertEquals("", commit.previousCommit);
+    	 
+    	 
+    	 commit = collector.getPreviousCommit("d93f77b2aac1b22c733adb372f7e246fafd6a4ef"); 	//Missing Commit 
+    	 assertEquals("", commit.previousCommit); 
    	 
     	 
-    	 previousCommit = collector.getPreviousCommit("c946700398fc43a437d124f027a9bd3ba25bcafc"); 	
-    	 assertEquals("16be1426aeb34352ba5d97811f3a721b11e3ae00", previousCommit); 
+    	 commit = collector.getPreviousCommit("c946700398fc43a437d124f027a9bd3ba25bcafc"); 	
+    	 assertEquals("16be1426aeb34352ba5d97811f3a721b11e3ae00", commit.previousCommit);
+    	 
+    	
 	}
 
 }

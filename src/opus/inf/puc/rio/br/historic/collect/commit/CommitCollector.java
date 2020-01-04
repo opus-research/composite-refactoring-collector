@@ -23,6 +23,8 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 
+import opus.inf.puc.rio.br.historic.Commit;
+
 /**
  * Collect last commit and order of current commit
  * 
@@ -38,7 +40,7 @@ public class CommitCollector {
 	private String projectName;
 	private String projectPath;
 	private final static int PREVIOUS_COMMIT_INDEX = 1;
-	
+    private int order; 	
 	
 	public CommitCollector(String projectName, String projectPath) {
 		
@@ -47,11 +49,13 @@ public class CommitCollector {
 		openProject();
 	}
 	
-	public String getPreviousCommit(String currentCommit){
+	public Commit getPreviousCommit(String currentCommit){
 		
 		this.currentCommit = currentCommit;
 
 		List<RevCommit> commits = gitLogFromCurrentCommit();
+		this.order = commits.size();
+        
         
 		if(commits != null && commits.size() > 1) {
 			RevCommit previousCommitObj = commits.get(PREVIOUS_COMMIT_INDEX);
@@ -61,8 +65,8 @@ public class CommitCollector {
 			previousCommit = "";
 		}
 		
-		
-		return previousCommit;
+		Commit commit = new Commit(currentCommit, previousCommit, order);
+		return commit;
 	}
 	
 	private void openProject() {
