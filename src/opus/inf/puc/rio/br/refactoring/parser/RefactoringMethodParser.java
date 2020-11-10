@@ -46,8 +46,9 @@ public class RefactoringMethodParser extends RefactoringParser {
 		CodeElement element1 = new CodeElement(methodNameOrigin.trim(), null, className.trim());
 		CodeElement element2 = new CodeElement(methodNameNew.trim(), null, className.trim());
 
-		CodeElement mainElement = element1;
-
+		element1.setSourceRefactoredCode(true);
+		element2.setTargetRefactoredCode(true);
+		
 		elements.add(element1);
 		elements.add(element2);
 
@@ -80,7 +81,10 @@ public class RefactoringMethodParser extends RefactoringParser {
 		
 		
 		CodeElement element1 = new CodeElement(methodNameOrigin.trim(), null, className.trim());
+		element1.setSourceRefactoredCode(true);
+		
 		CodeElement element2 = new CodeElement(methodNameNew.trim(), null, className.trim());
+		element2.setTargetRefactoredCode(true);
 
 		CodeElement mainElement = element1;
 		elements.add(element1);
@@ -114,7 +118,10 @@ public class RefactoringMethodParser extends RefactoringParser {
 		methodNameNew = methodNameNew.replaceAll("\"", "");
 
 		CodeElement element1 = new CodeElement(methodNameOrigin.trim(), null, className.trim());
+		element1.setSourceRefactoredCode(true);
+		
 		CodeElement element2 = new CodeElement(methodNameNew.trim(), null, className.trim());
+		element2.setTargetRefactoredCode(true);
 
 		CodeElement mainElement = element1;
 
@@ -122,10 +129,7 @@ public class RefactoringMethodParser extends RefactoringParser {
 		elements.add(element2);
 		
 		System.out.println(elements.size());
-
-		
-		
-		
+				
 	}
 
 //	Move Method	public bootstrapCarrierEnabled() : boolean from class com.couchbase.client.core.env.DynamicCoreProperties to public bootstrapCarrierEnabled() : boolean from class com.couchbase.client.core.env.DefaultCoreEnvironment
@@ -161,7 +165,10 @@ public class RefactoringMethodParser extends RefactoringParser {
 		newMethodName = newMethodName.replaceAll("\"", "");
 		
 		CodeElement element1 = new CodeElement(methodName.trim(), null, oldClassName.trim());
+		element1.setSourceRefactoredCode(true);
+		
 		CodeElement element2 = new CodeElement(newMethodName.trim(), null, newClassName.trim());
+		element2.setTargetRefactoredCode(true);
 
 		CodeElement mainElement = element1;
 		elements.add(element1);

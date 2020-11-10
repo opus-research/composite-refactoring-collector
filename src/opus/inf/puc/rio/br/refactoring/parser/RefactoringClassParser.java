@@ -34,7 +34,10 @@ public class RefactoringClassParser extends RefactoringParser{
 			newClassName = newClassName.replaceAll("\"", "");
 					
 			CodeElement element1 = new CodeElement(null, null, className.trim());
+			element1.setSourceRefactoredCode(true);
+			
 			CodeElement element2 = new CodeElement(null, null, newClassName.trim());
+			element2.setTargetRefactoredCode(true);
 		
 			CodeElement mainElement = element1;
 			
@@ -60,7 +63,10 @@ public class RefactoringClassParser extends RefactoringParser{
 			newClassName = newClassName.replaceAll("\"", "");
 			
 			CodeElement element1 = new CodeElement(null, null, className.trim());
+			element1.setSourceRefactoredCode(true);
+			
 			CodeElement element2 = new CodeElement(null, null, newClassName.trim());
+			element2.setTargetRefactoredCode(true);
 		
 			CodeElement mainElement = element1;
 			
@@ -100,7 +106,10 @@ public class RefactoringClassParser extends RefactoringParser{
 			sourceClass = sourceClass.replaceAll("\"", "");
 			
 		    CodeElement element1 = new CodeElement(null, null, targetClass.trim());
+		    element1.setSourceRefactoredCode(true);
+		    
 		    CodeElement element2 = new CodeElement(null, null, sourceClass.trim());
+		    element2.setTargetRefactoredCode(true);
 				
 			elements.add(element1);
 			elements.add(element2);
