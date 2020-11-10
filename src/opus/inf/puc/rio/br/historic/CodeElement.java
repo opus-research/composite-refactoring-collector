@@ -5,6 +5,8 @@ public class CodeElement {
 	public final String methodName;
 	public final String attributeName;
 	public final String className;
+	private boolean sourceRefactoredCode;
+	private boolean targetRefactoredCode; 
 	
 	private String packageName;
 	private String details;
@@ -28,6 +30,22 @@ public class CodeElement {
 		if(this.packageName == null){
 			this.packageName = packageName;
 		}
+	}
+
+	public boolean isSourceRefactoredCode() {
+		return sourceRefactoredCode;
+	}
+
+	public void setSourceRefactoredCode(boolean sourceRefactoredCode) {
+		this.sourceRefactoredCode = sourceRefactoredCode;
+	}
+
+	public boolean isTargetRefactoredCode() {
+		return targetRefactoredCode;
+	}
+
+	public void setTargetRefactoredCode(boolean targetRefactoredCode) {
+		this.targetRefactoredCode = targetRefactoredCode;
 	}
 
 	public void setDetails(String details) {
