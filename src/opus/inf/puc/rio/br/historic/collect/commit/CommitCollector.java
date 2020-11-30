@@ -69,6 +69,15 @@ public class CommitCollector {
 		return commit;
 	}
 	
+	public int getOrderCommit(String commit){
+		this.currentCommit = commit;
+		
+		List<RevCommit> commits = gitLogFromCurrentCommit();
+		this.order = commits.size();
+		
+		return this.order;
+	}
+	
 	private void openProject() {
 		
 		try {

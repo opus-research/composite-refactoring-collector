@@ -1,14 +1,28 @@
 package opus.inf.puc.rio.br.historic;
 
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 public class CodeElement {
-		
+	
+	@BsonProperty(value = "method_name")
 	public final String methodName;
+	
+	@BsonProperty(value = "attribute_name")
 	public final String attributeName;
+	
+	@BsonProperty(value = "class_name")
 	public final String className;
+	
+	@BsonProperty(value = "is_source_code")
 	private boolean sourceRefactoredCode;
+	
+	@BsonProperty(value = "is_target_code")
 	private boolean targetRefactoredCode; 
 	
+	@BsonProperty(value = "package_name")
 	private String packageName;
+	
+	@BsonProperty(value = "details")
 	private String details;
 	
 	
