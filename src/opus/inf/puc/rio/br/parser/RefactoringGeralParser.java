@@ -1,6 +1,8 @@
-package opus.inf.puc.rio.br.refactoring.parser;
+package opus.inf.puc.rio.br.parser;
 
-import opus.inf.puc.rio.br.historic.CodeElement;
+
+
+import opus.inf.puc.rio.br.model.historic.CodeElement;
 
 public class RefactoringGeralParser extends RefactoringParser {
 

@@ -1,4 +1,4 @@
-      package opus.inf.puc.rio.br.parser.main;
+package opus.inf.puc.rio.br.parser.main;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,11 +14,12 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import opus.inf.puc.rio.br.historic.CodeElement;
-import opus.inf.puc.rio.br.historic.Commit;
-import opus.inf.puc.rio.br.historic.collect.commit.CommitCollector;
-import opus.inf.puc.rio.br.refactoring.Refactoring;
-import opus.inf.puc.rio.br.refactoring.parser.RefactoringParser;
+import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.model.historic.Commit;
+import opus.inf.puc.rio.br.model.historic.collect.commit.CommitCollector;
+import opus.inf.puc.rio.br.model.refactoring.Refactoring;
+import opus.inf.puc.rio.br.model.refactoring.miner.RefMinerOutput;
+import opus.inf.puc.rio.br.parser.RefactoringParser;
 
 public class RefactoringParserMain {
 	
@@ -37,7 +38,7 @@ public class RefactoringParserMain {
     
 	public static void main(String[] args) {
 		
-		RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv");
+        RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv");
 		
 	    List<Refactoring> refactorings = parserMain.getRefactorings();
 	    ObjectMapper mapper = new ObjectMapper();
@@ -50,8 +51,57 @@ public class RefactoringParserMain {
 			e.printStackTrace();
 		}
 		
+		
 	}
 	
+	private List<Refactoring> getRefactoringsFromRefMinerJson() {
+		RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv");
+		
+	    RefMinerOutput refMinerOutput = new RefMinerOutput();
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<Refactoring> refs = new ArrayList<Refactoring>();
+	    
+	    try {
+			refMinerOutput = mapper.readValue(new File("presto.json"), RefMinerOutput.class);
+			
+			refMinerOutput.getCommits().forEach( commit -> {
+				String commitHash = commit.getSha1();
+				
+				commit.getRefactorings().forEach( ref -> {
+					
+					 String refType = ref.getType();
+					 String details = ref.getDescription(); 
+					 
+					 
+					 Refactoring refactoring = this.getRefactoring("", commitHash, refType, details);
+					 refs.add(refactoring);
+					 
+				});
+			});
+		
+	    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    return refs;
+	}
+	
+	
+	private void writeRefactoringsToJson() {
+		RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv");
+		
+	    List<Refactoring> refactorings = parserMain.getRefactorings();
+	    ObjectMapper mapper = new ObjectMapper();
+	    
+	    try {
+			mapper.writeValue(new File("presto.json"), refactorings);
+		
+	    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public List<Refactoring> getRefactorings() {
 		//for 
@@ -92,7 +142,6 @@ public class RefactoringParserMain {
 				refact = getRefactoring(String.valueOf(i), commit, refactoringType, details);
 				
 				refactorings.add(refact);
-				
 			
 			}
 

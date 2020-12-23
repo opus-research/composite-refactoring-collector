@@ -9,9 +9,9 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.junit.Test;
 
-import opus.inf.puc.rio.br.historic.CodeElement;
-import opus.inf.puc.rio.br.refactoring.parser.RefactoringAttributeParser;
-import opus.inf.puc.rio.br.refactoring.parser.RefactoringParser;
+import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.parser.RefactoringParser;
+
 
 public class RefactoringAttributeParserTest {
 

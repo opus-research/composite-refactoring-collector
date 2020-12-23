@@ -1,4 +1,6 @@
-package opus.inf.puc.rio.br.historic.collect.commit;
+package opus.inf.puc.rio.br.model.historic.collect.commit;
+
+
 
 
 import java.io.File;
@@ -23,7 +25,8 @@ import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 
-import opus.inf.puc.rio.br.historic.Commit;
+import opus.inf.puc.rio.br.model.historic.Commit;
+
 
 /**
  * Collect last commit and order of current commit

@@ -1,8 +1,12 @@
-package opus.inf.puc.rio.br.refactoring.parser;
+package opus.inf.puc.rio.br.parser;
+
+
 
 import java.util.List;
 
-import opus.inf.puc.rio.br.historic.CodeElement;
+import opus.inf.puc.rio.br.model.historic.CodeElement;
+
+
 
 public class RefactoringParser {
 

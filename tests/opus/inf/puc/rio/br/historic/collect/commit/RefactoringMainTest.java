@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import opus.inf.puc.rio.br.model.refactoring.Refactoring;
 import opus.inf.puc.rio.br.parser.main.RefactoringParserMain;
-import opus.inf.puc.rio.br.refactoring.Refactoring;
 
 public class RefactoringMainTest {
 	

@@ -1,4 +1,6 @@
-package opus.inf.puc.rio.br.historic;
+package opus.inf.puc.rio.br.model.historic;
+
+
 
 import org.bson.codecs.pojo.annotations.BsonProperty;
 

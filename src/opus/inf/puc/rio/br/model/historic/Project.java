@@ -1,4 +1,7 @@
-package opus.inf.puc.rio.br.historic;
+package opus.inf.puc.rio.br.model.historic;
+
+
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

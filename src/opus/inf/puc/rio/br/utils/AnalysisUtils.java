@@ -8,9 +8,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import opus.inf.puc.rio.br.historic.collect.commit.CommitCollector;
+import opus.inf.puc.rio.br.model.historic.collect.commit.CommitCollector;
 import opus.inf.puc.rio.br.parser.main.RefactoringParserMain;
-import opus.inf.puc.rio.br.refactoring.Refactoring;
 
 public class AnalysisUtils {
 

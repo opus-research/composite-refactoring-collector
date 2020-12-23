@@ -1,13 +1,10 @@
-package opus.inf.puc.rio.br.refactoring;
+package opus.inf.puc.rio.br.model.refactoring;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import opus.inf.puc.rio.br.historic.CodeElement;
-import opus.inf.puc.rio.br.historic.Commit;
-
-
-
+import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.model.historic.Commit;
 
 public class Refactoring {
 	
@@ -19,9 +16,6 @@ public class Refactoring {
 	
 	private List<CodeElement> elements;
     
-	
-	
-
 	public Refactoring(String id, 
 			           String project, 
 			           Commit commit, 
@@ -34,19 +28,13 @@ public class Refactoring {
 		this.refactoringType = refactoringType;
 		this.refactoringDetail = refactoringDetail;
 		this.elements = new ArrayList<>();
-		
-		
-		
 	}
-	
-	
 	
 	public void setCodeElements(List<CodeElement> elements){
 		
 	   if(this.elements == null || this.elements.size() == 0) {
 		   this.elements = elements;
 	   }
-		
 	}
 	
 	@Override
