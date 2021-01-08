@@ -33,3 +33,17 @@ Split Attribute - Source e target - ok
 Change Variable Type - Source e target - ok 
 Change Parameter Type - Source e target - ok 
 Change Return Type - Source e target - ok 
+
+
+"Pull Up Attribute", "Push Down Attribute", "Move Attribute", "Extract Variable", 
+"Inline Variable", "Parameterize Variable", "Rename Variable", "Rename Parameter", 
+"Replace Variable", "Replace Variable With Attribute", "Split Variable", "Change Variable Type", 
+"Change Parameter Type", "Split Parameter", "Merge Variable", "Merge Parameter", "Rename Attribute", 
+"Merge Attribute", "Split Attribute", "Change Attribute Type", "Replace Attribute", "Extract Attribute", 
+"Change Return Type", "Rename Method", "Inline Method", "Extract Method", "Move Method", "Pull Up Method",
+"Push Down Method",  "Move Class", "Rename Class", "Extract Superclass", "Extract Interface", "Extract Subclass", 
+"Extract Class"
+
+
+
+

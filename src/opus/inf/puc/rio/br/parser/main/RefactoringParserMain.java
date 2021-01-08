@@ -32,6 +32,7 @@ public class RefactoringParserMain {
     public RefactoringParserMain(String projectName, String projectPath) {
     	this.projectName = projectName; 
     	this.projectPath = projectPath;
+    	this.refParser = new RefactoringParser();
     	commitCollector = new CommitCollector(projectName, projectPath);
     }
     
@@ -57,12 +58,16 @@ public class RefactoringParserMain {
 				commit.getRefactorings().forEach( ref -> {
 					
 					 String refType = ref.getType();
-					 String details = ref.getDescription(); 
-					 
-					 
-					 Refactoring refactoring = this.getRefactoring("", commitHash, refType, details);
-					 refs.add(refactoring);
-					 
+
+                    for (String refactoringType : refParser.getRefactorings()) {
+
+                        if(refactoringType.equals(refType)){
+                            String details = ref.getDescription();
+                            Refactoring refactoring = this.getRefactoring(String.valueOf(refs.size()), commitHash, refType, details);
+                            refs.add(refactoring);
+                        }
+                    }
+
 				});
 			});
 			
@@ -160,7 +165,6 @@ public class RefactoringParserMain {
 		
 		
 		//GetCodeElements
-	    refParser = new RefactoringParser();
 		List<CodeElement> elements = refParser.getCodeElements(refactoringType, details);
 		ref.setCodeElements(elements);
 		

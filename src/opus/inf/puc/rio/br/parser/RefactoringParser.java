@@ -2,6 +2,8 @@ package opus.inf.puc.rio.br.parser;
 
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import opus.inf.puc.rio.br.model.historic.CodeElement;
@@ -16,6 +18,26 @@ public class RefactoringParser {
 	private RefactoringAttributeParser attributeParser;
 	private RefactoringMethodParser methodParser;
 	private RefactoringClassParser classParser;
+
+	public List<String> getRefactorings() {
+		return refactorings;
+	}
+
+	private List<String> refactorings;
+
+	public RefactoringParser(){
+		String refactoringList = "Pull Up Attribute, Push Down Attribute, Move Attribute, Extract Variable, " +
+				"Inline Variable, Parameterize Variable, Rename Variable, Rename Parameter, Replace Variable, " +
+				"Replace Variable With Attribute, Split Variable, Change Variable Type,  Change Parameter Type, " +
+				"Split Parameter, Merge Variable, Merge Parameter, Rename Attribute, Merge Attribute, Split Attribute, " +
+				"Change Attribute Type, Replace Attribute, Extract Attribute, Change Return Type, Rename Method, " +
+				"Inline Method, Extract Method, Move Method, Pull Up Method, Push Down Method,  Move Class, " +
+				"Rename Class, Extract Superclass, Extract Interface, Extract Subclass, Extract Class";
+
+		refactorings = new ArrayList<>(Arrays.asList(refactoringList.split(",")));
+
+	}
+
 
 	public List<CodeElement> getCodeElements(String refactoringType, String details) {
 
