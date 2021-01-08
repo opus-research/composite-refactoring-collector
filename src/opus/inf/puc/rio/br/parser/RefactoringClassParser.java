@@ -106,10 +106,10 @@ public class RefactoringClassParser extends RefactoringParser{
 			sourceClass = sourceClass.replaceAll("\"", "");
 			
 		    CodeElement element1 = new CodeElement(null, null, targetClass.trim());
-		    element1.setSourceRefactoredCode(true);
+		    element1.setTargetRefactoredCode(true);
 		    
 		    CodeElement element2 = new CodeElement(null, null, sourceClass.trim());
-		    element2.setTargetRefactoredCode(true);
+		    element2.setSourceRefactoredCode(true);
 				
 			elements.add(element1);
 			elements.add(element2);

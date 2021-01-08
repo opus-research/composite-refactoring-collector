@@ -1,0 +1,35 @@
+Extract Method - Source e target - ok 
+Inline Method - Source e target - ok 
+Rename Method - Source e target - ok 
+Nao ta com tratamento de Extract e Move Method 
+Move Method - Source e target - ok
+Move Attribute  - Source e target - ok (mas tá saindo um caracter a mais no className do target c TEST_BASEDIR_IGNORE : String from class org.apache.tools.ant.MagicTestNames)
+Pull Up Method - Source e target - ok
+Push Down Method - Source e target - ok
+Push Down Attribute - Source e target - ok
+Extract Superclass - tá trocado o source e target e tá saindo  os caracteres "[" no target que deveria ser source - fix
+Extract Interface - tá trocado o source e target e tá saindo  os caracteres "[" no target que deveria ser source - fix
+Extract Class- tá trocado o source e target  - fix
+Extract Supclass- tá trocado o source e target - fix 
+Move Class - Source e target - ok
+Rename Class - Source e target - ok
+Change Package - elements tá saindo null 
+Move and Rename Class tá saindo no dataset, os composites que o RefMiner não deveriam ser incluídos
+
+Extract Variable - Source e target - ok 
+Inline Variable - Source e target - ok 
+Parametrize Variable - Source e target - ok 
+Rename Variable - Source e target - ok 
+Rename Parameter - Source e target - ok 
+Rename Attribute - Source e target - ok 
+Replace Variable With Attribute  - Source e target - ok 
+Replace Attribute  - Source e target - ok 
+Merge Variable  - Source e target - ok 
+Merge Parameter  - Source e target - ok 
+Merge Attribute - Source e target - ok 
+Split Variable - Source e target - ok 
+Split Parameter - Source e target - ok 
+Split Attribute - Source e target - ok 
+Change Variable Type - Source e target - ok 
+Change Parameter Type - Source e target - ok 
+Change Return Type - Source e target - ok 

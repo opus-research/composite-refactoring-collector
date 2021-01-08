@@ -64,7 +64,8 @@ public class RefactoringAttributeParser extends RefactoringParser {
 	
 	
 	
-//	Move Attribute	public SSL_ENABLED : boolean from class com.couchbase.client.core.env.DefaultCoreProperties  to class com.couchbase.client.core.env.DefaultCoreEnvironment	
+//	"Move Attribute public TEST_BASEDIR_IGNORE : String from class org.apache.tools.ant.MagicNames to public TEST_BASEDIR_IGNORE : String
+//	from class org.apache.tools.ant.MagicTestNames"
 	public void getAttributePattern1() {
 		int attributeStartIndex = refactoringDetails.indexOf(refactoringType);
 		int attributeLastIndex = refactoringDetails.indexOf("from class");
@@ -78,9 +79,9 @@ public class RefactoringAttributeParser extends RefactoringParser {
 		String oldClassName = refactoringDetails.substring(oldClassStartIndex + "from class".length(),
 				oldClassLastIndex);
 
-		int newClassStartIndex = refactoringDetails.lastIndexOf(" to ");
+		int newClassStartIndex = refactoringDetails.lastIndexOf(" from class ");
 
-		String newClassName = refactoringDetails.substring(newClassStartIndex + " to class".length());
+		String newClassName = refactoringDetails.substring(newClassStartIndex + " from class ".length());
 
 		CodeElement mainElementCompletePath = new CodeElement(null, attributeName.trim(), oldClassName.trim());
 

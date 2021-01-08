@@ -30,25 +30,25 @@ Change Package (Move, Rename, Split, Merge)
 
 Supported by RefactoringMiner 2.0
 Move and Rename Class -
-Extract Class - TODO
-Extract Subclass - TODO
-Extract Variable - TODO
-Inline Variable - TODO
-Parameterize Variable - TODO
-Rename Variable - TODO
-Rename Parameter  - TODO
-Rename Attribute - TODO
+Extract Class - Ok
+Extract Subclass - Ok
+Extract Variable - Ok
+Inline Variable - Ok
+Parameterize Variable - OK
+Rename Variable - Ok
+Rename Parameter  - OK
+Rename Attribute - OK
 Move and Rename Attribute
-Replace Variable with Attribute - TODO
-Replace Attribute (with Attribute) - TODO
-Merge Variable - TODO
-Merge Parameter - TODO
-Merge Attribute - TODO
-Split Variable - TODO
-Split Parameter - TODO
-Split Attribute - TODO
-Change Variable Type - TODO
-Change Parameter Type - TODO
-Change Return Type - TODO
-Change Attribute Type - TODO
-Extract Attribute - TODO
+Replace Variable with Attribute - Ok
+Replace Attribute (with Attribute) - OK
+Merge Variable - Ok
+Merge Parameter - Ok
+Merge Attribute - OK
+Split Variable - OK
+Split Parameter - Ok
+Split Attribute - OK
+Change Variable Type - Ok
+Change Parameter Type - OK
+Change Return Type - OK
+Change Attribute Type - Ok
+Extract Attribute - Ok

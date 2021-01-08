@@ -60,7 +60,9 @@ public class RefactoringClassParserTest {
         		+ "com.couchbase.client.core.message.binary.GetResponse,"
         		+ "com.couchbase.client.core.message.binary.UpsertResponse,"
         		+ "com.couchbase.client.core.message.cluster.SeedNodesResponse]", elements.get(1).className);
-      
+
+        assertEquals(true, elements.get(0).isTargetRefactoredCode());
+		assertEquals(true, elements.get(1).isSourceRefactoredCode());
 	}
 	
 	@Test

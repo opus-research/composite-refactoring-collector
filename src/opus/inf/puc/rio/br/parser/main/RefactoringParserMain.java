@@ -23,7 +23,6 @@ import opus.inf.puc.rio.br.parser.RefactoringParser;
 
 public class RefactoringParserMain {
 	
-	
 	private List<Refactoring> refactorings = new ArrayList<Refactoring>();
 	private RefactoringParser refParser;
     private CommitCollector commitCollector; 
@@ -33,36 +32,24 @@ public class RefactoringParserMain {
     public RefactoringParserMain(String projectName, String projectPath) {
     	this.projectName = projectName; 
     	this.projectPath = projectPath;
-    	commitCollector = new CommitCollector(projectName, "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\ICPC2020\\Projects\\presto");
+    	commitCollector = new CommitCollector(projectName, projectPath);
     }
     
 	public static void main(String[] args) {
 		
-        RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv");
+        RefactoringParserMain parserMain = new RefactoringParserMain("ant", "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Projects\\ant");
 		
-	    List<Refactoring> refactorings = parserMain.getRefactorings();
-	    ObjectMapper mapper = new ObjectMapper();
-	    
-	    try {
-			mapper.writeValue(new File("presto.json"), refactorings);
-		
-	    } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
+        parserMain.getRefactoringsFromRefMinerJson();
 	}
 	
 	private List<Refactoring> getRefactoringsFromRefMinerJson() {
-		RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv");
 		
 	    RefMinerOutput refMinerOutput = new RefMinerOutput();
 	    ObjectMapper mapper = new ObjectMapper();
 	    List<Refactoring> refs = new ArrayList<Refactoring>();
 	    
 	    try {
-			refMinerOutput = mapper.readValue(new File("presto.json"), RefMinerOutput.class);
+			refMinerOutput = mapper.readValue(new File("C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\RefactoringMiner-2.0.2\\RefactoringMiner-2.0.2\\bin\\refactorings-ant.json"), RefMinerOutput.class);
 			
 			refMinerOutput.getCommits().forEach( commit -> {
 				String commitHash = commit.getSha1();
@@ -78,6 +65,8 @@ public class RefactoringParserMain {
 					 
 				});
 			});
+			
+			mapper.writeValue(new File("ant.json"), refs);
 		
 	    } catch (IOException e) {
 			// TODO Auto-generated catch block
