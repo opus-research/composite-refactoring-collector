@@ -6,9 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import opus.inf.puc.rio.br.historic.CodeElement;
-import opus.inf.puc.rio.br.refactoring.parser.RefactoringClassParser;
-import opus.inf.puc.rio.br.refactoring.parser.RefactoringParser;
+import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.parser.RefactoringParser;
 
 
 public class RefactoringClassParserTest {
@@ -61,7 +60,9 @@ public class RefactoringClassParserTest {
         		+ "com.couchbase.client.core.message.binary.GetResponse,"
         		+ "com.couchbase.client.core.message.binary.UpsertResponse,"
         		+ "com.couchbase.client.core.message.cluster.SeedNodesResponse]", elements.get(1).className);
-      
+
+        assertEquals(true, elements.get(0).isTargetRefactoredCode());
+		assertEquals(true, elements.get(1).isSourceRefactoredCode());
 	}
 	
 	@Test

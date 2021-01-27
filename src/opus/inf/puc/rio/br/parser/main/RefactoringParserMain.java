@@ -1,4 +1,4 @@
-      package opus.inf.puc.rio.br.parser.main;
+package opus.inf.puc.rio.br.parser.main;
 
 import java.io.File;
 import java.io.FileReader;
@@ -14,14 +14,14 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import opus.inf.puc.rio.br.historic.CodeElement;
-import opus.inf.puc.rio.br.historic.Commit;
-import opus.inf.puc.rio.br.historic.collect.commit.CommitCollector;
-import opus.inf.puc.rio.br.refactoring.Refactoring;
-import opus.inf.puc.rio.br.refactoring.parser.RefactoringParser;
+import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.model.historic.Commit;
+import opus.inf.puc.rio.br.model.historic.collect.commit.CommitCollector;
+import opus.inf.puc.rio.br.model.refactoring.Refactoring;
+import opus.inf.puc.rio.br.model.refactoring.miner.RefMinerOutput;
+import opus.inf.puc.rio.br.parser.RefactoringParser;
 
 public class RefactoringParserMain {
-	
 	
 	private List<Refactoring> refactorings = new ArrayList<Refactoring>();
 	private RefactoringParser refParser;
@@ -32,11 +32,57 @@ public class RefactoringParserMain {
     public RefactoringParserMain(String projectName, String projectPath) {
     	this.projectName = projectName; 
     	this.projectPath = projectPath;
-    	commitCollector = new CommitCollector(projectName, "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\ICPC2020\\Projects\\presto");
+    	this.refParser = new RefactoringParser();
+    	commitCollector = new CommitCollector(projectName, projectPath);
     }
     
 	public static void main(String[] args) {
 		
+        RefactoringParserMain parserMain = new RefactoringParserMain("spymemcached", "C:\\Users\\anaca\\repositories\\spymemcached");
+		
+        parserMain.getRefactoringsFromRefMinerJson();
+	}
+	
+	private List<Refactoring> getRefactoringsFromRefMinerJson() {
+		
+	    RefMinerOutput refMinerOutput = new RefMinerOutput();
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<Refactoring> refs = new ArrayList<Refactoring>();
+	    
+	    try {
+			refMinerOutput = mapper.readValue(new File("C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\Refactorings\\FormatoBrutoRefactoringMiner\\RefactoringsComDadosProjetos\\refactorings-spymemcached.json"), RefMinerOutput.class);
+			
+			refMinerOutput.getCommits().forEach( commit -> {
+				String commitHash = commit.getSha1();
+				
+				commit.getRefactorings().forEach( ref -> {
+					
+					 String refType = ref.getType();
+
+                    for (String refactoringType : refParser.getRefactorings()) {
+
+                        if(refactoringType.trim().equals(refType)){
+                            String details = ref.getDescription();
+                            Refactoring refactoring = this.getRefactoring(String.valueOf(refs.size()), commitHash, refType, details);
+                            refs.add(refactoring);
+                        }
+                    }
+
+				});
+			});
+			
+			mapper.writeValue(new File("spymemcached.json"), refs);
+		
+	    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    return refs;
+	}
+	
+	
+	private void writeRefactoringsToJson() {
 		RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv");
 		
 	    List<Refactoring> refactorings = parserMain.getRefactorings();
@@ -49,9 +95,7 @@ public class RefactoringParserMain {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-	
 	
 	public List<Refactoring> getRefactorings() {
 		//for 
@@ -92,7 +136,6 @@ public class RefactoringParserMain {
 				refact = getRefactoring(String.valueOf(i), commit, refactoringType, details);
 				
 				refactorings.add(refact);
-				
 			
 			}
 
@@ -122,7 +165,6 @@ public class RefactoringParserMain {
 		
 		
 		//GetCodeElements
-	    refParser = new RefactoringParser();
 		List<CodeElement> elements = refParser.getCodeElements(refactoringType, details);
 		ref.setCodeElements(elements);
 		

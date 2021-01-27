@@ -9,9 +9,9 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.junit.Test;
 
-import opus.inf.puc.rio.br.historic.CodeElement;
-import opus.inf.puc.rio.br.refactoring.parser.RefactoringAttributeParser;
-import opus.inf.puc.rio.br.refactoring.parser.RefactoringParser;
+import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.parser.RefactoringParser;
+
 
 public class RefactoringAttributeParserTest {
 
@@ -59,16 +59,16 @@ public class RefactoringAttributeParserTest {
 		RefactoringParser parserMM = new RefactoringParser();
 
 		List<CodeElement> elements = parserMM.getCodeElements("Move Attribute",
-				"Move Attribute	public SSL_ENABLED : boolean "
-						+ "from class com.couchbase.client.core.env.DefaultCoreProperties "
-						+ "to class com.couchbase.client.core.env.DefaultCoreEnvironment");
+				"Move Attribute public TEST_BASEDIR_IGNORE : String " +
+				"from class org.apache.tools.ant.MagicNames to public TEST_BASEDIR_IGNORE : String " +
+				"from class org.apache.tools.ant.MagicTestNames");
 
 		assertEquals(2, elements.size());
-		assertEquals("public SSL_ENABLED : boolean", elements.get(0).attributeName);
-		assertEquals("com.couchbase.client.core.env.DefaultCoreProperties", elements.get(0).className);
+		assertEquals("public TEST_BASEDIR_IGNORE : String", elements.get(0).attributeName);
+		assertEquals("org.apache.tools.ant.MagicNames", elements.get(0).className);
 
-		assertEquals("public SSL_ENABLED : boolean", elements.get(1).attributeName);
-		assertEquals("com.couchbase.client.core.env.DefaultCoreEnvironment", elements.get(1).className);
+		assertEquals("public TEST_BASEDIR_IGNORE : String", elements.get(1).attributeName);
+		assertEquals("org.apache.tools.ant.MagicTestNames", elements.get(1).className);
 
 	}
 
