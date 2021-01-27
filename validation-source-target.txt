@@ -7,8 +7,8 @@ Move Attribute  - Source e target - ok (mas tá saindo um caracter a mais no cla
 Pull Up Method - Source e target - ok
 Push Down Method - Source e target - ok
 Push Down Attribute - Source e target - ok
-Extract Superclass - tá trocado o source e target e tá saindo  os caracteres "[" no target que deveria ser source - fix
-Extract Interface - tá trocado o source e target e tá saindo  os caracteres "[" no target que deveria ser source - fix
+Extract Superclass - tá trocado o source e target e tá saindo  os caracteres [ no target que deveria ser source - fix
+Extract Interface - tá trocado o source e target e tá saindo  os caracteres [ no target que deveria ser source - fix
 Extract Class- tá trocado o source e target  - fix
 Extract Supclass- tá trocado o source e target - fix 
 Move Class - Source e target - ok
@@ -35,14 +35,14 @@ Change Parameter Type - Source e target - ok
 Change Return Type - Source e target - ok 
 
 
-"Pull Up Attribute", "Push Down Attribute", "Move Attribute", "Extract Variable", 
-"Inline Variable", "Parameterize Variable", "Rename Variable", "Rename Parameter", 
-"Replace Variable", "Replace Variable With Attribute", "Split Variable", "Change Variable Type", 
-"Change Parameter Type", "Split Parameter", "Merge Variable", "Merge Parameter", "Rename Attribute", 
-"Merge Attribute", "Split Attribute", "Change Attribute Type", "Replace Attribute", "Extract Attribute", 
-"Change Return Type", "Rename Method", "Inline Method", "Extract Method", "Move Method", "Pull Up Method",
-"Push Down Method",  "Move Class", "Rename Class", "Extract Superclass", "Extract Interface", "Extract Subclass", 
-"Extract Class"
+"Pull Up Attribute, Push Down Attribute, Move Attribute, Extract Variable, 
+Inline Variable, Parameterize Variable, Rename Variable, Rename Parameter, 
+Replace Variable, Replace Variable With Attribute, Split Variable, Change Variable Type, 
+Change Parameter Type, Split Parameter, Merge Variable, Merge Parameter, Rename Attribute, 
+Merge Attribute, Split Attribute, Change Attribute Type, Replace Attribute, Extract Attribute, 
+Change Return Type, Rename Method, Inline Method, Extract Method, Move Method, Pull Up Method,
+Push Down Method,  Move Class, Rename Class, Extract Superclass, Extract Interface, Extract Subclass, 
+Extract Class"
 
 
 

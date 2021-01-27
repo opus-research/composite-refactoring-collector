@@ -38,7 +38,7 @@ public class RefactoringParserMain {
     
 	public static void main(String[] args) {
 		
-        RefactoringParserMain parserMain = new RefactoringParserMain("ant", "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Projects\\ant");
+        RefactoringParserMain parserMain = new RefactoringParserMain("spymemcached", "C:\\Users\\anaca\\repositories\\spymemcached");
 		
         parserMain.getRefactoringsFromRefMinerJson();
 	}
@@ -50,7 +50,7 @@ public class RefactoringParserMain {
 	    List<Refactoring> refs = new ArrayList<Refactoring>();
 	    
 	    try {
-			refMinerOutput = mapper.readValue(new File("C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\RefactoringMiner-2.0.2\\RefactoringMiner-2.0.2\\bin\\refactorings-ant.json"), RefMinerOutput.class);
+			refMinerOutput = mapper.readValue(new File("C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\Refactorings\\FormatoBrutoRefactoringMiner\\RefactoringsComDadosProjetos\\refactorings-spymemcached.json"), RefMinerOutput.class);
 			
 			refMinerOutput.getCommits().forEach( commit -> {
 				String commitHash = commit.getSha1();
@@ -61,7 +61,7 @@ public class RefactoringParserMain {
 
                     for (String refactoringType : refParser.getRefactorings()) {
 
-                        if(refactoringType.equals(refType)){
+                        if(refactoringType.trim().equals(refType)){
                             String details = ref.getDescription();
                             Refactoring refactoring = this.getRefactoring(String.valueOf(refs.size()), commitHash, refType, details);
                             refs.add(refactoring);
@@ -71,7 +71,7 @@ public class RefactoringParserMain {
 				});
 			});
 			
-			mapper.writeValue(new File("ant.json"), refs);
+			mapper.writeValue(new File("spymemcached.json"), refs);
 		
 	    } catch (IOException e) {
 			// TODO Auto-generated catch block
