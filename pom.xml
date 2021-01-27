@@ -3,7 +3,7 @@
 
   <groupId>opus.inf.puc.rio.br</groupId>
   <artifactId>refactoring-parser</artifactId>
-  <version>0.0.1</version>
+  <version>0.1.0</version>
   
   <build>
     <sourceDirectory>src</sourceDirectory>
