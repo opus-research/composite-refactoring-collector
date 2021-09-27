@@ -55,8 +55,9 @@ public class RefactoringAnalyzer {
 		
 	    List<Refactoring> refs = parser.parserRefactoringsFromRefMinerOutput(refsOutput);
 		
-	    Map<String, Set<Refactoring>> refactoredClasses = this.getGroupsOfRefactoredClasses(refs);
-	    this.writeGroupsOfRefactoredClassesFormat2(refactoredClasses);
+	    Map<String, Set<Refactoring>> groupsOfRefactoredClasses = this.getGroupsOfRefactoredClasses(refs);
+	    
+	    this.writeGroupsOfRefactoredClassesFormat2(groupsOfRefactoredClasses);
 	    
 		
 	}
