@@ -18,7 +18,9 @@ import opus.inf.puc.rio.br.model.historic.CodeElement;
 import opus.inf.puc.rio.br.model.historic.Commit;
 import opus.inf.puc.rio.br.model.historic.collect.commit.CommitCollector;
 import opus.inf.puc.rio.br.model.refactoring.Refactoring;
+import opus.inf.puc.rio.br.model.refactoring.miner.CommitRefMinerOutput;
 import opus.inf.puc.rio.br.model.refactoring.miner.RefMinerOutput;
+import opus.inf.puc.rio.br.model.refactoring.miner.RefactoringRefMinerOutput;
 import opus.inf.puc.rio.br.parser.RefactoringParser;
 
 public class RefactoringParserMain {
@@ -36,12 +38,35 @@ public class RefactoringParserMain {
     	commitCollector = new CommitCollector(projectName, projectPath);
     }
     
+    public RefactoringParserMain() {
+    	
+    }
+    
 	public static void main(String[] args) {
 		
         RefactoringParserMain parserMain = new RefactoringParserMain("spymemcached", "C:\\Users\\anaca\\repositories\\spymemcached");
 		
         parserMain.getRefactoringsFromRefMinerJson();
 	}
+	
+
+	
+	public List<Refactoring> parserRefactoringsFromRefMinerOutput(List<RefactoringRefMinerOutput> refactoringsOutput){
+		List<Refactoring> refs = new ArrayList<Refactoring>();
+		
+		for(RefactoringRefMinerOutput refOutput : refactoringsOutput) {
+			
+			String refId = refOutput.project + "_" + String.valueOf(refs.size());
+			Commit commit = new Commit("", refOutput.commit, 0);
+			Refactoring ref = new Refactoring(refId, refOutput.project, commit, refOutput.getType(), refOutput.getDescription());
+			refs.add(ref);
+			
+		}
+		
+		return refs; 
+		
+	}
+	
 	
 	private List<Refactoring> getRefactoringsFromRefMinerJson() {
 		

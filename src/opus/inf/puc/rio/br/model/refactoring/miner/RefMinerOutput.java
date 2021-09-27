@@ -15,17 +15,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 public class RefMinerOutput {
 
 	@JsonProperty("commits")
-	private List<Commit> commits = null;
+	private List<CommitRefMinerOutput> commits = null;
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
 	@JsonProperty("commits")
-	public List<Commit> getCommits() {
+	public List<CommitRefMinerOutput> getCommits() {
 		return commits;
 	}
 
 	@JsonProperty("commits")
-	public void setCommits(List<Commit> commits) {
+	public void setCommits(List<CommitRefMinerOutput> commits) {
 		this.commits = commits;
 	}
 

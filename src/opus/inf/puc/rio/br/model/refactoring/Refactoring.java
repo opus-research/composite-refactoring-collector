@@ -1,6 +1,7 @@
 package opus.inf.puc.rio.br.model.refactoring;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import opus.inf.puc.rio.br.model.historic.CodeElement;
@@ -46,6 +47,46 @@ public class Refactoring {
 		return elements;
 	}
 	
+	public String getRefactoringType() {
+		return refactoringType;
+	}
+
+	public String getRefactoringId() {
+		return refactoringId;
+	}
+
+	public String getRefactoringDetail() {
+		return refactoringDetail;
+	}
+
+	public Commit getCurrentCommit() {
+		return currentCommit;
+	}
+
+	public String getProject() {
+		return project;
+	}
+
+	public void setElements(List<CodeElement> elements) {
+		this.elements = elements;
+	}
+
+	public static boolean equalsToRefactoringType(String refType){
+
+		for(RefactoringTypesEnum refTypeEnum : RefactoringTypesEnum.values()){
+			List<String> refTypesList = new ArrayList<String>(Arrays.asList(refTypeEnum.toString().split(",")));
+
+			for(String refTypeAsText : refTypesList) {
+
+				if(refType.trim().equals(refTypeAsText.trim())) {
+					return true;
+				}
+			}
+
+
+		}
+		return false;
+	}
 
 
 
