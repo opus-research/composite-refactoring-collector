@@ -39,7 +39,7 @@ public class RefactoringParserMain {
     }
     
     public RefactoringParserMain() {
-    	
+		this.refParser = new RefactoringParser();
     }
     
 	public static void main(String[] args) {
@@ -57,8 +57,14 @@ public class RefactoringParserMain {
 		for(RefactoringRefMinerOutput refOutput : refactoringsOutput) {
 			
 			String refId = refOutput.project + "_" + String.valueOf(refs.size());
-			Commit commit = new Commit("", refOutput.commit, 0);
+
+			Commit commit = new Commit(refOutput.commit,"", 0);
 			Refactoring ref = new Refactoring(refId, refOutput.project, commit, refOutput.getType(), refOutput.getDescription());
+
+			//GetCodeElements
+			List<CodeElement> elements = refParser.getCodeElements(refOutput.getType(), refOutput.getDescription());
+			ref.setCodeElements(elements);
+
 			refs.add(ref);
 			
 		}

@@ -18,6 +18,16 @@ public class AnalysisUtils {
 		
 		AnalysisUtils.collectOrderFromCommitList();
 	}
+
+	public static String getLastNameFromURL(String projectURL){
+
+		String lastName = "";
+		int indexLastName = projectURL.lastIndexOf("/") + 1;
+		lastName = projectURL.substring(indexLastName);
+
+		return lastName;
+
+	}
 	
 	public static void collectOrderFromCommitList() {
 		CommitCollector commitCollector = new CommitCollector("elasticsearch", "C:\\Users\\anaca\\elasticsearch");

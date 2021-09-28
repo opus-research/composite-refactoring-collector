@@ -33,33 +33,24 @@ public class RefactoringAnalyzer {
 	public static void main(String[] args) throws IOException {
 
 		RefactoringAnalyzer analyzer = new RefactoringAnalyzer();
-		
-		
-		
-		
+        analyzer.getRefactoredClassesTask();
 		//analyzer.getRefactoringsFromRefMiner("C:\\Users\\anaca\\Executaveis\\RefactoringMiner-2.0.0\\"
 		//		+ "RefactoringMiner-2.0.0\\build\\distributions\\RefactoringMiner-1.0\\"
 		//		+ "RefactoringMiner-1.0\\bin\\refactoring-toy-example",
 		//		"36287f7c3b09eff78395267a3ac0d7da067863fd");
-		
-		
-		
-		
 	}
 	
 	private void getRefactoredClassesTask() {
 		RefactoringCollector collector = new RefactoringCollector();
 		RefactoringParserMain parser = new RefactoringParserMain();
 		
-		List<RefactoringRefMinerOutput> refsOutput = collector.getRefactoringsFromRefMinerOutput("");
+		List<RefactoringRefMinerOutput> refsOutput = collector.getRefactoringsFromRefMinerOutput("C:\\Users\\anaca\\Downloads\\spring-boot-refactorings.json");
 		
 	    List<Refactoring> refs = parser.parserRefactoringsFromRefMinerOutput(refsOutput);
 		
 	    Map<String, Set<Refactoring>> groupsOfRefactoredClasses = this.getGroupsOfRefactoredClasses(refs);
 	    
 	    this.writeGroupsOfRefactoredClassesFormat2(groupsOfRefactoredClasses);
-	    
-		
 	}
 
     public List<String> convertRefactoringListInText(List<Refactoring> refactorings){
@@ -129,7 +120,7 @@ public class RefactoringAnalyzer {
 
 	private void writeGroupsOfRefactoredClassesFormat2(Map<String, Set<Refactoring>> groupsOfRefactoredClasses) {
 		// TODO Auto-generated method stub
-		CsvWriter csv = new CsvWriter("groupsOfRefactoredClasses-presto.csv", ',', Charset.forName("ISO-8859-1"));
+		CsvWriter csv = new CsvWriter("groupsOfRefactoredClasses-spring.csv", ',', Charset.forName("ISO-8859-1"));
 		try {
 			csv.write("Class");
 			csv.write("Number of Refactorings");

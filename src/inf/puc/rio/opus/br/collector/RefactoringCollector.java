@@ -14,6 +14,7 @@ import opus.inf.puc.rio.br.model.refactoring.Refactoring;
 import opus.inf.puc.rio.br.model.refactoring.miner.CommitRefMinerOutput;
 import opus.inf.puc.rio.br.model.refactoring.miner.RefMinerOutput;
 import opus.inf.puc.rio.br.model.refactoring.miner.RefactoringRefMinerOutput;
+import opus.inf.puc.rio.br.utils.AnalysisUtils;
 
 public class RefactoringCollector {
 	
@@ -30,6 +31,8 @@ public class RefactoringCollector {
 			List<CommitRefMinerOutput> commitOutputs = refInfo.getCommits();
 
 			for(CommitRefMinerOutput commitOutput : commitOutputs){
+				String projectName = commitOutput.getRepository();
+                projectName = AnalysisUtils.getLastNameFromURL(projectName);
 
 				if(commitOutput.getRefactorings() != null && commitOutput.getRefactorings().size() > 1) {
 					for (RefactoringRefMinerOutput refactoringOutput : commitOutput.getRefactorings()) {
@@ -37,7 +40,8 @@ public class RefactoringCollector {
 						if(Refactoring.equalsToRefactoringType(refactoringOutput.getType())){
 							
 							refactoringOutput.commit = commitOutput.getSha1();
-							refactoringOutput.project = commitOutput.getRepository();
+							refactoringOutput.project = projectName;
+
 							refactoringsList.add(refactoringOutput);
 							
 						}
