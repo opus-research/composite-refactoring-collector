@@ -6,13 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,9 +42,11 @@ public class RefactoringAnalyzer {
 		
 	    List<Refactoring> refs = parser.parserRefactoringsFromRefMinerOutput(refsOutput);
 		
-	    Map<String, Set<Refactoring>> groupsOfRefactoredClasses = this.getGroupsOfRefactoredClasses(refs);
-	    
-	    this.writeGroupsOfRefactoredClassesFormat2(groupsOfRefactoredClasses);
+	    List<RefactoredClass> refactoredClasses = this.getGroupsOfRefactoredClasses(refs);
+
+        List<RefactoredClass> mostCommonRefactoredClasses = this.getMostCommonRefactoredClasses(refactoredClasses);
+	    //Rank the most common refactored classes
+	    this.writeGroupsOfRefactoredClassesFormat2(mostCommonRefactoredClasses);
 	}
 
     public List<String> convertRefactoringListInText(List<Refactoring> refactorings){
@@ -59,6 +55,16 @@ public class RefactoringAnalyzer {
 											.collect(Collectors.toList());
 		return refactoringsTextList;
 	}
+
+	private List<RefactoredClass> getMostCommonRefactoredClasses(List<RefactoredClass> refactoredClasses){
+
+        List<RefactoredClass> mostCommonRefactoredClasses = refactoredClasses.stream()
+                .sorted(Comparator.comparingInt(RefactoredClass::getNumberOfRefactorings)
+				.reversed())
+                .collect(Collectors.toList());
+
+        return mostCommonRefactoredClasses;
+    }
 
     
     
@@ -118,7 +124,7 @@ public class RefactoringAnalyzer {
 		
 	}
 
-	private void writeGroupsOfRefactoredClassesFormat2(Map<String, Set<Refactoring>> groupsOfRefactoredClasses) {
+	private void writeGroupsOfRefactoredClassesFormat2(List<RefactoredClass> groupsOfRefactoredClasses) {
 		// TODO Auto-generated method stub
 		CsvWriter csv = new CsvWriter("groupsOfRefactoredClasses-spring.csv", ',', Charset.forName("ISO-8859-1"));
 		try {
@@ -133,24 +139,22 @@ public class RefactoringAnalyzer {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		groupsOfRefactoredClasses.entrySet().forEach(refClass -> {
+		groupsOfRefactoredClasses.forEach(refClass -> {
 
 			try {
 
-
-				Set<Refactoring> refsSet = groupsOfRefactoredClasses.get(refClass.getKey());
-				csv.write(refClass.getKey());
+				csv.write(refClass.getClassName());
 
 
 				//Number of Refactorings
-				int numberOfRefs = refsSet.size();
+				int numberOfRefs = refClass.getRefactorings().size();
 				csv.write(String.valueOf(numberOfRefs));
 				csv.write(""); // refId
 				csv.write(""); // refType
 				csv.write(""); // commit
 				csv.write(""); // refDetails
 				csv.endRecord();
-				for (Refactoring ref : refsSet) {
+				for (Refactoring ref : refClass.getRefactorings()) {
 
 					// System.out.println(ref.getRefactoringType());
 
@@ -359,11 +363,11 @@ public class RefactoringAnalyzer {
 
 
 
-	private Map<String, Set<Refactoring>> getGroupsOfRefactoredClasses(List<Refactoring> refs) {
+	private List<RefactoredClass> getGroupsOfRefactoredClasses(List<Refactoring> refs) {
 
-		Map<String, Set<Refactoring>> groupsOfRefactoredClasses = 
+		Map<String, Set<Refactoring>> groupsOfRefactoredClasses =
 				new HashMap<String, Set<Refactoring>>();
-		
+		List<RefactoredClass> refactoredClasses = new ArrayList<>();
 		for (Refactoring ref : refs) {
 
 			if (ref.getElements() != null) {
@@ -377,7 +381,7 @@ public class RefactoringAnalyzer {
 							if(groupsOfRefactoredClasses.containsKey(elem.className)) {
 								
 								groupsOfRefactoredClasses.get(elem.className).add(ref);
-								
+
 							}else {
 								groupsOfRefactoredClasses.put(elem.className, new HashSet<Refactoring>());
 								groupsOfRefactoredClasses.get(elem.className).add(ref);
@@ -390,7 +394,12 @@ public class RefactoringAnalyzer {
 
 		}
 
-		return groupsOfRefactoredClasses;
+        for (Entry<String, Set<Refactoring>> groupRefactoredClass : groupsOfRefactoredClasses.entrySet()) {
+            RefactoredClass refactoredClass = new RefactoredClass(groupRefactoredClass.getKey(), groupRefactoredClass.getValue());
+            refactoredClasses.add(refactoredClass);
+        }
+
+		return refactoredClasses;
 
 	}
 
