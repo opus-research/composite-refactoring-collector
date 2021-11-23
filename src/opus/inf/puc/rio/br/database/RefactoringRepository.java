@@ -1,10 +1,14 @@
 package opus.inf.puc.rio.br.database;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.Ref;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.DB;
 //import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
@@ -30,11 +34,10 @@ public class RefactoringRepository extends Repository{
 	// https://www.baeldung.com/java-mongodb
 	//https://mongodb.github.io/mongo-java-driver/3.5/driver/getting-started/quick-start-pojo/
 
-	public static void main(String[] args) {
-
+	public RefactoringRepository(String[] args){
+		init(args);
 	}
-	
-	private void insertAllRefactorings(List<Refactoring> refList) {
+	public void insertAllRefactorings(List<Refactoring> refList) {
 		refactorings().insertMany(refList);
 	}
 
