@@ -10,15 +10,12 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import opus.inf.puc.rio.br.model.historic.CodeElement;
 import opus.inf.puc.rio.br.model.historic.Commit;
 import opus.inf.puc.rio.br.model.historic.collect.commit.CommitCollector;
 import opus.inf.puc.rio.br.model.refactoring.Refactoring;
-import opus.inf.puc.rio.br.model.refactoring.miner.CommitRefMinerOutput;
 import opus.inf.puc.rio.br.model.refactoring.miner.RefMinerOutput;
 import opus.inf.puc.rio.br.model.refactoring.miner.RefactoringRefMinerOutput;
 import opus.inf.puc.rio.br.parser.RefactoringParser;
@@ -63,7 +60,7 @@ public class RefactoringParserMain {
 
 			//GetCodeElements
 			List<CodeElement> elements = refParser.getCodeElements(refOutput.getType(), refOutput.getDescription());
-			ref.setCodeElements(elements);
+			ref.setElements(elements);
 
 			refs.add(ref);
 			
@@ -197,7 +194,7 @@ public class RefactoringParserMain {
 		
 		//GetCodeElements
 		List<CodeElement> elements = refParser.getCodeElements(refactoringType, details);
-		ref.setCodeElements(elements);
+		ref.setElements(elements);
 		
 		
         return ref; 

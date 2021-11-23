@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import opus.inf.puc.rio.br.model.historic.CodeElement;
 import opus.inf.puc.rio.br.model.historic.Commit;
 
@@ -30,14 +31,7 @@ public class Refactoring {
 		this.refactoringDetail = refactoringDetail;
 		this.elements = new ArrayList<>();
 	}
-	
-	public void setCodeElements(List<CodeElement> elements){
-		
-	   if(this.elements == null || this.elements.size() == 0) {
-		   this.elements = elements;
-	   }
-	}
-	
+
 	@Override
 	public String toString() {
 		return refactoringType;
@@ -68,7 +62,9 @@ public class Refactoring {
 	}
 
 	public void setElements(List<CodeElement> elements) {
-		this.elements = elements;
+		if(this.elements == null || this.elements.size() == 0) {
+			this.elements = elements;
+		}
 	}
 
 	public static boolean equalsToRefactoringType(String refType){
@@ -87,17 +83,6 @@ public class Refactoring {
 		}
 		return false;
 	}
-
-
-
-
-	
-	
-
-
-	
-	
-
 }
 
 
