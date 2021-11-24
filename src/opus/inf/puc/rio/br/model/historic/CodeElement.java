@@ -2,33 +2,30 @@ package opus.inf.puc.rio.br.model.historic;
 
 
 
-import org.bson.codecs.pojo.annotations.BsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CodeElement {
-	
-	@BsonProperty(value = "method_name")
+
 	public final String methodName;
-	
-	@BsonProperty(value = "attribute_name")
 	public final String attributeName;
-	
-	@BsonProperty(value = "class_name")
 	public final String className;
 	
-	@BsonProperty(value = "is_source_code")
+	@JsonProperty("sourceRefactoredCode")
 	private boolean sourceRefactoredCode;
 	
-	@BsonProperty(value = "is_target_code")
+	@JsonProperty(value = "targetRefactoredCode")
 	private boolean targetRefactoredCode; 
 	
-	@BsonProperty(value = "package_name")
+	@JsonProperty(value = "packageName")
 	private String packageName;
 	
-	@BsonProperty(value = "details")
+	@JsonProperty(value = "details")
 	private String details;
 	
 	
-	public CodeElement(String methodName, String attributeName, String className) {
+	public CodeElement(	@JsonProperty("methodName") String methodName,
+					    @JsonProperty("attributeName") String attributeName,
+					    @JsonProperty("className") String className) {
 		
 		this.methodName = methodName;
 		this.attributeName = attributeName;
@@ -39,8 +36,7 @@ public class CodeElement {
 		// TODO Auto-generated method stub
 		return packageName;
 	}
-	
-	
+
 	public void setPackageName(String packageName) {
 		
 		if(this.packageName == null){

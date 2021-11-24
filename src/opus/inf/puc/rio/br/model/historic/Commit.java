@@ -2,6 +2,7 @@ package opus.inf.puc.rio.br.model.historic;
 
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 public class Commit {
@@ -16,7 +17,9 @@ public class Commit {
 	public final int orderCommit;
 	
 	
-	public Commit(String commit, String previousCommit, int orderCommit) {
+	public Commit(@JsonProperty("commit") String commit,
+				  @JsonProperty("previousCommit") String previousCommit,
+				  @JsonProperty("orderCommit") int orderCommit) {
 		
 		this.commit = commit;
 		this.previousCommit = previousCommit;

@@ -17,8 +17,7 @@ public class Repository {
     private MongoCollection<Refactoring> refactorings;
     private MongoDatabase database;
 
-    public static void init(String[] args) {
-        Repository repository = new Repository();
+    public void init(String[] args) {
         MongoClient mongoClient;
 
         if (args.length == 0) {
@@ -33,7 +32,7 @@ public class Repository {
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 
         // get handle to "mydb" database
-        repository.database = mongoClient.getDatabase("refactoringsdb").withCodecRegistry(pojoCodecRegistry);
+        database = mongoClient.getDatabase("refactoringsdb").withCodecRegistry(pojoCodecRegistry);
 
         // get a handle to the "people" collection
         //MongoCollection<Refactoring> collection = database.getCollection("composites", CompositeRefactoring.class);

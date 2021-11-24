@@ -5,24 +5,39 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import opus.inf.puc.rio.br.model.historic.CodeElement;
 import opus.inf.puc.rio.br.model.historic.Commit;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+		"refactoringType",
+		"refactoringId",
+		"refactoringDetail",
+		"currentCommit",
+		"project",
+		"previousCommit",
+		"elements"
+})
 public class Refactoring {
-	
+
+
 	public final String refactoringType;
 	public final String refactoringId;
 	public final String refactoringDetail;
 	public final Commit currentCommit;
 	public final String project;
-	
+
+	@JsonProperty("elements")
 	private List<CodeElement> elements;
     
-	public Refactoring(String id, 
-			           String project, 
-			           Commit commit, 
-					   String refactoringType, 
-				       String refactoringDetail){
+	public Refactoring(	@JsonProperty("refactoringId") String id,
+					    @JsonProperty("project") String project,
+					    @JsonProperty("currentCommit") Commit commit,
+					    @JsonProperty("refactoringType") String refactoringType,
+					    @JsonProperty("refactoringDetail") String refactoringDetail){
 		
 		this.refactoringId = id;
 		this.project = project;
@@ -61,6 +76,7 @@ public class Refactoring {
 		return project;
 	}
 
+	@JsonProperty("elements")
 	public void setElements(List<CodeElement> elements) {
 		if(this.elements == null || this.elements.size() == 0) {
 			this.elements = elements;

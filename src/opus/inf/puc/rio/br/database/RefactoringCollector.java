@@ -23,19 +23,18 @@ public class RefactoringCollector {
     }
 
 
+
     private List<Refactoring> getAllRefactorings(){
         ObjectMapper mapper = new ObjectMapper();
         List<Refactoring> refList = new ArrayList<>();
         Refactoring[] refactorings = new Refactoring[0];
         try {
-            refactorings = mapper.readValue(new File("refs-project1.json"), Refactoring[].class);
-            refList = Arrays.asList(refactorings);
+            refactorings = mapper.readValue(new File("jfreechart-refactorings.json"), Refactoring[].class);
+            refList = new ArrayList<>(Arrays.asList(refactorings));
 
-            refactorings = mapper.readValue(new File("refs-project2.json"), Refactoring[].class);
-            refList = Arrays.asList(refactorings);
-
-            refactorings = mapper.readValue(new File("refs-project3.json"), Refactoring[].class);
-            refList = Arrays.asList(refactorings);
+            refactorings = mapper.readValue(new File("okhttp-refactorings.json"), Refactoring[].class);
+           // List<Refactoring> auxRefList = new ArrayList<>(Arrays.asList(refactorings));
+            refList.addAll(Arrays.asList(refactorings));
 
         } catch (IOException e) {
             e.printStackTrace();
