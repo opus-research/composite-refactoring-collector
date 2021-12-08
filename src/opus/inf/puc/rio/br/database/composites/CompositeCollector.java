@@ -2,6 +2,7 @@ package opus.inf.puc.rio.br.database.composites;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import opus.inf.puc.rio.br.model.compositeref.CompositeRefactoring;
+import opus.inf.puc.rio.br.model.refactoring.Refactoring;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,21 +27,45 @@ public class CompositeCollector {
 
     private List<CompositeRefactoring> getAllComposites(){
         ObjectMapper mapper = new ObjectMapper();
-        List<CompositeRefactoring> refList = new ArrayList<>();
+        List<CompositeRefactoring> compositeList = new ArrayList<>();
         CompositeRefactoring[] composites = new CompositeRefactoring[0];
         try {
-            composites = mapper.readValue(new File("jfreechart-refactorings.json"), CompositeRefactoring[].class);
-            refList = new ArrayList<>(Arrays.asList(composites));
+            composites = mapper.readValue(new File("junit4-composite-rangebased.json"), CompositeRefactoring[].class);
+            compositeList = new ArrayList<>(Arrays.asList(composites));
+            compositeList = prepareComposites(compositeList);
 
-            composites = mapper.readValue(new File("okhttp-refactorings.json"), CompositeRefactoring[].class);
+           // composites = mapper.readValue(new File("okhttp-refactorings.json"), CompositeRefactoring[].class);
            // List<Refactoring> auxRefList = new ArrayList<>(Arrays.asList(refactorings));
-            refList.addAll(Arrays.asList(composites));
+          //  compositeList.addAll(Arrays.asList(composites));
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return refList;
+        return compositeList;
+    }
+
+
+    private List<CompositeRefactoring> prepareComposites(List<CompositeRefactoring> compositeList){
+
+        if (compositeList!= null || compositeList.size() != 0){
+            String projectName = compositeList.get(0).getRefactorings().get(0).getProject();
+
+            for (CompositeRefactoring composite : compositeList) {
+                composite.setId( projectName + "-" + composite.getId());
+                composite.setRefactoringIDs(new ArrayList<>());
+
+                for (Refactoring refactoring : composite.getRefactorings()) {
+                     String refactoringId = refactoring.refactoringId;
+                     composite.getRefactoringIDs().add(refactoringId);
+                }
+
+                composite.setRefactorings(null);
+            }
+            return compositeList;
+        }
+
+        return null;
     }
 }
 
