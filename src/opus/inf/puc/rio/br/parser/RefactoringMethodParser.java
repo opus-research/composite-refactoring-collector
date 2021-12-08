@@ -4,7 +4,7 @@ package opus.inf.puc.rio.br.parser;
 
 import java.util.ArrayList;
 
-import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.model.refactoring.historic.CodeElement;
 public class RefactoringMethodParser extends RefactoringParser {
 	
 	

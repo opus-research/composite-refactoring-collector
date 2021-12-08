@@ -1,15 +1,10 @@
 package opus.inf.puc.rio.br.utils;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import opus.inf.puc.rio.br.model.historic.collect.commit.CommitCollector;
-import opus.inf.puc.rio.br.parser.main.RefactoringParserMain;
+import opus.inf.puc.rio.br.model.refactoring.historic.collect.commit.CommitCollector;
 
 public class AnalysisUtils {
 

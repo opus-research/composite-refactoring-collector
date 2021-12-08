@@ -12,9 +12,9 @@ import org.apache.commons.csv.CSVRecord;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import opus.inf.puc.rio.br.model.historic.CodeElement;
-import opus.inf.puc.rio.br.model.historic.Commit;
-import opus.inf.puc.rio.br.model.historic.collect.commit.CommitCollector;
+import opus.inf.puc.rio.br.model.refactoring.historic.CodeElement;
+import opus.inf.puc.rio.br.model.refactoring.historic.Commit;
+import opus.inf.puc.rio.br.model.refactoring.historic.collect.commit.CommitCollector;
 import opus.inf.puc.rio.br.model.refactoring.Refactoring;
 import opus.inf.puc.rio.br.model.refactoring.miner.RefMinerOutput;
 import opus.inf.puc.rio.br.model.refactoring.miner.RefactoringRefMinerOutput;

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.model.refactoring.historic.CodeElement;
 
 
 

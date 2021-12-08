@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import opus.inf.puc.rio.br.model.historic.CodeElement;
-import opus.inf.puc.rio.br.model.historic.Commit;
+import opus.inf.puc.rio.br.model.refactoring.historic.CodeElement;
+import opus.inf.puc.rio.br.model.refactoring.historic.Commit;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({

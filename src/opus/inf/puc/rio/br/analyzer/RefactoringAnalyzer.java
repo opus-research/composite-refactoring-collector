@@ -1,10 +1,7 @@
 package opus.inf.puc.rio.br.analyzer;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -12,7 +9,7 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import inf.puc.rio.opus.br.collector.RefactoringCollector;
-import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.model.refactoring.historic.CodeElement;
 import opus.inf.puc.rio.br.model.refactoring.Refactoring;
 import opus.inf.puc.rio.br.model.refactoring.miner.CommitRefMinerOutput;
 import opus.inf.puc.rio.br.model.refactoring.miner.RefMinerOutput;

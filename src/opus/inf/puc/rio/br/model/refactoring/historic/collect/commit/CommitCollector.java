@@ -1,4 +1,4 @@
-package opus.inf.puc.rio.br.model.historic.collect.commit;
+package opus.inf.puc.rio.br.model.refactoring.historic.collect.commit;
 
 
 
@@ -6,26 +6,15 @@ package opus.inf.puc.rio.br.model.historic.collect.commit;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Spliterator;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
-import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.errors.CheckoutConflictException;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.InvalidRefNameException;
 import org.eclipse.jgit.api.errors.NoHeadException;
-import org.eclipse.jgit.api.errors.RefAlreadyExistsException;
-import org.eclipse.jgit.api.errors.RefNotFoundException;
-import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 
-import opus.inf.puc.rio.br.model.historic.Commit;
+import opus.inf.puc.rio.br.model.refactoring.historic.Commit;
 
 
 /**

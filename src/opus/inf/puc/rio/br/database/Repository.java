@@ -5,6 +5,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import opus.inf.puc.rio.br.model.project.Project;
 import opus.inf.puc.rio.br.model.refactoring.Refactoring;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -15,6 +16,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 public class Repository {
 
     private MongoCollection<Refactoring> refactorings;
+    private MongoCollection<Project> projects;
     private MongoDatabase database;
 
     public void init(String[] args) {
@@ -45,5 +47,12 @@ public class Repository {
             refactorings = database.getCollection("refactorings", Refactoring.class);
         }
         return refactorings;
+    }
+
+    protected MongoCollection<Project> projects(){
+        if(projects == null){
+            projects = database.getCollection("projects", Project.class);
+        }
+        return projects;
     }
 }

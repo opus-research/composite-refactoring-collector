@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.model.refactoring.historic.CodeElement;
 import opus.inf.puc.rio.br.parser.RefactoringParser;
 
 

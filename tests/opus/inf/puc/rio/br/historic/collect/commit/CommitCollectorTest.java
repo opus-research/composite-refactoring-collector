@@ -9,8 +9,8 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.junit.Test;
 
-import opus.inf.puc.rio.br.model.historic.Commit;
-import opus.inf.puc.rio.br.model.historic.collect.commit.CommitCollector;
+import opus.inf.puc.rio.br.model.refactoring.historic.Commit;
+import opus.inf.puc.rio.br.model.refactoring.historic.collect.commit.CommitCollector;
 
 
 public class CommitCollectorTest {

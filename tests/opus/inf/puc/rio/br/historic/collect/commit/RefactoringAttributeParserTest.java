@@ -9,7 +9,7 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.NoHeadException;
 import org.junit.Test;
 
-import opus.inf.puc.rio.br.model.historic.CodeElement;
+import opus.inf.puc.rio.br.model.refactoring.historic.CodeElement;
 import opus.inf.puc.rio.br.parser.RefactoringParser;
 
 

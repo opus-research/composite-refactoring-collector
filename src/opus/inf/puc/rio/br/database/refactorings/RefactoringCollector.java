@@ -1,4 +1,4 @@
-package opus.inf.puc.rio.br.database;
+package opus.inf.puc.rio.br.database.refactorings;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import opus.inf.puc.rio.br.model.refactoring.Refactoring;

@@ -1,7 +1,6 @@
 package opus.inf.puc.rio.br.parser;
 
 
-import opus.inf.puc.rio.br.model.historic.CodeElement;
 public class CompositeRefactoringParser {
 
 	
