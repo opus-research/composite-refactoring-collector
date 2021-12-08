@@ -22,7 +22,6 @@ public class ProjectCollector {
     }
 
 
-
     private List<Project> getAllProjects(){
         ObjectMapper mapper = new ObjectMapper();
         List<Project> projectList = new ArrayList<>();

@@ -4,7 +4,6 @@ package opus.inf.puc.rio.br.model.project;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "name",
     "commits"
 })
-@Generated("jsonschema2pojo")
 public class Project {
 
     @JsonProperty("name")

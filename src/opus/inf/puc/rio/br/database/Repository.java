@@ -5,6 +5,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import opus.inf.puc.rio.br.model.compositeref.CompositeRefactoring;
 import opus.inf.puc.rio.br.model.project.Project;
 import opus.inf.puc.rio.br.model.refactoring.Refactoring;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -17,6 +18,7 @@ public class Repository {
 
     private MongoCollection<Refactoring> refactorings;
     private MongoCollection<Project> projects;
+    private MongoCollection<CompositeRefactoring> composites;
     private MongoDatabase database;
 
     public void init(String[] args) {
@@ -54,5 +56,12 @@ public class Repository {
             projects = database.getCollection("projects", Project.class);
         }
         return projects;
+    }
+
+    protected MongoCollection<CompositeRefactoring> composites(){
+        if(composites == null){
+            composites = database.getCollection("composites", CompositeRefactoring.class);
+        }
+        return composites;
     }
 }
