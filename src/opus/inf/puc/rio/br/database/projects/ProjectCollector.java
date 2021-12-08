@@ -26,12 +26,12 @@ public class ProjectCollector {
     private List<Project> getAllProjects(){
         ObjectMapper mapper = new ObjectMapper();
         List<Project> projectList = new ArrayList<>();
-        Project[] projects = new Project[0];
+        Project project = new Project();
         try {
 
-            projects = mapper.readValue(new File("junit4.json"), Project[].class);
+            project = mapper.readValue(new File("junit4.json"), Project.class);
             // List<Refactoring> auxRefList = new ArrayList<>(Arrays.asList(refactorings));
-            projectList.addAll(Arrays.asList(projects));
+            projectList.add(project);
 
         } catch (IOException e) {
             e.printStackTrace();
