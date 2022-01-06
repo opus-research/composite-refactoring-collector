@@ -2,6 +2,7 @@ package opus.inf.puc.rio.br.database.refactorings;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import opus.inf.puc.rio.br.model.refactoring.Refactoring;
+import opus.inf.puc.rio.br.utils.AnalysisUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,13 +29,14 @@ public class RefactoringCollector {
         ObjectMapper mapper = new ObjectMapper();
         List<Refactoring> refList = new ArrayList<>();
         Refactoring[] refactorings = new Refactoring[0];
-        try {
-            refactorings = mapper.readValue(new File("jfreechart-refactorings.json"), Refactoring[].class);
-            refList = new ArrayList<>(Arrays.asList(refactorings));
 
-            refactorings = mapper.readValue(new File("okhttp-refactorings.json"), Refactoring[].class);
-           // List<Refactoring> auxRefList = new ArrayList<>(Arrays.asList(refactorings));
-            refList.addAll(Arrays.asList(refactorings));
+        List<String> refactoringFiles = AnalysisUtils.getAllFileNames("refactorings");
+        refList = new ArrayList<>();
+        try {
+            for (String refactoringFile : refactoringFiles) {
+                refactorings = mapper.readValue(new File(refactoringFile), Refactoring[].class);
+                refList.addAll(Arrays.asList(refactorings));
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

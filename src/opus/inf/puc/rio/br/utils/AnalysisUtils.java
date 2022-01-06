@@ -1,8 +1,13 @@
 package opus.inf.puc.rio.br.utils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import opus.inf.puc.rio.br.model.refactoring.historic.collect.commit.CommitCollector;
 
@@ -22,6 +27,29 @@ public class AnalysisUtils {
 
 		return lastName;
 
+	}
+
+	/**
+	 * @method 'getAllFileNames' generates a list of all files from a path
+	 * @param Files path
+	 * @return a list of all files from a path
+	 * */
+	public static List<String> getAllFileNames(String pathFiles) {
+
+		List<String> fileNames = new ArrayList<String>();
+
+		try (Stream<Path> paths = Files.walk(Paths.get(pathFiles))) {
+			paths.forEach(filePath -> {
+				if (Files.isRegularFile(filePath)) {
+					fileNames.add(filePath.toString());
+				}
+			});
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return fileNames;
 	}
 	
 	public static void collectOrderFromCommitList() {
