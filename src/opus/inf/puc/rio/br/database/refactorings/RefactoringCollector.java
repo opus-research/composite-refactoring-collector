@@ -30,10 +30,11 @@ public class RefactoringCollector {
         List<Refactoring> refList = new ArrayList<>();
         Refactoring[] refactorings = new Refactoring[0];
 
-        List<String> refactoringFiles = AnalysisUtils.getAllFileNames("refactorings");
+        List<String> refactoringFiles = AnalysisUtils.getAllFileNames("refactorings", ".json");
         refList = new ArrayList<>();
         try {
             for (String refactoringFile : refactoringFiles) {
+                System.out.println(refactoringFile);
                 refactorings = mapper.readValue(new File(refactoringFile), Refactoring[].class);
                 refList.addAll(Arrays.asList(refactorings));
             }

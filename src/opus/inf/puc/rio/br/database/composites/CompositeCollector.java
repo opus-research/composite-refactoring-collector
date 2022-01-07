@@ -3,6 +3,7 @@ package opus.inf.puc.rio.br.database.composites;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import opus.inf.puc.rio.br.model.compositeref.CompositeRefactoring;
 import opus.inf.puc.rio.br.model.refactoring.Refactoring;
+import opus.inf.puc.rio.br.utils.AnalysisUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,14 +30,20 @@ public class CompositeCollector {
         ObjectMapper mapper = new ObjectMapper();
         List<CompositeRefactoring> compositeList = new ArrayList<>();
         CompositeRefactoring[] composites = new CompositeRefactoring[0];
+        List<String> compositeFiles = AnalysisUtils.getAllFileNames("composites", ".json");
         try {
-            composites = mapper.readValue(new File("junit4-composite-rangebased.json"), CompositeRefactoring[].class);
-            compositeList = new ArrayList<>(Arrays.asList(composites));
-            compositeList = prepareComposites(compositeList);
+            for (String compositeFile : compositeFiles) {
+                System.out.println(compositeFile);
+                composites = mapper.readValue(new File(compositeFile), CompositeRefactoring[].class);
+                List<CompositeRefactoring> auxCompositeList = new ArrayList<>(Arrays.asList(composites));
+                auxCompositeList = prepareComposites(auxCompositeList);
+                compositeList.addAll(auxCompositeList);
+            }
 
-           // composites = mapper.readValue(new File("okhttp-refactorings.json"), CompositeRefactoring[].class);
-           // List<Refactoring> auxRefList = new ArrayList<>(Arrays.asList(refactorings));
-          //  compositeList.addAll(Arrays.asList(composites));
+
+            // composites = mapper.readValue(new File("okhttp-refactorings.json"), CompositeRefactoring[].class);
+            //
+            //  compositeList.addAll(Arrays.asList(composites));
 
         } catch (IOException e) {
             e.printStackTrace();

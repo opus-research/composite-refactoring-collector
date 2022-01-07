@@ -2,6 +2,8 @@ package opus.inf.puc.rio.br.database.projects;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import opus.inf.puc.rio.br.model.project.Project;
+import opus.inf.puc.rio.br.model.refactoring.Refactoring;
+import opus.inf.puc.rio.br.utils.AnalysisUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,11 +28,14 @@ public class ProjectCollector {
         ObjectMapper mapper = new ObjectMapper();
         List<Project> projectList = new ArrayList<>();
         Project project = new Project();
+        List<String> projectFiles = AnalysisUtils.getAllFileNames("projects", ".json");
         try {
 
-            project = mapper.readValue(new File("junit4.json"), Project.class);
-            // List<Refactoring> auxRefList = new ArrayList<>(Arrays.asList(refactorings));
-            projectList.add(project);
+            for (String projectFile : projectFiles) {
+                System.out.println(projectFile);
+                project = mapper.readValue(new File(projectFile), Project.class);
+                projectList.add(project);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

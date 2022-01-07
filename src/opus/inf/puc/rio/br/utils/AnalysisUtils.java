@@ -31,16 +31,17 @@ public class AnalysisUtils {
 
 	/**
 	 * @method 'getAllFileNames' generates a list of all files from a path
-	 * @param Files path
+	 * @param pathFiles path
 	 * @return a list of all files from a path
 	 * */
-	public static List<String> getAllFileNames(String pathFiles) {
+	public static List<String> getAllFileNames(String pathFiles, String extension) {
 
 		List<String> fileNames = new ArrayList<String>();
 
 		try (Stream<Path> paths = Files.walk(Paths.get(pathFiles))) {
 			paths.forEach(filePath -> {
-				if (Files.isRegularFile(filePath)) {
+
+				if (Files.isRegularFile(filePath) && hasExtension(filePath.toString(), extension)) {
 					fileNames.add(filePath.toString());
 				}
 			});
@@ -51,7 +52,10 @@ public class AnalysisUtils {
 
 		return fileNames;
 	}
-	
+
+	private static boolean hasExtension(String filePath, String extension){
+		return filePath.contains(extension);
+	}
 	public static void collectOrderFromCommitList() {
 		CommitCollector commitCollector = new CommitCollector("elasticsearch", "C:\\Users\\anaca\\elasticsearch");
 		
