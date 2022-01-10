@@ -2,7 +2,6 @@ package opus.inf.puc.rio.br.database.composites;
 
 import opus.inf.puc.rio.br.database.Repository;
 import opus.inf.puc.rio.br.model.compositeref.CompositeRefactoring;
-import opus.inf.puc.rio.br.model.refactoring.Refactoring;
 
 import java.util.List;
 

@@ -13,15 +13,15 @@ import java.util.List;
 
 public class CompositeCollector {
 
-    private CompositeRepository refRepository;
+    private CompositeRepository compositeRepository;
 
     private CompositeCollector(String[] args){
-        refRepository= new CompositeRepository(args);
+        compositeRepository= new CompositeRepository(args);
     }
     public static void main(String[] args) {
         CompositeCollector collector = new CompositeCollector(args);
         List<CompositeRefactoring> composites = collector.getAllComposites();
-        collector.refRepository.insertAllComposites(composites);
+        collector.compositeRepository.insertAllComposites(composites);
     }
 
 
