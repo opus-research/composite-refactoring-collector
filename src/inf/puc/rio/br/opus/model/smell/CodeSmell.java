@@ -1,6 +1,5 @@
-package inf.puc.rio.br.opus.model.smell.organic;
+package inf.puc.rio.br.opus.model.smell;
 
-import inf.puc.rio.br.opus.model.refactoring.historic.CodeElement;
 
 public class CodeSmell {
 
@@ -10,11 +9,13 @@ public class CodeSmell {
     private String codeElement;
     private String detectorName;
     private String details;
+    private String commit;
 
-    public CodeSmell(String id, String name, String codeElement, String detectorName, String details) {
+    public CodeSmell(String id, String name, String codeElement, String commit, String detectorName, String details) {
         this.id = id;
         this.name = name;
         this.codeElement = codeElement;
+        this.commit = commit;
         this.detectorName = detectorName;
         this.details = details;
     }

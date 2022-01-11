@@ -8,7 +8,7 @@ import com.mongodb.client.MongoDatabase;
 import inf.puc.rio.br.opus.model.refactoring.Refactoring;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
 import inf.puc.rio.br.opus.model.project.Project;
-import inf.puc.rio.br.opus.model.smell.organic.CodeSmellOrganic;
+import inf.puc.rio.br.opus.model.smell.organic.OuputOrganic;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
@@ -20,7 +20,7 @@ public class Repository {
     private MongoCollection<Refactoring> refactorings;
     private MongoCollection<Project> projects;
     private MongoCollection<CompositeRefactoring> composites;
-    private MongoCollection<CodeSmellOrganic> smells;
+    private MongoCollection<OuputOrganic> smells;
     private MongoDatabase database;
 
     public void init(String[] args) {
@@ -67,9 +67,9 @@ public class Repository {
         return composites;
     }
 
-    protected MongoCollection<CodeSmellOrganic> smells(){
+    protected MongoCollection<OuputOrganic> smells(){
         if(smells == null){
-            smells = database.getCollection("smells", CodeSmellOrganic.class);
+            smells = database.getCollection("smells", OuputOrganic.class);
         }
         return smells;
     }
