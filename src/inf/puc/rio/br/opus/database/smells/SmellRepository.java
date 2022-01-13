@@ -1,6 +1,7 @@
 package inf.puc.rio.br.opus.database.smells;
 
 import inf.puc.rio.br.opus.database.Repository;
+import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import inf.puc.rio.br.opus.model.smell.organic.OuputOrganic;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class SmellRepository extends Repository {
         init(args);
     }
 
-    public void insertAllSmells(List<OuputOrganic> smellList) {
+    public void insertAllSmells(List<CodeSmell> smellList) {
         smells().insertMany(smellList);
     }
 

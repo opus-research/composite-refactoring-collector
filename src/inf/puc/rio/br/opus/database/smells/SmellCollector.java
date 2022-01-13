@@ -1,7 +1,9 @@
 package inf.puc.rio.br.opus.database.smells;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import inf.puc.rio.br.opus.model.smell.organic.OuputOrganic;
+import inf.puc.rio.br.opus.parser.smell.SmellParser;
 import inf.puc.rio.br.opus.utils.AnalysisUtils;
 
 import java.io.File;
@@ -20,28 +22,30 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-        List<OuputOrganic> smells = collector.getAllSmells();
+        List<CodeSmell> smells = collector.getAllSmells("");
         collector.smellRepository.insertAllSmells(smells);
     }
 
-    private List<OuputOrganic> getAllSmells(){
+    private List<CodeSmell> getAllSmells(String projectName){
         ObjectMapper mapper = new ObjectMapper();
-        List<OuputOrganic> compositeList = new ArrayList<>();
         OuputOrganic[] smells = new OuputOrganic[0];
-        List<String> smellFiles = AnalysisUtils.getAllFileNames("smells", ".json");
+        List<String> smellFiles = AnalysisUtils.getAllFileNames(projectName, ".json");
+        SmellParser parser = new SmellParser();
+        List<CodeSmell> smellsOurModel = new ArrayList<>();
         try {
             for (String smellFile : smellFiles) {
                 System.out.println(smellFile);
                 smells = mapper.readValue(new File(smellFile), OuputOrganic[].class);
-                List<OuputOrganic> smellList = new ArrayList<>(Arrays.asList(smells));
-
+                List<OuputOrganic> smellOutputOrganic = new ArrayList<>(Arrays.asList(smells));
+                List<CodeSmell> smellsAuxOurModel = parser.parserOrganicSmellToOurSmellModel(smellOutputOrganic, projectName, smellFile);
+                smellsOurModel.addAll(smellsAuxOurModel);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return compositeList;
+        return smellsOurModel;
     }
 
 

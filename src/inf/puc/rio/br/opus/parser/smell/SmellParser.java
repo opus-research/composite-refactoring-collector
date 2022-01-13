@@ -11,7 +11,7 @@ public class SmellParser{
 
 
 
-    private List<CodeSmell> parserOrganicSmellToOurSmellModel(List<OuputOrganic> outputOrganicList,
+    public List<CodeSmell> parserOrganicSmellToOurSmellModel(List<OuputOrganic> outputOrganicList,
                                                               String projectName, String commit){
 
         List<CodeSmell> smells = new ArrayList<>();
