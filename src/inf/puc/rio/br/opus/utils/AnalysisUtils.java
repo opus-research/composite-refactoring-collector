@@ -53,6 +53,16 @@ public class AnalysisUtils {
 		return fileNames;
 	}
 
+	public static String getOnlyFileNameFromPath(String path, String extension){
+
+		String fileName;
+		int indexSeparator = path.lastIndexOf("/");
+		int indexExtension = path.indexOf(extension);
+
+		fileName = path.substring(indexSeparator+1, indexExtension);
+
+		return fileName;
+	}
 	private static boolean hasExtension(String filePath, String extension){
 		return filePath.contains(extension);
 	}

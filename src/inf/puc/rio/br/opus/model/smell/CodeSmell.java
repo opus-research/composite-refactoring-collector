@@ -11,9 +11,17 @@ public class CodeSmell {
     private String details;
     private String commit;
 
-    public CodeSmell(String id, String name, String codeElement, String commit, String detectorName, String details) {
+
+    public CodeSmell(String id,
+                     String name,
+                     String projectName,
+                     String codeElement,
+                     String commit,
+                     String detectorName,
+                     String details) {
         this.id = id;
         this.name = name;
+        this.projectName = projectName;
         this.codeElement = codeElement;
         this.commit = commit;
         this.detectorName = detectorName;

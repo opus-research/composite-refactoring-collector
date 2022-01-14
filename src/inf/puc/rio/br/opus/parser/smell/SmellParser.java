@@ -24,12 +24,18 @@ public class SmellParser{
                 String smellId = "smell-" + projectName + "-" + count;
                 String details = smellOrganic.getReason() +
                                 ", startingLine: " + smellOrganic.getStartingLine()+ ", EndingLine: " + smellOrganic.getEndingLine();
+
                 CodeSmell smell = new CodeSmell(smellId,
                                                 smellOrganic.getName(),
+                                                projectName,
                                                 outputOrganic.getFullyQualifiedName(),
                                                 commit,
                                                 detectorName,
                                                 details);
+                if(smellOrganic.getName().equals("FeatureEnvy")){
+                    boolean method = true;
+                }
+                smells.add(smell);
                 count ++;
             }
         }
