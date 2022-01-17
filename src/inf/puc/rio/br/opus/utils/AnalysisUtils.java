@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
+
+import inf.puc.rio.br.opus.model.project.Commit;
 import inf.puc.rio.br.opus.model.project.Project;
 
 import inf.puc.rio.br.opus.model.refactoring.historic.collect.commit.CommitCollector;
@@ -65,10 +67,19 @@ public class AnalysisUtils {
 		return fileName;
 	}
 
+
+	private void divideProjects(Project project){
+		List[] lists = AnalysisUtils.split(project.getCommits());
+		List<Commit> commits1 = new ArrayList<>(lists[0]);
+		List<Commit> commits2 = new ArrayList<>(lists[1]);
+		Project projectAux = project;
+		project.setCommits(commits1);
+		projectAux.setCommits(commits2);
+	}
 	// Method 1
 	// To split a list into two sublists in Java
 	//Source code from: https://www.geeksforgeeks.org/split-a-list-into-two-halves-in-java/
-	public static List[] split(List<Project> list)
+	public static List[] split(List<inf.puc.rio.br.opus.model.project.Commit> list)
 	{
 
 		// Finding the size of the list using List.size()
@@ -77,9 +88,9 @@ public class AnalysisUtils {
 
 		// Creating new list and inserting values which is
 		// returned by List.subList() method
-		List<Project> first
-				= new ArrayList<Project>(list.subList(0, (size) / 2));
-		List<Project> second = new ArrayList<>(
+		List<Commit> first
+				= new ArrayList<>(list.subList(0, (size) / 2));
+		List<Commit> second = new ArrayList<>(
 				list.subList((size) / 2, size));
 
 		// Returning an List of array

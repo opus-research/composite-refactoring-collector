@@ -15,17 +15,7 @@ public class ProjectRepository extends Repository {
 
     public void insertAllProjects(List<Project> projectList) {
 
-        for (Project project : projectList) {
-            List<Commit> commits = project.getCommits();
-            project.setCommits(null);
-            //projects().insertOne(project);
-
-            for (Commit commit : commits) {
-                insertCommitByProjectName(project.getName(), commit);
-            }
-        }
-
-
+        projects().insertMany(projectList);
     }
 
     private void insertCommitByProjectName(String projectName, Commit commit){

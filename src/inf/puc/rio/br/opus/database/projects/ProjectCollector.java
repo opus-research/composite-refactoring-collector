@@ -34,6 +34,7 @@ public class ProjectCollector {
                 System.out.println(projectFile);
                 project = mapper.readValue(new File(projectFile), Project.class);
                 projectList.add(project);
+
             }
 
         } catch (IOException e) {
