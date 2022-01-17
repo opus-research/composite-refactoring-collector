@@ -1,6 +1,7 @@
 package inf.puc.rio.br.opus.database.projects;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import inf.puc.rio.br.opus.model.project.Commit;
 import inf.puc.rio.br.opus.model.project.Project;
 import inf.puc.rio.br.opus.utils.AnalysisUtils;
 
@@ -17,12 +18,12 @@ public class ProjectCollector {
     }
     public static void main(String[] args) {
         ProjectCollector collector = new ProjectCollector(args);
-        List<Project> projects = collector.getAllProjects();
+        List<Project> projects = collector.getProject();
         collector.projectRepository.insertAllProjects(projects);
     }
 
 
-    private List<Project> getAllProjects(){
+    private List<Project> getProject(){
         ObjectMapper mapper = new ObjectMapper();
         List<Project> projectList = new ArrayList<>();
         Project project = new Project();

@@ -15,28 +15,22 @@ public class SmellParser{
                                                               String projectName, String commit){
 
         List<CodeSmell> smells = new ArrayList<>();
-        int count = 0;
+
         String detectorName = "Organic";
         for(OuputOrganic outputOrganic: outputOrganicList){
 
             for (CodeSmellOrganic smellOrganic : outputOrganic.getSmells()) {
-
-                String smellId = "smell-" + projectName + "-" + count;
                 String details = smellOrganic.getReason() +
                                 ", startingLine: " + smellOrganic.getStartingLine()+ ", EndingLine: " + smellOrganic.getEndingLine();
 
-                CodeSmell smell = new CodeSmell(smellId,
+                CodeSmell smell = new CodeSmell(null,
                                                 smellOrganic.getName(),
                                                 projectName,
                                                 outputOrganic.getFullyQualifiedName(),
                                                 commit,
                                                 detectorName,
                                                 details);
-                if(smellOrganic.getName().equals("FeatureEnvy")){
-                    boolean method = true;
-                }
                 smells.add(smell);
-                count ++;
             }
         }
 
