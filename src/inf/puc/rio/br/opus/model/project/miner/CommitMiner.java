@@ -1,5 +1,5 @@
 
-package inf.puc.rio.br.opus.model.project;
+package inf.puc.rio.br.opus.model.project.miner;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,27 +14,24 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "authorName",
-        "projectName",
-        "authorEmail",
-        "authorTimeZone",
-        "committerName",
-        "committerEmail",
-        "committerTimeZone",
-        "numberOfBranches",
-        "hash",
-        "msg",
-        "modifiedFiles",
-        "date",
-        "numberOfModifiedFiles"
+    "authorName",
+    "authorEmail",
+    "authorTimeZone",
+    "committerName",
+    "committerEmail",
+    "committerTimeZone",
+    "numberOfBranches",
+    "hash",
+    "msg",
+    "modifiedFiles",
+    "date",
+    "numberOfModifiedFiles"
 })
 @Generated("jsonschema2pojo")
-public class Commit {
+public class CommitMiner {
 
     @JsonProperty("authorName")
     private String authorName;
-    @JsonProperty("projectName")
-    private String projectName;
     @JsonProperty("authorEmail")
     private String authorEmail;
     @JsonProperty("authorTimeZone")
@@ -62,13 +59,13 @@ public class Commit {
 
     /**
      * No args constructor for use in serialization
-     *
+     * 
      */
-    public Commit() {
+    public CommitMiner() {
     }
 
     /**
-     * @param projectName
+     * 
      * @param msg
      * @param date
      * @param authorEmail
@@ -82,9 +79,8 @@ public class Commit {
      * @param numberOfBranches
      * @param hash
      */
-    public Commit(String projectName, String authorName, String authorEmail, String authorTimeZone, String committerName, String committerEmail, String committerTimeZone, Integer numberOfBranches, String hash, String msg, List<String> modifiedFiles, Long date, Integer numberOfModifiedFiles) {
+    public CommitMiner(String authorName, String authorEmail, String authorTimeZone, String committerName, String committerEmail, String committerTimeZone, Integer numberOfBranches, String hash, String msg, List<String> modifiedFiles, Long date, Integer numberOfModifiedFiles) {
         super();
-        this.projectName = projectName;
         this.authorName = authorName;
         this.authorEmail = authorEmail;
         this.authorTimeZone = authorTimeZone;
@@ -217,16 +213,6 @@ public class Commit {
     @JsonProperty("numberOfModifiedFiles")
     public void setNumberOfModifiedFiles(Integer numberOfModifiedFiles) {
         this.numberOfModifiedFiles = numberOfModifiedFiles;
-    }
-
-    @JsonProperty("projectName")
-    public String getProjectName() {
-        return projectName;
-    }
-
-    @JsonProperty("projectName")
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
     }
 
     @JsonAnyGetter

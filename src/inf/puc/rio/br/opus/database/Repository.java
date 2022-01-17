@@ -5,11 +5,11 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import inf.puc.rio.br.opus.model.project.Commit;
+import inf.puc.rio.br.opus.model.project.Project;
 import inf.puc.rio.br.opus.model.refactoring.Refactoring;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
-import inf.puc.rio.br.opus.model.project.Project;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
-import inf.puc.rio.br.opus.model.smell.organic.OuputOrganic;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
@@ -20,6 +20,7 @@ public class Repository {
 
     private MongoCollection<Refactoring> refactorings;
     private MongoCollection<Project> projects;
+    private MongoCollection<Commit> commits;
     private MongoCollection<CompositeRefactoring> composites;
     private MongoCollection<CodeSmell> smells;
     private MongoDatabase database;
@@ -59,6 +60,13 @@ public class Repository {
             projects = database.getCollection("projects", Project.class);
         }
         return projects;
+    }
+
+    protected MongoCollection<Commit> commits(){
+        if(commits == null){
+            commits = database.getCollection("commits", Commit.class);
+        }
+        return commits;
     }
 
     protected MongoCollection<CompositeRefactoring> composites(){
