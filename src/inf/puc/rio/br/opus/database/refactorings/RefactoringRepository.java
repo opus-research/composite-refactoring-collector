@@ -20,4 +20,7 @@ public class RefactoringRepository extends Repository {
 		refactorings().insertMany(refList);
 	}
 
+	public Refactoring getRefactoringById(String refID) {
+		return null;
+	}
 }

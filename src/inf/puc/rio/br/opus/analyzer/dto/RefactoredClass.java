@@ -1,4 +1,4 @@
-package inf.puc.rio.br.opus.analyzer;
+package inf.puc.rio.br.opus.analyzer.dto;
 
 import inf.puc.rio.br.opus.model.refactoring.Refactoring;
 

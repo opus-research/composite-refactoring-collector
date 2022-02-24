@@ -22,7 +22,7 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-        List<CodeSmell> smells = collector.getAllSmells("fresco");
+        List<CodeSmell> smells = collector.getAllSmells("egit");
         collector.smellRepository.insertAllSmells(smells);
     }
 
@@ -49,7 +49,4 @@ public class SmellCollector {
 
         return smellsOurModel;
     }
-
-
-
 }

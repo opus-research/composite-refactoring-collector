@@ -8,9 +8,10 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import inf.puc.rio.br.opus.analyzer.dto.RefactoredClass;
 import inf.puc.rio.br.opus.model.refactoring.Refactoring;
 import inf.puc.rio.br.opus.model.refactoring.historic.CodeElement;
-import inf.puc.rio.br.opus.collector.RefactoringCollector;
+import inf.puc.rio.br.opus.minerator.refactoring.RefactoringMinerator;
 import inf.puc.rio.br.opus.model.refactoring.miner.CommitRefMinerOutput;
 import inf.puc.rio.br.opus.model.refactoring.miner.RefMinerOutput;
 import inf.puc.rio.br.opus.model.refactoring.miner.RefactoringRefMinerOutput;
@@ -32,7 +33,7 @@ public class RefactoringAnalyzer {
 	}
 	
 	private void getRefactoredClassesTask() {
-		RefactoringCollector collector = new RefactoringCollector();
+		RefactoringMinerator collector = new RefactoringMinerator();
 		RefactoringParserMain parser = new RefactoringParserMain();
 		
 		List<RefactoringRefMinerOutput> refsOutput = collector.getRefactoringsFromRefMinerOutput("C:\\Users\\anaca\\Downloads\\spring-boot-refactorings.json");
@@ -263,7 +264,7 @@ public class RefactoringAnalyzer {
 
 	public List<String> getRefactoringsFromRefMiner(String pathProject, String commit){
 
-		RefactoringCollector collector = new RefactoringCollector();
+		RefactoringMinerator collector = new RefactoringMinerator();
 		
 		String resultRefMiner = collector.executeRefMiner(pathProject, commit);
 		List<String> refactoringsList = new ArrayList<>();

@@ -1,4 +1,4 @@
-package inf.puc.rio.br.opus.collector;
+package inf.puc.rio.br.opus.minerator.refactoring;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,7 +16,7 @@ import inf.puc.rio.br.opus.model.refactoring.miner.RefMinerOutput;
 import inf.puc.rio.br.opus.model.refactoring.miner.RefactoringRefMinerOutput;
 import inf.puc.rio.br.opus.utils.AnalysisUtils;
 
-public class RefactoringCollector {
+public class RefactoringMinerator {
 	
 	public List<RefactoringRefMinerOutput> getRefactoringsFromRefMinerOutput(String refMinerOutputPath){
 

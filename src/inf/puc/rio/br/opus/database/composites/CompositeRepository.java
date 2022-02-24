@@ -3,6 +3,7 @@ package inf.puc.rio.br.opus.database.composites;
 import inf.puc.rio.br.opus.database.Repository;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -15,8 +16,15 @@ public class CompositeRepository extends Repository {
 	public CompositeRepository(String[] args){
 		init(args);
 	}
+
 	public void insertAllComposites(List<CompositeRefactoring> compositeList) {
 		composites().insertMany(compositeList);
 	}
 
+	public List<CompositeRefactoring> getAllComposites(String projectNames){
+
+		List<CompositeRefactoring> composites = composites().find().into(new ArrayList<CompositeRefactoring>());
+
+		return composites;
+	}
 }
