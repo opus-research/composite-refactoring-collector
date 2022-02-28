@@ -2,8 +2,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>opus.inf.puc.rio.br</groupId>
-  <artifactId>refactoring-parser</artifactId>
-  <version>0.1.0</version>
+  <artifactId>composite-refactoring-collector</artifactId>
+  <version>1.0</version>
   
   <build>
     <sourceDirectory>src</sourceDirectory>
