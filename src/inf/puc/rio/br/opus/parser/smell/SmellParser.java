@@ -19,6 +19,9 @@ public class SmellParser{
         String detectorName = "Organic";
         for(OuputOrganic outputOrganic: outputOrganicList){
 
+            if(outputOrganic.getSmells() == null){
+                outputOrganic.setSmells(new ArrayList<>());
+            }
             for (CodeSmellOrganic smellOrganic : outputOrganic.getSmells()) {
                 String details = smellOrganic.getReason() +
                                 ", startingLine: " + smellOrganic.getStartingLine()+ ", EndingLine: " + smellOrganic.getEndingLine();

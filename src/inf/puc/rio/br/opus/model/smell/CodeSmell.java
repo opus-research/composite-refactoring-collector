@@ -76,4 +76,12 @@ public class CodeSmell {
     public void setDetails(String details) {
         this.details = details;
     }
+
+    public String getCommit() {
+        return commit;
+    }
+
+    public void setCommit(String commit) {
+        this.commit = commit;
+    }
 }

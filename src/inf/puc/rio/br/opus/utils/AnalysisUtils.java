@@ -59,7 +59,7 @@ public class AnalysisUtils {
 	public static String getOnlyFileNameFromPath(String path, String extension){
 
 		String fileName;
-		int indexSeparator = path.lastIndexOf("/");
+		int indexSeparator = path.lastIndexOf("\\");
 		int indexExtension = path.indexOf(extension);
 
 		fileName = path.substring(indexSeparator+1, indexExtension);

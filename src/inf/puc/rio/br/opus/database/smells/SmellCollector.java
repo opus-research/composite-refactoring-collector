@@ -22,7 +22,7 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-        List<CodeSmell> smells = collector.getAllSmells("egit");
+        List<CodeSmell> smells = collector.getAllSmells("sitewhere");
         collector.smellRepository.insertAllSmells(smells);
     }
 
