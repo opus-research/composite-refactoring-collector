@@ -1,15 +1,12 @@
-Execute Refactoring Miner 
---> Make download the Refactoring Miner tool
---> Execute Refactoring Miner via command line through these steps
-  
-  
-  3. $ .\RefactoringMiner -a git-repo-folder> <branch>
-  
-  
-  
- Parser from output of RefactoringMiner 2.0 for the following refactoring types: 
- 
-Supported by RefactoringMiner 1.0 & 2.0
+CompositeRefactoringCollector is a minerator tool for composite refactoring data. 
+This tool can collect the following data. 
+--> Single refactorings from detection tools such as RefactoringMiner 
+--> Composite refactorings using the Range-Based Heuristic (Cedrim, 2018 and Sousa et al. MSR'20)
+--> Code smells from detection tools such as Organic 
+
+CompositeRefactoringCollector collects those data, executes a parser to a simple model, and saves the data in a local MongoDB database. 
+
+This tool collects the refactoring types supported by RefactoringMiner 1.0 & 2.0
 
 Extract Method  - OK 
 Inline Method  - OK
@@ -24,12 +21,10 @@ Extract Superclass - OK
 Extract Interface  - OK 
 Move Class  - OK 
 Rename Class  - OK 
-Extract and Move Method - OK (tem que validar se sao as msm instancias de Extract Method e Move Method)
 Change Package (Move, Rename, Split, Merge)
 
 
 Supported by RefactoringMiner 2.0
-Move and Rename Class -
 Extract Class - Ok
 Extract Subclass - Ok
 Extract Variable - Ok
