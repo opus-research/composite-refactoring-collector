@@ -39,7 +39,6 @@ public class SmellRepository extends Repository {
         searchQuery.put("codeElement", regexQuery);
 
         FindIterable<CodeSmell> smellsIterable =  smells().find(searchQuery);
-        MongoCursor<CodeSmell> smellsCursor = smellsIterable.iterator();
 
         return getSmellsFromIterable(smellsIterable);
     }
