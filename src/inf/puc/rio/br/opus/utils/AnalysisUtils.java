@@ -4,15 +4,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 import inf.puc.rio.br.opus.model.project.miner.CommitMiner;
 import inf.puc.rio.br.opus.model.project.miner.ProjectMiner;
 
 import inf.puc.rio.br.opus.model.refactoring.historic.collect.commit.CommitCollector;
+import inf.puc.rio.br.opus.model.smell.CodeSmell;
 
 public class AnalysisUtils {
 
@@ -97,6 +96,35 @@ public class AnalysisUtils {
 		return new List[] { first, second };
 	}
 
+	public static String getMethodName(String methodSignature){
+
+		int accessIndex = 0;
+		String methodName = "";
+
+		if(methodSignature.contains("public ")){
+			accessIndex = "public ".length();
+		}
+		else
+			if(methodSignature.contains("private ")){
+				accessIndex = "private ".length();
+			}
+		else
+			if(methodSignature.contains("protected ")){
+				accessIndex = "protected ".length();
+			}
+
+		int separatorIndex = methodSignature.indexOf("(");
+		methodName = methodSignature.substring(accessIndex-1, separatorIndex);
+
+		return methodName;
+	}
+
+	public static boolean hasOverrideCodeElement(List<String> codeElements){
+       Set<String> elementSet = new HashSet<>(codeElements);
+
+	   return elementSet.size() > 0;
+	}
+
 	private static boolean hasExtension(String filePath, String extension){
 		return filePath.contains(extension);
 	}
@@ -141,6 +169,7 @@ public class AnalysisUtils {
 	    });
 	    
 	}
+
 	
 	public static void countRefactoringFromList() {
 		String refactorings = "\"Extract Method\"\r\n"

@@ -31,7 +31,7 @@ public class MethodOrganic {
     @JsonProperty("fullyQualifiedName")
     private String fullyQualifiedName;
     @JsonProperty("smells")
-    private List<Object> smells = null;
+    private List<CodeSmellOrganic> smells = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -76,12 +76,12 @@ public class MethodOrganic {
     }
 
     @JsonProperty("smells")
-    public List<Object> getSmells() {
+    public List<CodeSmellOrganic> getSmells() {
         return smells;
     }
 
     @JsonProperty("smells")
-    public void setSmells(List<Object> smells) {
+    public void setSmells(List<CodeSmellOrganic> smells) {
         this.smells = smells;
     }
 

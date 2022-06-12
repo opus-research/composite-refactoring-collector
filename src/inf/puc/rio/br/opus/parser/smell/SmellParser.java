@@ -2,6 +2,7 @@ package inf.puc.rio.br.opus.parser.smell;
 
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import inf.puc.rio.br.opus.model.smell.organic.CodeSmellOrganic;
+import inf.puc.rio.br.opus.model.smell.organic.MethodOrganic;
 import inf.puc.rio.br.opus.model.smell.organic.OuputOrganic;
 
 import java.util.ArrayList;
@@ -22,22 +23,56 @@ public class SmellParser{
             if(outputOrganic.getSmells() == null){
                 outputOrganic.setSmells(new ArrayList<>());
             }
-            for (CodeSmellOrganic smellOrganic : outputOrganic.getSmells()) {
-                String details = smellOrganic.getReason() +
-                                ", startingLine: " + smellOrganic.getStartingLine()+ ", EndingLine: " + smellOrganic.getEndingLine();
 
-                CodeSmell smell = new CodeSmell(null,
-                                                smellOrganic.getName(),
-                                                projectName,
-                                                outputOrganic.getFullyQualifiedName(),
-                                                commit,
-                                                detectorName,
-                                                details);
-                smells.add(smell);
+            //getSmellsOfClass(detectorName, outputOrganic, projectName,commit);
+            getSmellsOfMethod(detectorName, outputOrganic, projectName,commit);
+        }
+        return smells;
+    }
+
+    private CodeSmell getSmellsOfMethod(String detectorName, OuputOrganic outputOrganic, String projectName, String commit){
+        CodeSmell smell = null;
+        for (MethodOrganic method : outputOrganic.getMethods()) {
+
+
+            for (CodeSmellOrganic smellOrganic : method.getSmells()) {
+                String details = smellOrganic.getReason() +
+                        ", startingLine: " + smellOrganic.getStartingLine()+ ", EndingLine: " + smellOrganic.getEndingLine();
+
+
+                String elementName = method.getFullyQualifiedName();
+                if (method.getParametersTypes().size() > 0){
+                    elementName += "(" + method.getParametersTypes().toString()+ ")";
+                }
+
+                smell = new CodeSmell(null,
+                        smellOrganic.getName(),
+                        projectName,
+                        elementName,
+                        commit,
+                        detectorName,
+                        details);
             }
         }
+        return smell;
+    }
 
+    private CodeSmell getSmellsOfClass(String detectorName, OuputOrganic outputOrganic, String projectName, String commit){
 
-        return smells;
+        CodeSmell smell = null;
+        for (CodeSmellOrganic smellOrganic : outputOrganic.getSmells()) {
+            String details = smellOrganic.getReason() +
+                    ", startingLine: " + smellOrganic.getStartingLine()+ ", EndingLine: " + smellOrganic.getEndingLine();
+
+            smell = new CodeSmell(null,
+                    smellOrganic.getName(),
+                    projectName,
+                    outputOrganic.getFullyQualifiedName(),
+                    commit,
+                    detectorName,
+                    details);
+
+        }
+        return smell;
     }
 }

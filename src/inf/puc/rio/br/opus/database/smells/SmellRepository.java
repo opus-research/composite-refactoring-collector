@@ -2,7 +2,6 @@ package inf.puc.rio.br.opus.database.smells;
 
 import inf.puc.rio.br.opus.database.Repository;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
-import inf.puc.rio.br.opus.model.smell.organic.OuputOrganic;
 
 import java.util.List;
 
@@ -17,4 +16,11 @@ public class SmellRepository extends Repository {
     }
 
 
+    public List<CodeSmell> getSmellsOfClassByCommit(String commit, String className) {
+        return null;
+    }
+
+    public List<CodeSmell> getSmellsOfMethodByCommit(String commit, String methodName) {
+        return null;
+    }
 }

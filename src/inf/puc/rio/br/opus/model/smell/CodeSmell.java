@@ -1,6 +1,8 @@
 package inf.puc.rio.br.opus.model.smell;
 
 
+import java.util.List;
+
 public class CodeSmell {
 
     private String id;
@@ -84,4 +86,5 @@ public class CodeSmell {
     public void setCommit(String commit) {
         this.commit = commit;
     }
+
 }
