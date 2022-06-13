@@ -24,47 +24,49 @@ public class SmellParser{
                 outputOrganic.setSmells(new ArrayList<>());
             }
 
-            //getSmellsOfClass(detectorName, outputOrganic, projectName,commit);
-            getSmellsOfMethod(detectorName, outputOrganic, projectName,commit);
+            smells.addAll(getSmellsOfMethod(detectorName, outputOrganic, projectName,commit));
+            smells.addAll(getSmellsOfClass(detectorName, outputOrganic, projectName,commit));
+
         }
         return smells;
     }
 
-    private CodeSmell getSmellsOfMethod(String detectorName, OuputOrganic outputOrganic, String projectName, String commit){
-        CodeSmell smell = null;
-        for (MethodOrganic method : outputOrganic.getMethods()) {
+    private List<CodeSmell> getSmellsOfMethod(String detectorName, OuputOrganic outputOrganic, String projectName, String commit){
 
+        List<CodeSmell> smells = new ArrayList<>();
+        for (MethodOrganic method : outputOrganic.getMethods()) {
 
             for (CodeSmellOrganic smellOrganic : method.getSmells()) {
                 String details = smellOrganic.getReason() +
                         ", startingLine: " + smellOrganic.getStartingLine()+ ", EndingLine: " + smellOrganic.getEndingLine();
-
 
                 String elementName = method.getFullyQualifiedName();
                 if (method.getParametersTypes().size() > 0){
                     elementName += "(" + method.getParametersTypes().toString()+ ")";
                 }
 
-                smell = new CodeSmell(null,
+                CodeSmell smell = new CodeSmell(null,
                         smellOrganic.getName(),
                         projectName,
                         elementName,
                         commit,
                         detectorName,
                         details);
+
+                smells.add(smell);
             }
         }
-        return smell;
+        return smells;
     }
 
-    private CodeSmell getSmellsOfClass(String detectorName, OuputOrganic outputOrganic, String projectName, String commit){
+    private List<CodeSmell> getSmellsOfClass(String detectorName, OuputOrganic outputOrganic, String projectName, String commit){
 
-        CodeSmell smell = null;
+        List<CodeSmell> smells = new ArrayList<>();
         for (CodeSmellOrganic smellOrganic : outputOrganic.getSmells()) {
             String details = smellOrganic.getReason() +
                     ", startingLine: " + smellOrganic.getStartingLine()+ ", EndingLine: " + smellOrganic.getEndingLine();
 
-            smell = new CodeSmell(null,
+            CodeSmell smell = new CodeSmell(null,
                     smellOrganic.getName(),
                     projectName,
                     outputOrganic.getFullyQualifiedName(),
@@ -72,7 +74,8 @@ public class SmellParser{
                     detectorName,
                     details);
 
+            smells.add(smell);
         }
-        return smell;
+        return smells;
     }
 }

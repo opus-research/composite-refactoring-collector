@@ -12,22 +12,22 @@ public class SmellCollectorTest {
 
 
     @Test
-    public void getAllSmells(){
-        SmellCollector collector = new SmellCollector(new String[]{""});
+    public void getAllSmellsTest(){
+        SmellCollector collector = new SmellCollector();
         List<CodeSmell> smells = collector.getAllSmells("project-test");
 
-        CodeSmell smell1 = smells.get(5);
+        CodeSmell smell1 = smells.get(93);
 
-        assertEquals("ClassDataShouldBePrivate", smell1.getName());
-        assertEquals("org.apache.tools.ant.helper.ProjectHelperImpl2", smell1.getCodeElement());
+        assertEquals("LazyClass", smell1.getName());
+        assertEquals("org.apache.tools.ant.taskdefs.optional.rjunit.KeepAliveOutputStream", smell1.getCodeElement());
 
 
-        CodeSmell smell2 = smells.get(3);
+        CodeSmell smell2 = smells.get(0);
 
-        assertEquals("LongMethod", smell2.getName());
-        assertEquals("org.apache.tools.ant.helper.ProjectHelperImpl2.parse(Project, Handler, RootHandler)", smell2.getCodeElement());
+        assertEquals("FeatureEnvy", smell2.getName());
+        assertEquals("org.apache.tools.ant.helper.ProjectHelperImpl2.hookSpecialTasks([Project])", smell2.getCodeElement());
 
-        assertEquals(1464, smells.size());
+        assertEquals(2174, smells.size());
     }
 }
 

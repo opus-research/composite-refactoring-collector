@@ -16,8 +16,12 @@ public class SmellCollector {
 
     private SmellRepository smellRepository;
 
-    public SmellCollector(String[] args){
+    private SmellCollector(String[] args){
         smellRepository= new SmellRepository(args);
+    }
+
+    public SmellCollector(){
+
     }
 
     public static void main(String[] args) {
