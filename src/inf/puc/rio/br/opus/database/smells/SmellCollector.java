@@ -16,7 +16,7 @@ public class SmellCollector {
 
     private SmellRepository smellRepository;
 
-    private SmellCollector(String[] args){
+    public SmellCollector(String[] args){
         smellRepository= new SmellRepository(args);
     }
 
@@ -26,7 +26,7 @@ public class SmellCollector {
         collector.smellRepository.insertAllSmells(smells);
     }
 
-    private List<CodeSmell> getAllSmells(String projectName){
+    public List<CodeSmell> getAllSmells(String projectName){
         ObjectMapper mapper = new ObjectMapper();
         OuputOrganic[] smells = new OuputOrganic[0];
         String extensionName = ".json";
