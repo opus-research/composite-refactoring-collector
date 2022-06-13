@@ -13,7 +13,7 @@ import static org.junit.Assert.assertEquals;
 public class EffectCollectorTest {
 
     @Test
-    public void hasOverrideCodeElementTest(){
+    public void isNotSameCodeElementTest(){
         String methodName;
         CodeSmell smell1 = new CodeSmell(null, "LongMethod",
                 "ant",
@@ -22,7 +22,7 @@ public class EffectCollectorTest {
                 "Organic",
                 "MLOC > 500.0, startingLine: 19, EndingLine: 20");
 
-        CodeSmell smell2 = new CodeSmell(null, "LongMethod",
+        CodeSmell smell2 = new CodeSmell(null, "FeatureEnvy",
                 "ant",
                 "org.apache.tools.ant.helper.ProjectHelperImpl2.parse(Project, RootHandler)",
                 "0020d1a16ba4207289d2380dc6981c85455b617f",
@@ -45,7 +45,65 @@ public class EffectCollectorTest {
 
         List<String> methodNames = smells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
 
-        assertEquals(true, AnalysisUtils.hasOverrideCodeElement(methodNames));
+        assertEquals(false, AnalysisUtils.isSameCodeElementName(methodNames));
+
+    }
+
+
+    @Test
+    public void isNotSameCodeElementTest2(){
+        String methodName;
+        CodeSmell smell1 = new CodeSmell(null, "LongMethod",
+                "ant",
+                "org.apache.tools.ant.helper.ProjectHelperImpl2.parse(Project, Handler, RootHandler)",
+                "0020d1a16ba4207289d2380dc6981c85455b617f",
+                "Organic",
+                "MLOC > 500.0, startingLine: 19, EndingLine: 20");
+
+        CodeSmell smell2 = new CodeSmell(null, "FeatureEnvy",
+                "ant",
+                "org.apache.tools.ant.helper.ProjectHelperImpl2.parse(Project, RootHandler)",
+                "0020d1a16ba4207289d2380dc6981c85455b617f",
+                "Organic",
+                "MLOC > 500.0, startingLine: 19, EndingLine: 20");
+
+        List<CodeSmell> smells = new ArrayList<>();
+        smells.add(smell1);
+        smells.add(smell2);
+
+
+        List<String> methodNames = smells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
+
+        assertEquals(false, AnalysisUtils.isSameCodeElementName(methodNames));
+
+    }
+
+    @Test
+    public void isSameCodeElementTest(){
+        String methodName;
+        CodeSmell smell1 = new CodeSmell(null, "LongMethod",
+                "ant",
+                "org.apache.tools.ant.helper.ProjectHelperImpl2.parse(Project, Handler, RootHandler)",
+                "0020d1a16ba4207289d2380dc6981c85455b617f",
+                "Organic",
+                "MLOC > 500.0, startingLine: 19, EndingLine: 20");
+
+
+        CodeSmell smell2 = new CodeSmell(null, "LongMethod",
+                "ant",
+                "org.apache.tools.ant.helper.ProjectHelperImpl2.parse(Project, Handler, RootHandler)",
+                "0020d1a16ba4207289d2380dc6981c85455b617f",
+                "Organic",
+                "MLOC > 500.0, startingLine: 19, EndingLine: 20");
+
+        List<CodeSmell> smells = new ArrayList<>();
+        smells.add(smell1);
+        smells.add(smell2);
+
+
+        List<String> methodNames = smells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
+
+        assertEquals(true, AnalysisUtils.isSameCodeElementName(methodNames));
 
     }
 }

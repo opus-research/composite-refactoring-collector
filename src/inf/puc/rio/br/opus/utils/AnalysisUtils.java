@@ -11,7 +11,6 @@ import inf.puc.rio.br.opus.model.project.miner.CommitMiner;
 import inf.puc.rio.br.opus.model.project.miner.ProjectMiner;
 
 import inf.puc.rio.br.opus.model.refactoring.historic.collect.commit.CommitCollector;
-import inf.puc.rio.br.opus.model.smell.CodeSmell;
 
 public class AnalysisUtils {
 
@@ -119,10 +118,10 @@ public class AnalysisUtils {
 		return methodName;
 	}
 
-	public static boolean hasOverrideCodeElement(List<String> codeElements){
+	public static boolean isSameCodeElementName(List<String> codeElements){
        Set<String> elementSet = new HashSet<>(codeElements);
 
-	   return elementSet.size() > 0;
+	   return elementSet.size() == 1;
 	}
 
 	private static boolean hasExtension(String filePath, String extension){

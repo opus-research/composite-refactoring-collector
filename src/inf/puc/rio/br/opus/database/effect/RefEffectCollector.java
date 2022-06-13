@@ -53,14 +53,14 @@ public class RefEffectCollector {
                     String methodName = AnalysisUtils.getMethodName(methodSignature);
                     List<CodeSmell> tempSmells = smellRepository.getSmellsOfMethodByCommit(previousCommit, methodName);
                     List<String> methodNames = tempSmells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
-                    if(AnalysisUtils.hasOverrideCodeElement(methodNames)){
+                    if( !AnalysisUtils.isSameCodeElementName(methodNames)){
                         return null;
                     }
                     smellsOfPreviousCommit.addAll(tempSmells);
 
                     tempSmells = smellRepository.getSmellsOfMethodByCommit(currentCommit, methodName);
                     methodNames = tempSmells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
-                    if(AnalysisUtils.hasOverrideCodeElement(methodNames)){
+                    if( !AnalysisUtils.isSameCodeElementName(methodNames)){
                         return null;
                     }
 
