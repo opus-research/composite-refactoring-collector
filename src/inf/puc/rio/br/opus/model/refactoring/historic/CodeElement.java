@@ -6,9 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CodeElement {
 
-	public final String methodName;
-	public final String attributeName;
-	public final String className;
+	@JsonProperty("methodName")
+	private String methodName;
+
+	@JsonProperty("attributeName")
+	private String attributeName;
+
+	@JsonProperty("className")
+	private String className;
 	
 	@JsonProperty("sourceRefactoredCode")
 	private boolean sourceRefactoredCode;
@@ -31,7 +36,11 @@ public class CodeElement {
 		this.attributeName = attributeName;
 		this.className = className;
 	}
-	
+
+
+	public CodeElement() {
+	}
+
 	public String getPackageName() {
 		// TODO Auto-generated method stub
 		return packageName;
@@ -70,10 +79,29 @@ public class CodeElement {
 	public String getDetails() {
 		return details;
 	}
-	
-	
-	
-	
-  
-	
+
+
+	public String getMethodName() {
+		return methodName;
+	}
+
+	public void setMethodName(String methodName) {
+		this.methodName = methodName;
+	}
+
+	public String getAttributeName() {
+		return attributeName;
+	}
+
+	public void setAttributeName(String attributeName) {
+		this.attributeName = attributeName;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
 }

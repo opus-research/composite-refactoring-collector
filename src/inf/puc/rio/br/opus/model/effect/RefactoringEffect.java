@@ -1,11 +1,11 @@
-package inf.puc.rio.br.opus.model.refeffect;
+package inf.puc.rio.br.opus.model.effect;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 import java.util.List;
 
-public class RefEffect {
+public class RefactoringEffect {
 
     @JsonProperty("id")
     private String id;
@@ -20,7 +20,7 @@ public class RefEffect {
     private List<String> smellsAfter;
 
 
-    public RefEffect(String id, String refactoringId, List<String> smellsBefore, List<String> smellsAfter) {
+    public RefactoringEffect(String id, String refactoringId, List<String> smellsBefore, List<String> smellsAfter) {
         this.id = id;
         this.refactoringId = refactoringId;
         this.smellsBefore = smellsBefore;

@@ -3,7 +3,7 @@ package inf.puc.rio.br.opus.database.effect;
 import inf.puc.rio.br.opus.database.smells.SmellRepository;
 import inf.puc.rio.br.opus.model.refactoring.Refactoring;
 import inf.puc.rio.br.opus.model.refactoring.historic.CodeElement;
-import inf.puc.rio.br.opus.model.refeffect.RefEffect;
+import inf.puc.rio.br.opus.model.effect.RefactoringEffect;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import inf.puc.rio.br.opus.utils.AnalysisUtils;
 
@@ -15,10 +15,15 @@ public class RefEffectCollector {
 
 
     private SmellRepository smellRepository;
+
+    public RefEffectCollector(String[] args) {
+        this.smellRepository = new SmellRepository(args);
+    }
+
     public void collectRefEffect(){
         List<Refactoring> refs = new ArrayList<>();
         List<CodeSmell> smell = new ArrayList<>();
-        List<RefEffect> effects = new ArrayList<>();
+        List<RefactoringEffect> effects = new ArrayList<>();
 
         for (Refactoring ref : refs) {
              getRefEffectByRefactoring(ref);
@@ -29,21 +34,21 @@ public class RefEffectCollector {
 
     }
 
-    private RefEffect getRefEffectByRefactoring(Refactoring ref){
+    public RefactoringEffect getRefEffectByRefactoring(Refactoring ref){
 
-        RefEffect effect = null;
+        RefactoringEffect effect = null;
         List<CodeElement> elements = ref.getElements();
 
 
-        String previousCommit = ref.getCurrentCommit().previousCommit;
-        String currentCommit = ref.getCurrentCommit().commit;
+        String previousCommit = ref.getCurrentCommit().getPreviousCommit();
+        String currentCommit = ref.getCurrentCommit().getCommit();
 
         List<CodeSmell> smellsOfPreviousCommit = new ArrayList<>();
         List<CodeSmell> smellsOfCurrentCommit = new ArrayList<>();
 
         for (CodeElement element : elements) {
-                String className = element.className;
-                String methodSignature = element.methodName;
+                String className = element.getClassName();
+                String methodSignature = element.getMethodName();
 
                 if (className !=null) {
                     smellsOfPreviousCommit = smellRepository.getSmellsOfClassByCommit(previousCommit, className);
@@ -72,7 +77,7 @@ public class RefEffectCollector {
 
         List<String> smellsBefore = smellsOfPreviousCommit.stream().map(CodeSmell::getId).collect(Collectors.toList());
         List<String> smellsAfter = smellsOfCurrentCommit.stream().map(CodeSmell::getId).collect(Collectors.toList());
-        effect = new RefEffect(null, ref.refactoringId, smellsBefore, smellsAfter);
+        effect = new RefactoringEffect(null, ref.getRefactoringId(), smellsBefore, smellsAfter);
         return effect;
 
     }

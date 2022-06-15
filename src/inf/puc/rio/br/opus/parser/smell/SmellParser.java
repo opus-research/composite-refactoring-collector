@@ -51,7 +51,8 @@ public class SmellParser{
                         elementName,
                         commit,
                         detectorName,
-                        details);
+                        details,
+                        method.getMetricsValues());
 
                 smells.add(smell);
             }
@@ -72,7 +73,8 @@ public class SmellParser{
                     outputOrganic.getFullyQualifiedName(),
                     commit,
                     detectorName,
-                    details);
+                    details,
+                    outputOrganic.getMetricsValues());
 
             smells.add(smell);
         }

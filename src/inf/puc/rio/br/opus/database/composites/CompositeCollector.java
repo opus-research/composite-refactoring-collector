@@ -63,7 +63,7 @@ public class CompositeCollector {
                 composite.setRefactoringIDs(new ArrayList<>());
 
                 for (Refactoring refactoring : composite.getRefactorings()) {
-                     String refactoringId = refactoring.refactoringId;
+                     String refactoringId = refactoring.getRefactoringId();
                      composite.getRefactoringIDs().add(refactoringId);
                 }
 

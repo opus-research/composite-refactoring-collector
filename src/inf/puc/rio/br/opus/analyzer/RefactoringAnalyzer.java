@@ -105,7 +105,7 @@ public class RefactoringAnalyzer {
 								csv.write(ref.getRefactoringType());
 								
 								//Commit
-								csv.write(ref.getCurrentCommit().commit);
+								csv.write(ref.getCurrentCommit().getCommit());
 								csv.endRecord();
 									
 				}
@@ -170,7 +170,7 @@ public class RefactoringAnalyzer {
 					csv.write(ref.getRefactoringType());
 
 					//Commit
-					csv.write(ref.getCurrentCommit().commit);
+					csv.write(ref.getCurrentCommit().getCommit());
 
 					//Refactoring Details
 					csv.write(ref.getRefactoringDetail());
@@ -243,7 +243,7 @@ public class RefactoringAnalyzer {
 								csv.write(ref.getRefactoringType());
 								
 								//Commit
-								csv.write(ref.getCurrentCommit().commit);
+								csv.write(ref.getCurrentCommit().getCommit());
 								csv.endRecord();
 										
 							}			
@@ -319,9 +319,9 @@ public class RefactoringAnalyzer {
 				if (ref.getElements() != null) {
 					for (CodeElement elem : ref.getElements()) {
 						
-						if (elem.className != null) {
+						if (elem.getClassName() != null) {
 
-							if (elem.className.equals(refactoreClass.getKey())) {
+							if (elem.getClassName().equals(refactoreClass.getKey())) {
 
 								refsList.add(ref);
 							}
@@ -372,17 +372,17 @@ public class RefactoringAnalyzer {
 				
 				for (CodeElement elem : ref.getElements()) {
 
-					if (elem.className != null) {
+					if (elem.getClassName() != null) {
 
-						if (!elem.className.isEmpty()) {
+						if (!elem.getClassName().isEmpty()) {
 							
-							if(groupsOfRefactoredClasses.containsKey(elem.className)) {
+							if(groupsOfRefactoredClasses.containsKey(elem.getClassName())) {
 								
-								groupsOfRefactoredClasses.get(elem.className).add(ref);
+								groupsOfRefactoredClasses.get(elem.getClassName()).add(ref);
 
 							}else {
-								groupsOfRefactoredClasses.put(elem.className, new HashSet<Refactoring>());
-								groupsOfRefactoredClasses.get(elem.className).add(ref);
+								groupsOfRefactoredClasses.put(elem.getClassName(), new HashSet<Refactoring>());
+								groupsOfRefactoredClasses.get(elem.getClassName()).add(ref);
 							}
 							
 						}

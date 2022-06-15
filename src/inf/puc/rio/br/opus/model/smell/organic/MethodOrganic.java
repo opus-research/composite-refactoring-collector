@@ -27,7 +27,7 @@ public class MethodOrganic {
     @JsonProperty("sourceFile")
     private SourceFileOrganic sourceFile;
     @JsonProperty("metricsValues")
-    private MetricsValuesOrganic metricsValues;
+    private Metrics metricsValues;
     @JsonProperty("fullyQualifiedName")
     private String fullyQualifiedName;
     @JsonProperty("smells")
@@ -56,12 +56,12 @@ public class MethodOrganic {
     }
 
     @JsonProperty("metricsValues")
-    public MetricsValuesOrganic getMetricsValues() {
+    public Metrics getMetricsValues() {
         return metricsValues;
     }
 
     @JsonProperty("metricsValues")
-    public void setMetricsValues(MetricsValuesOrganic metricsValues) {
+    public void setMetricsValues(Metrics metricsValues) {
         this.metricsValues = metricsValues;
     }
 

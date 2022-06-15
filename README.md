@@ -6,6 +6,10 @@ This tool can collect the following data.
 
 CompositeRefactoringCollector collects those data, executes a parser to a simple model, and saves the data in a local MongoDB database. 
 
+Command do RefMiner used to collect refactorings 
+RefactoringMiner -a <git-repo-folder> <branch> -json <path-to-json-file>
+Detect refactorings between <start-commit-sha1> and <end-commit-sha1> for project <git-repo-folder>	
+
 This tool collects the refactoring types supported by RefactoringMiner 1.0 & 2.0
 
 Extract Method  - OK 

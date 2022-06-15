@@ -2,8 +2,10 @@ package inf.puc.rio.br.opus.database.refactorings;
 
 import java.util.List;
 
+import com.mongodb.BasicDBObject;
 import inf.puc.rio.br.opus.database.Repository;
 import inf.puc.rio.br.opus.model.refactoring.Refactoring;
+import org.bson.types.ObjectId;
 
 
 public class RefactoringRepository extends Repository {
@@ -20,7 +22,11 @@ public class RefactoringRepository extends Repository {
 		refactorings().insertMany(refList);
 	}
 
-	public Refactoring getRefactoringById(String refID) {
-		return null;
+	public Refactoring getRefactoringById(String refactoringId) {
+
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("refactoringId", refactoringId.trim());
+		return refactorings().find(searchQuery).first();
+
 	}
 }

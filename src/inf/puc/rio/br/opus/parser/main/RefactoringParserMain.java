@@ -56,7 +56,7 @@ public class RefactoringParserMain {
 			String refId = refOutput.project + "_" + String.valueOf(refs.size());
 
 			Commit commit = new Commit(refOutput.commit,"", 0);
-			Refactoring ref = new Refactoring(refId, refOutput.project, commit, refOutput.getType(), refOutput.getDescription());
+			Refactoring ref = new Refactoring(null, refId, refOutput.project, commit, refOutput.getType(), refOutput.getDescription());
 
 			//GetCodeElements
 			List<CodeElement> elements = refParser.getCodeElements(refOutput.getType(), refOutput.getDescription());
@@ -189,7 +189,7 @@ public class RefactoringParserMain {
 	    Commit commitObj = commitCollector.getPreviousCommit(commit);
 		
 	    //Get Refactoring
-		ref = new Refactoring(refId, projectName, commitObj, refactoringType, details);
+		ref = new Refactoring(null, refId, projectName, commitObj, refactoringType, details);
 		
 		
 		//GetCodeElements

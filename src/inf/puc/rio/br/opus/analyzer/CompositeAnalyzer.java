@@ -26,8 +26,8 @@ public class CompositeAnalyzer {
 
         for (String refID : refsIDs) {
             Refactoring ref = refactoringRepository.getRefactoringById(refID);
-            commits.add(ref.getCurrentCommit().previousCommit);
-            commits.add(ref.getCurrentCommit().commit);
+            commits.add(ref.getCurrentCommit().getPreviousCommit());
+            commits.add(ref.getCurrentCommit().getCommit());
         }
 
 

@@ -8,27 +8,48 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 public class Commit {
 	
 	@BsonProperty(value = "commit")
-	public final String commit;
+	private String commit;
 	
 	@BsonProperty(value = "previous_commit")
-	public final String previousCommit;
+	private String previousCommit;
 	
 	@BsonProperty(value = "order_commit")
-	public final int orderCommit;
+	private int orderCommit;
 	
 	
 	public Commit(@JsonProperty("commit") String commit,
-				  @JsonProperty("previousCommit") String previousCommit,
-				  @JsonProperty("orderCommit") int orderCommit) {
+				  @JsonProperty("previous_commit") String previousCommit,
+				  @JsonProperty("order_commit") int orderCommit) {
 		
 		this.commit = commit;
 		this.previousCommit = previousCommit;
 		this.orderCommit = orderCommit;
 	}
-	
-	
-	
-	
-	
 
+	public Commit() {
+	}
+
+	public String getCommit() {
+		return commit;
+	}
+
+	public void setCommit(String commit) {
+		this.commit = commit;
+	}
+
+	public String getPreviousCommit() {
+		return previousCommit;
+	}
+
+	public void setPreviousCommit(String previousCommit) {
+		this.previousCommit = previousCommit;
+	}
+
+	public int getOrderCommit() {
+		return orderCommit;
+	}
+
+	public void setOrderCommit(int orderCommit) {
+		this.orderCommit = orderCommit;
+	}
 }

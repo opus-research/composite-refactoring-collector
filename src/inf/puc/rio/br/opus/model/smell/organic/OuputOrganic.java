@@ -27,7 +27,7 @@ public class OuputOrganic {
     @JsonProperty("sourceFile")
     private SourceFileOrganicDTO sourceFile;
     @JsonProperty("metricsValues")
-    private MetricsValuesDTO metricsValues;
+    private Metrics metricsValues;
     @JsonProperty("fullyQualifiedName")
     private String fullyQualifiedName;
     @JsonProperty("smells")
@@ -56,12 +56,12 @@ public class OuputOrganic {
     }
 
     @JsonProperty("metricsValues")
-    public MetricsValuesDTO getMetricsValues() {
+    public Metrics getMetricsValues() {
         return metricsValues;
     }
 
     @JsonProperty("metricsValues")
-    public void setMetricsValues(MetricsValuesDTO metricsValues) {
+    public void setMetricsValues(Metrics metricsValues) {
         this.metricsValues = metricsValues;
     }
 
