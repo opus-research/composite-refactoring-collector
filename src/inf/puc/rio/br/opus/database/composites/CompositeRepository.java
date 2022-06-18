@@ -1,5 +1,6 @@
 package inf.puc.rio.br.opus.database.composites;
 
+import com.mongodb.BasicDBObject;
 import inf.puc.rio.br.opus.database.Repository;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
 
@@ -26,5 +27,12 @@ public class CompositeRepository extends Repository {
 		List<CompositeRefactoring> composites = composites().find().into(new ArrayList<CompositeRefactoring>());
 
 		return composites;
+	}
+
+	public CompositeRefactoring getCompositeById(String compositeId){
+
+		BasicDBObject searchQuery = new BasicDBObject();
+		searchQuery.put("_id", compositeId.trim());
+		return composites().find(searchQuery).first();
 	}
 }

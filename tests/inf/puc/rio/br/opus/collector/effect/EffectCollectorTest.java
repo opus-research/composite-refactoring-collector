@@ -123,8 +123,6 @@ public class EffectCollectorTest {
         Refactoring refactoring = refRepository.getRefactoringById("ant_5899");
 
         RefactoringEffect effect = collector.getRefEffectByRefactoring(refactoring);
-
-
-
+        
     }
 }
