@@ -11,6 +11,7 @@ import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 public class CompositeEffectTest {
 
@@ -20,7 +21,7 @@ public class CompositeEffectTest {
         CompositeRepository compositeRepository= new CompositeRepository(connection);
         CompositeEffectCollector collector = new CompositeEffectCollector(connection);
 
-        CompositeRefactoring composite = compositeRepository.getCompositeById("ant_5899");
+        CompositeRefactoring composite = compositeRepository.getCompositeById("okhttp-1346");
 
         //PreviousCommit
         CodeSmell smellPM1 = new CodeSmell("1b",
@@ -57,7 +58,6 @@ public class CompositeEffectTest {
         CodeSmell smellCM3 = new CodeSmell("4a",
                 "FeatureEnvy",
                 "okhttp",
-                           // TODO - Ignorar casos do mesmo nome de metodo e mesmo tipo de parametros
                 "libcore.net.http.HttpURLConnectionImpl.execute([boolean])",
                 "3355d0c99bb946a6441f08fe6fd1c9881a9ea96a",  "","", null);
 

@@ -124,6 +124,16 @@ public class AnalysisUtils {
 	   return elementSet.size() == 1;
 	}
 
+	public static String parserToMethodNameSmellFormat(String methodSignature) {
+
+		String methodName = getMethodName(methodSignature);
+		List<String> parameterTypes = getParametersAsAList(methodSignature);
+
+		String methodNameParser = methodName + "(" + parameterTypes.toString() + ")";
+
+		return methodNameParser;
+	}
+
 	public static List<String> getParametersAsAList(String methodSignature){
 		List<String> parameterTypes = new ArrayList<>();
 

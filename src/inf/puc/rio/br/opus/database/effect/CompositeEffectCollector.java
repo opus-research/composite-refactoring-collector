@@ -24,8 +24,6 @@ public class CompositeEffectCollector {
     public CompositeEffect collectRefEffect(CompositeRefactoring composite){
 
         List<Refactoring> refs = composite.getRefactorings();
-        List<CodeSmell> smell = new ArrayList<>();
-        List<RefactoringEffect> effects = new ArrayList<>();
 
         Map<String, String> previousAndCurrentCommits = getPreviousAndCurrentCommits(refs);
         String previousCommit = previousAndCurrentCommits.get("previousCommit");
@@ -48,8 +46,10 @@ public class CompositeEffectCollector {
                 smellsOfCurrentCommit = smellRepository.getSmellsOfClassByCommit(currentCommit, className);
             }
             if (methodSignature !=null) {
-                String methodName = AnalysisUtils.getMethodName(methodSignature);
+                String methodName = AnalysisUtils.parserToMethodNameSmellFormat(methodSignature);
+
                 List<CodeSmell> tempSmells = smellRepository.getSmellsOfMethodByCommit(previousCommit, methodName);
+
                 List<String> methodNames = tempSmells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
                 if( !AnalysisUtils.isSameCodeElementName(methodNames)){
                     return null;
