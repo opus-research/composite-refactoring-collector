@@ -124,9 +124,32 @@ public class AnalysisUtils {
 	   return elementSet.size() == 1;
 	}
 
+	public static List<String> getParametersAsAList(String methodSignature){
+		List<String> parameterTypes = new ArrayList<>();
+
+
+		int separatorOpenIndex = methodSignature.indexOf("(");
+		int separatorCloseIndex = methodSignature.indexOf(")");
+
+		String parameterTypesAsText = methodSignature.substring(separatorOpenIndex+1, separatorCloseIndex);
+		parameterTypes = new ArrayList<>(Arrays.asList(parameterTypesAsText.split(",")));
+
+		for (int i = 0; i < parameterTypes.size(); i++) {
+			String parameterType = parameterTypes.get(i).trim();
+			int spaceIndex = parameterType.indexOf(" ");
+			parameterType = parameterType.substring(spaceIndex+1);
+
+			parameterTypes.set(i, parameterType);
+
+		}
+
+		return parameterTypes;
+	}
+
 	private static boolean hasExtension(String filePath, String extension){
 		return filePath.contains(extension);
 	}
+
 	public static void collectOrderFromCommitList() {
 		CommitCollector commitCollector = new CommitCollector("elasticsearch", "C:\\Users\\anaca\\elasticsearch");
 		

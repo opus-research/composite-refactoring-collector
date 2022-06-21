@@ -10,6 +10,8 @@ import inf.puc.rio.br.opus.model.refactoring.Refactoring;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 public class CompositeEffectTest {
 
     @Test
@@ -18,46 +20,63 @@ public class CompositeEffectTest {
         CompositeRepository compositeRepository= new CompositeRepository(connection);
         CompositeEffectCollector collector = new CompositeEffectCollector(connection);
 
-        CompositeRefactoring refactoring = compositeRepository.getCompositeById("ant_5899");
+        CompositeRefactoring composite = compositeRepository.getCompositeById("ant_5899");
 
         //PreviousCommit
-        CodeSmell smellPM1 = new CodeSmell("1",
+        CodeSmell smellPM1 = new CodeSmell("1b",
                 "FeatureEnvy",
                 "okhttp",
                 "libcore.net.http.HttpURLConnectionImpl.getResponse()",
                 "f1eacbff7ec5912d041184e1b35aa4e5468ea4ba", "","", null);
 
-        CodeSmell smellPM2 = new CodeSmell("2",
+        CodeSmell smellPM2 = new CodeSmell("2b",
                 "LongMethod",
                 "okhttp",
                 "libcore.net.http.HttpURLConnectionImpl.getResponse()",
                 "f1eacbff7ec5912d041184e1b35aa4e5468ea4ba",  "","", null);
 
-        CodeSmell smellPM3 = new CodeSmell("3",
+        CodeSmell smellPM3 = new CodeSmell("3b",
                 "IntensiveCoupling",
                 "okhttp",
                 "libcore.net.http.HttpURLConnectionImpl.getResponse()",
                 "f1eacbff7ec5912d041184e1b35aa4e5468ea4ba",  "","", null);
 
         //CurrentCommit
-        CodeSmell smellCM1 = new CodeSmell("1",
+        CodeSmell smellCM1 = new CodeSmell("1b",
                 "FeatureEnvy",
                 "okhttp",
                 "libcore.net.http.HttpURLConnectionImpl.getResponse()",
                 "3355d0c99bb946a6441f08fe6fd1c9881a9ea96a", "","", null);
 
-        CodeSmell smellCM2 = new CodeSmell("3",
+        CodeSmell smellCM2 = new CodeSmell("3b",
                 "IntensiveCoupling",
                 "okhttp",
                 "libcore.net.http.HttpURLConnectionImpl.getResponse()",
                 "3355d0c99bb946a6441f08fe6fd1c9881a9ea96a",  "","", null);
 
-        CodeSmell smellCM3 = new CodeSmell("4",
+        CodeSmell smellCM3 = new CodeSmell("4a",
                 "FeatureEnvy",
                 "okhttp",
+                           // TODO - Ignorar casos do mesmo nome de metodo e mesmo tipo de parametros
                 "libcore.net.http.HttpURLConnectionImpl.execute([boolean])",
                 "3355d0c99bb946a6441f08fe6fd1c9881a9ea96a",  "","", null);
 
-        CompositeEffect effect = collector.collectRefEffect(refactoring);
+        CompositeEffect effect = collector.collectRefEffect(composite);
+
+       // Mocar esses metodos getSmellsOfMethodByCommit
+
+        assertEquals(effect.getCompositeId(), composite.getId());
+        assertEquals(effect.getSmellsBefore(), 5);
+        assertEquals(effect.getSmellsAfter(), 4);
+
+        assertEquals(true, effect.getSmellsBefore().stream().filter(smellId -> smellId.equals("1b")));
+        assertEquals(true, effect.getSmellsBefore().stream().filter(smellId -> smellId.equals("2b")));
+        assertEquals(true, effect.getSmellsBefore().stream().filter(smellId -> smellId.equals("3b")));
+
+        assertEquals(true, effect.getSmellsAfter().stream().filter(smellId -> smellId.equals("1b")));
+        assertEquals(true, effect.getSmellsAfter().stream().filter(smellId -> smellId.equals("3b")));
+        assertEquals(true, effect.getSmellsAfter().stream().filter(smellId -> smellId.equals("4a")));
+
     }
+
 }

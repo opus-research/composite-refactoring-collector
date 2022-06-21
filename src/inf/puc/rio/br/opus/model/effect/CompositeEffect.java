@@ -28,4 +28,36 @@ public class CompositeEffect {
         this.smellsBefore = smellsBefore;
         this.smellsAfter = smellsAfter;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getCompositeId() {
+        return compositeId;
+    }
+
+    public void setCompositeId(String compositeId) {
+        this.compositeId = compositeId;
+    }
+
+    public List<String> getSmellsBefore() {
+        return smellsBefore;
+    }
+
+    public void setSmellsBefore(List<String> smellsBefore) {
+        this.smellsBefore = smellsBefore;
+    }
+
+    public List<String> getSmellsAfter() {
+        return smellsAfter;
+    }
+
+    public void setSmellsAfter(List<String> smellsAfter) {
+        this.smellsAfter = smellsAfter;
+    }
 }
