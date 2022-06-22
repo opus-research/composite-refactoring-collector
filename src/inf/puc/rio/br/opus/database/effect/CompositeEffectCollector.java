@@ -40,7 +40,9 @@ public class CompositeEffectCollector {
         for (CodeElement element : elements) {
             String className = element.getClassName();
             String methodSignature = element.getMethodName();
-
+            // TODO - Get all elements in a set
+            // TODO - Get method name with class + methodsignature
+            // TODO - Fix Cannot find a public constructor for 'CodeSmell'.
             if (className !=null) {
                 smellsOfPreviousCommit = smellRepository.getSmellsOfClassByCommit(previousCommit, className);
                 smellsOfCurrentCommit = smellRepository.getSmellsOfClassByCommit(currentCommit, className);

@@ -38,7 +38,7 @@ public class RefactoringRepository extends Repository {
 	public List<Refactoring> getRefactorings(List<String> refactoringIDs) {
 		BasicDBObject searchQuery = new BasicDBObject();
 		BasicDBObject queryIn = new BasicDBObject();
-		queryIn.put("$in", refactoringIDs.toString());
+		queryIn.put("$in", refactoringIDs);
 		searchQuery.put("refactoringId", queryIn);
 
 		FindIterable<Refactoring> refactoringsIterable = refactorings().find(searchQuery);
