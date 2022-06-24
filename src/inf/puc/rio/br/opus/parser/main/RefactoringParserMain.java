@@ -43,7 +43,7 @@ public class RefactoringParserMain {
 		
         RefactoringParserMain parserMain = new RefactoringParserMain("spymemcached", "C:\\Users\\anaca\\repositories\\spymemcached");
 		
-        parserMain.getRefactoringsFromRefMinerJson();
+        parserMain.getRefactoringsFromRefMinerJson("");
 	}
 	
 
@@ -71,14 +71,14 @@ public class RefactoringParserMain {
 	}
 	
 	
-	private List<Refactoring> getRefactoringsFromRefMinerJson() {
+	private List<Refactoring> getRefactoringsFromRefMinerJson(String path) {
 		
 	    RefMinerOutput refMinerOutput = new RefMinerOutput();
 	    ObjectMapper mapper = new ObjectMapper();
 	    List<Refactoring> refs = new ArrayList<Refactoring>();
 	    
 	    try {
-			refMinerOutput = mapper.readValue(new File("C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\Refactorings\\FormatoBrutoRefactoringMiner\\RefactoringsComDadosProjetos\\refactorings-spymemcached.json"), RefMinerOutput.class);
+			refMinerOutput = mapper.readValue(new File(path), RefMinerOutput.class);
 			
 			refMinerOutput.getCommits().forEach( commit -> {
 				String commitHash = commit.getSha1();
@@ -120,6 +120,19 @@ public class RefactoringParserMain {
 			mapper.writeValue(new File("presto.json"), refactorings);
 		
 	    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void writeRefactoringsToJson(String jsonName, List<Refactoring> refactorings) {
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		try {
+			mapper.writeValue(new File(jsonName), refactorings);
+
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
