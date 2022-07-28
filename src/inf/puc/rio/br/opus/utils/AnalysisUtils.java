@@ -161,7 +161,7 @@ public class AnalysisUtils {
 	}
 
 	public static void collectOrderFromCommitList() {
-		CommitCollector commitCollector = new CommitCollector("elasticsearch", "C:\\Users\\anaca\\elasticsearch");
+		CommitCollector commitCollector = new CommitCollector("elasticsearch", "C:\\Users\\anaca\\elasticsearch", "");
 		
 	    String commits = "b3804c47f7e8ffdf2a98a34ac34dd48b8e97e39a\r\n"
 	    		+ "5cdba0383b08b24e6d829975b308e60bc81fc459\r\n"

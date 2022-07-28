@@ -31,13 +31,15 @@ public class CommitCollector {
 	private String previousCommit;
 	private String projectName;
 	private String projectPath;
+	private String branch;
 	private final static int PREVIOUS_COMMIT_INDEX = 1;
     private int order; 	
 	
-	public CommitCollector(String projectName, String projectPath) {
+	public CommitCollector(String projectName, String projectPath, String branch) {
 		
 		this.projectName = projectName;
 		this.projectPath = projectPath;
+		this.branch = branch;
 		openProject();
 	}
 	
@@ -77,7 +79,7 @@ public class CommitCollector {
 			
 				projectGit.checkout()
 				.setCreateBranch(false)
-				.setName("master")
+				.setName(this.branch)
 				.call();
 				
 			} catch (GitAPIException

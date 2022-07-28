@@ -28,11 +28,11 @@ public class RefactoringParserMain {
     private String projectName; 
     private String projectPath;
     
-    public RefactoringParserMain(String projectName, String projectPath) {
+    public RefactoringParserMain(String projectName, String projectPath, String branch) {
     	this.projectName = projectName; 
     	this.projectPath = projectPath;
     	this.refParser = new RefactoringParser();
-    	commitCollector = new CommitCollector(projectName, projectPath);
+    	commitCollector = new CommitCollector(projectName, projectPath, branch);
     }
     
     public RefactoringParserMain() {
@@ -40,10 +40,14 @@ public class RefactoringParserMain {
     }
     
 	public static void main(String[] args) {
+
+		String projectName = "realm-java";
+        String projectPath = "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\ICSE2023\\projects\\source-code\\projects\\realm-java";
+		RefactoringParserMain parserMain = new RefactoringParserMain(projectName, projectPath, "master");
 		
-        RefactoringParserMain parserMain = new RefactoringParserMain("spymemcached", "C:\\Users\\anaca\\repositories\\spymemcached");
-		
-        parserMain.getRefactoringsFromRefMinerJson("");
+        List<Refactoring> refactorings = parserMain.getRefactoringsFromRefMinerJson("refactorings\\" + projectName + "-refactorings.json");
+
+		parserMain.writeRefactoringsToJson(projectName + "-refactorings.json", refactorings);
 	}
 	
 
@@ -98,8 +102,7 @@ public class RefactoringParserMain {
 
 				});
 			});
-			
-			mapper.writeValue(new File("spymemcached.json"), refs);
+
 		
 	    } catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -111,7 +114,7 @@ public class RefactoringParserMain {
 	
 	
 	private void writeRefactoringsToJson() {
-		RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv");
+		RefactoringParserMain parserMain = new RefactoringParserMain("presto", "presto.csv", "");
 		
 	    List<Refactoring> refactorings = parserMain.getRefactorings();
 	    ObjectMapper mapper = new ObjectMapper();
