@@ -12,4 +12,10 @@ public class SmellMinerator {
         // Get smells from commits running Organic
     }
 
+
+    public static void main(String[] args) {
+        SmellOrganic smellOrganic = new SmellOrganic();
+
+        smellOrganic.colectSmells("", "");
+    }
 }

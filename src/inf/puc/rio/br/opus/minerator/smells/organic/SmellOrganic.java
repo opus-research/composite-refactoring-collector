@@ -9,23 +9,18 @@ public class SmellOrganic {
 
     ProcessBuilder pb;
 
-    // Teste: ant 96ca021c758da63ddfb00a7dff93f30417ebe616
-    public void colectSmells(String commit, String output) {
+    public void colectSmells(String commit, String path) {
         // ATUALIZA PARA O COMMIT EM QUESTÃO
         String commandGitCheckout[] = {"git", "checkout", "-f", commit};
-        executeCommand(commandGitCheckout, Constants.FOLDER_CHECKOUT);
+        executeCommand(commandGitCheckout, Constants.FOLDER_PROJECT);
 
-        // ADICIONA AS VARIÁVEIS DE AMBIENTE
-        pb.environment().put("ECLIPSE_PATH", Constants.FOLDER_ECLIPSE);
-        pb.environment().put("EQUINOX", Constants.FOLDER_ECLIPSE +"plugins/org.eclipse.equinox.launcher_1.5.500.v20190715-1310.jar");
-        pb.environment().put("MAIN", "org.eclipse.core.launcher.Main");
-        pb.environment().put("ORGANIC", "organic.Organic");
 
         // EXECUTA A ORGANIC
-        String comando6[] = {"java", "-jar", "-XX:MaxPermSize=2560m", "-Xms40m", "-Xmx2500m", pb.environment().get("EQUINOX"),
-                "-application", pb.environment().get("ORGANIC"), "-sf", commit+".json",
-                "-src", output};
-        executeCommand(comando6, Constants.FOLDER_CLONE);
+        // java -jar organic-OPT.jar -src <CAMINHO_PRO_PROJETO> -sf <NOME_DO_ARQUIVO_DE_SAIDA>.json
+        String comando6[] = {"java", "-jar", "-XX:MaxPermSize=2560m", "-Xms40m", "-Xmx2500m",Constants.FOLDER_ORGANIC,
+                "-src", Constants.FOLDER_PROJECT, "-sf", path + "\\" + commit+".json"};
+
+        executeCommand(comando6, Constants.FOLDER_PROJECT);
     }
 
     public  void executeCommand(String[] command, String folder) {
