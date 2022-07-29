@@ -132,10 +132,8 @@ public class CommitCollector {
 		List<RevCommit> commitList = new ArrayList<RevCommit>();
 
 		try {
-			ObjectId objectId =  projectGit.getRepository().resolve(currentCommit);
-			Iterable<RevCommit> commitsIterable = projectGit.log().add(objectId).call();
+			Iterable<RevCommit> commitsIterable = projectGit.log().all().call();
 			commitsIterable.iterator().forEachRemaining(n -> commitList.add(n));
-
 			for (RevCommit revCommit : commitList) {
 				Commit commit = new Commit();
 				commit.setCommit(revCommit.getName());
@@ -145,6 +143,7 @@ public class CommitCollector {
 				| IOException e) {
 			// TODO Auto-generated catch block
 			System.out.print(e.getMessage());
+
 		}
 
 		return commits;

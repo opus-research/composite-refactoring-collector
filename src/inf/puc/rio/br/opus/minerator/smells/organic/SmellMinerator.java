@@ -18,15 +18,36 @@ public class SmellMinerator {
 
     public static void main(String[] args) {
         SmellOrganic smellOrganic = new SmellOrganic();
-        smellOrganic.colectSmells("1090348566dd5afd1f5a03477ccc3120167bd639", "C:\\Users\\anaca\\Documents");
-       /*
-        0680ed627d84f8107f590d6e3951c4c7db67635f
-        CommitCollector collector = new CommitCollector("", "", "");
+
+        CommitCollector collector = new CommitCollector("okhttp", Constants.FOLDER_PROJECT, "master");
         List<Commit> commits = collector.getCommits();
 
         for (Commit commit : commits) {
-            smellOrganic.colectSmells(commit.getCommit(), "");
-        }*/
+            smellOrganic.colectSmells(commit.getCommit(), "C:\\Users\\anaca\\Documents");
+        }
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
