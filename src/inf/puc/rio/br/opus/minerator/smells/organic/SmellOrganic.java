@@ -8,16 +8,15 @@ import java.io.InputStreamReader;
 public class SmellOrganic {
 
     ProcessBuilder pb;
-
+    // java -jar organic-OPT.jar -src dubbo/ -sf output.json
     public void colectSmells(String commit, String path) {
         // ATUALIZA PARA O COMMIT EM QUESTÃO
         String commandGitCheckout[] = {"git", "checkout", "-f", commit};
         executeCommand(commandGitCheckout, Constants.FOLDER_PROJECT);
 
-
         // EXECUTA A ORGANIC
         // java -jar organic-OPT.jar -src <CAMINHO_PRO_PROJETO> -sf <NOME_DO_ARQUIVO_DE_SAIDA>.json
-        String comando6[] = {"java", "-jar", "-XX:MaxPermSize=2560m", "-Xms40m", "-Xmx2500m",Constants.FOLDER_ORGANIC,
+        String comando6[] = {"java", "-jar",Constants.FOLDER_ORGANIC,
                 "-src", Constants.FOLDER_PROJECT, "-sf", path + "\\" + commit+".json"};
 
         executeCommand(comando6, Constants.FOLDER_PROJECT);

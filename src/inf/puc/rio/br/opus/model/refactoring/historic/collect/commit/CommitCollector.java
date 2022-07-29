@@ -107,39 +107,48 @@ public class CommitCollector {
 	
 	
 	private List<RevCommit> gitLogFromCurrentCommit() {
-		
-		
+
 		List<RevCommit> commitList = new ArrayList<RevCommit>();  
 		
 		try {
-			
 			ObjectId objectId =  projectGit.getRepository().resolve(currentCommit);
 			Iterable<RevCommit> commits = projectGit.log().add(objectId).call(); 		
 			commits.iterator().forEachRemaining(n -> commitList.add(n));
 
-//			for (RevCommit rev : commits) {
-//				System.out.print(rev.getName());
-//				System.out.print(": ");
-//				System.out.print(rev.getFullMessage());
-//				System.out.println();
-//				System.out.println(rev.getId().getName());
-//				System.out.print(rev.getAuthorIdent().getName());
-//				System.out.println(rev.getAuthorIdent().getEmailAddress());
-//				System.out.println("-------------------------");
-//			}
- 
-			
 		} catch (GitAPIException
 				| IOException e) {
 			// TODO Auto-generated catch block
 			System.out.print(e.getMessage());
 		}
-		
-		
-		
+
 		return commitList;
-		
-	     
+
+	}
+
+	public List<Commit> getCommits() {
+
+		List<Commit> commits = new ArrayList<>();
+
+		List<RevCommit> commitList = new ArrayList<RevCommit>();
+
+		try {
+			ObjectId objectId =  projectGit.getRepository().resolve(currentCommit);
+			Iterable<RevCommit> commitsIterable = projectGit.log().add(objectId).call();
+			commitsIterable.iterator().forEachRemaining(n -> commitList.add(n));
+
+			for (RevCommit revCommit : commitList) {
+				Commit commit = new Commit();
+				commit.setCommit(revCommit.getName());
+				commits.add(commit);
+			}
+		} catch (GitAPIException
+				| IOException e) {
+			// TODO Auto-generated catch block
+			System.out.print(e.getMessage());
+		}
+
+		return commits;
+
 	}
  
 }
