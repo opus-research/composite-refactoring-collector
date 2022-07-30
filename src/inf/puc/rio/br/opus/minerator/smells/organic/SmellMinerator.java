@@ -19,7 +19,7 @@ public class SmellMinerator {
     public static void main(String[] args) {
         SmellOrganic smellOrganic = new SmellOrganic();
 
-        CommitCollector collector = new CommitCollector("okhttp", Constants.FOLDER_PROJECT, "master");
+        CommitCollector collector = new CommitCollector("jgit", Constants.FOLDER_PROJECT, "master");
         List<Commit> commits = collector.getCommits();
 
         for (Commit commit : commits) {
