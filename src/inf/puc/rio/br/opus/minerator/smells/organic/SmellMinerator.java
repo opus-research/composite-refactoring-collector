@@ -8,22 +8,14 @@ import java.util.List;
 public class SmellMinerator {
 
 
-    public void getSmellsFromCommits(List<String> commits){
-        // Get composites
-        // Get refactorings from composites
-        // Get commits from refactorings
-        // Get smells from commits running Organic
-    }
-
-
     public static void main(String[] args) {
         SmellOrganic smellOrganic = new SmellOrganic();
 
-        CommitCollector collector = new CommitCollector("jgit", Constants.FOLDER_PROJECT, "master");
+        CommitCollector collector = new CommitCollector(Constants.PROJECT, Constants.FOLDER_PROJECT, Constants.BRANCH);
         List<Commit> commits = collector.getCommits();
 
         for (Commit commit : commits) {
-            smellOrganic.colectSmells(commit.getCommit(), "C:\\Users\\anaca\\Documents");
+            smellOrganic.colectSmells(commit.getCommit(), Constants.OUTPUT);
         }
 
     }
