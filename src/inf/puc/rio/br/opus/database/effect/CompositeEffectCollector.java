@@ -36,37 +36,45 @@ public class CompositeEffectCollector {
 
         List<CodeSmell> smellsOfPreviousCommit = new ArrayList<>();
         List<CodeSmell> smellsOfCurrentCommit = new ArrayList<>();
+        Set<String> classesSet = new HashSet<>();
+        Set<String> methodsSet = new HashSet<>();
 
         for (CodeElement element : elements) {
             String className = element.getClassName();
-            String methodSignature = element.getMethodName();
-            // TODO - Get all elements in a set
-            // TODO - Get method name with class + methodsignature
-            // TODO - Fix Cannot find a public constructor for 'CodeSmell'.
-            if (className !=null) {
-                smellsOfPreviousCommit = smellRepository.getSmellsOfClassByCommit(previousCommit, className);
-                smellsOfCurrentCommit = smellRepository.getSmellsOfClassByCommit(currentCommit, className);
-            }
-            if (methodSignature !=null) {
-                String methodName = AnalysisUtils.parserToMethodNameSmellFormat(methodSignature);
-
-                List<CodeSmell> tempSmells = smellRepository.getSmellsOfMethodByCommit(previousCommit, methodName);
-
-                List<String> methodNames = tempSmells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
-                if( !AnalysisUtils.isSameCodeElementName(methodNames)){
-                    return null;
-                }
-                smellsOfPreviousCommit.addAll(tempSmells);
-
-                tempSmells = smellRepository.getSmellsOfMethodByCommit(currentCommit, methodName);
-                methodNames = tempSmells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
-                if( !AnalysisUtils.isSameCodeElementName(methodNames)){
-                    return null;
-                }
-
-                smellsOfCurrentCommit.addAll(tempSmells);
+            String methodName = AnalysisUtils.parserToMethodNameSmellFormat(element.getMethodName());
+            String methodSignature = className + "." + methodName;
+            if (className != null && !classesSet.contains(className)) {
+                classesSet.add(className);
             }
 
+            if ( methodSignature != null && !methodsSet.contains(methodSignature)) {
+                methodsSet.add(methodSignature);
+            }
+
+        }
+
+        for (String className : classesSet) {
+            smellsOfPreviousCommit.addAll(smellRepository.getSmellsOfClassByCommit(previousCommit, className));
+            smellsOfCurrentCommit.addAll(smellRepository.getSmellsOfClassByCommit(currentCommit, className));
+        }
+
+        for (String methodName : methodsSet) {
+
+            //Previous Commit
+            List<CodeSmell> tempSmells = smellRepository.getSmellsOfMethodByCommit(previousCommit, methodName);
+            List<String> methodNames = tempSmells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
+            if( !AnalysisUtils.isSameCodeElementName(methodNames)){
+                return null;
+            }
+            smellsOfPreviousCommit.addAll(tempSmells);
+
+            //Current Commit
+            tempSmells = smellRepository.getSmellsOfMethodByCommit(currentCommit, methodName);
+            methodNames = tempSmells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
+            if( !AnalysisUtils.isSameCodeElementName(methodNames)){
+                return null;
+            }
+            smellsOfCurrentCommit.addAll(tempSmells);
 
         }
 

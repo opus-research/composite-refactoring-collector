@@ -26,21 +26,22 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-        List<CodeSmell> smells = collector.getAllSmells("sitewhere");
+        List<CodeSmell> smells = collector.getAllSmells("hikaricp", "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\Smells\\output-hikaricp");
         collector.smellRepository.insertAllSmells(smells);
     }
 
-    public List<CodeSmell> getAllSmells(String projectName){
+    public List<CodeSmell> getAllSmells(String projectName, String pathOutput){
         ObjectMapper mapper = new ObjectMapper();
         OuputOrganic[] smells = new OuputOrganic[0];
         String extensionName = ".json";
-        List<String> smellFiles = AnalysisUtils.getAllFileNames(projectName, extensionName);
+        List<String> smellFiles = AnalysisUtils.getAllFileNames(pathOutput, extensionName);
         SmellParser parser = new SmellParser();
         List<CodeSmell> smellsOurModel = new ArrayList<>();
         try {
             for (String smellFile : smellFiles) {
                 System.out.println(smellFile);
                 String commit = AnalysisUtils.getOnlyFileNameFromPath(smellFile, extensionName);
+                System.out.println(commit);
                 smells = mapper.readValue(new File(smellFile), OuputOrganic[].class);
                 List<OuputOrganic> smellOutputOrganic = new ArrayList<>(Arrays.asList(smells));
                 List<CodeSmell> smellsAuxOurModel = parser.parserOrganicSmellToOurSmellModel(smellOutputOrganic, projectName, commit);

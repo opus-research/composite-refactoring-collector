@@ -14,13 +14,13 @@ public class SmellCollectorTest {
     @Test
     public void getAllSmellsTest(){
         SmellCollector collector = new SmellCollector();
-        List<CodeSmell> smells = collector.getAllSmells("project-test");
+        List<CodeSmell> smells = collector.getAllSmells("ant", "project-test");
 
         CodeSmell smell1 = smells.get(93);
 
         assertEquals("LazyClass", smell1.getName());
         assertEquals("org.apache.tools.ant.taskdefs.optional.rjunit.KeepAliveOutputStream", smell1.getCodeElement());
-
+        assertEquals("ant", smell1.getProjectName());
 
         CodeSmell smell2 = smells.get(0);
 
