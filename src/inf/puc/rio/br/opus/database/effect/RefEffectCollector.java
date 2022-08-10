@@ -75,8 +75,8 @@ public class RefEffectCollector {
 
         }
 
-        List<String> smellsBefore = smellsOfPreviousCommit.stream().map(CodeSmell::getId).collect(Collectors.toList());
-        List<String> smellsAfter = smellsOfCurrentCommit.stream().map(CodeSmell::getId).collect(Collectors.toList());
+        List<String> smellsBefore = smellsOfPreviousCommit.stream().map(CodeSmell::getSmellId).collect(Collectors.toList());
+        List<String> smellsAfter = smellsOfCurrentCommit.stream().map(CodeSmell::getSmellId).collect(Collectors.toList());
         effect = new RefactoringEffect(null, ref.getRefactoringId(), smellsBefore, smellsAfter);
         return effect;
 

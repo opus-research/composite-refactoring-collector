@@ -3,11 +3,9 @@ package inf.puc.rio.br.opus.model.smell;
 
 import inf.puc.rio.br.opus.model.smell.organic.Metrics;
 
-import java.util.List;
-
 public class CodeSmell {
 
-    private String id;
+    private String smellId;
     private String name;
     private String projectName;
     private String codeElement;
@@ -17,7 +15,7 @@ public class CodeSmell {
     private Metrics metrics;
 
 
-    public CodeSmell(String id,
+    public CodeSmell(String smellId,
                      String name,
                      String projectName,
                      String codeElement,
@@ -25,7 +23,7 @@ public class CodeSmell {
                      String detectorName,
                      String details,
                      Metrics metrics) {
-        this.id = id;
+        this.smellId = smellId;
         this.name = name;
         this.projectName = projectName;
         this.codeElement = codeElement;
@@ -39,12 +37,12 @@ public class CodeSmell {
 
     }
 
-    public String getId() {
-        return id;
+    public String getSmellId() {
+        return smellId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSmellId(String smellId) {
+        this.smellId = smellId;
     }
 
     public String getName() {

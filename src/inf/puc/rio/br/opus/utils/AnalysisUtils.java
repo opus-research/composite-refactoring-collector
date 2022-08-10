@@ -111,9 +111,14 @@ public class AnalysisUtils {
 			if(methodSignature.contains("protected ")){
 				accessIndex = "protected ".length();
 			}
+		else
+			if(methodSignature.contains("package ")){
+				accessIndex = "package ".length();
+			}
+
 
 		int separatorIndex = methodSignature.indexOf("(");
-		methodName = methodSignature.substring(accessIndex-1, separatorIndex);
+		methodName = methodSignature.substring(accessIndex, separatorIndex);
 
 		return methodName;
 	}

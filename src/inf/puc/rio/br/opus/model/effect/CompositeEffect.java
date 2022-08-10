@@ -83,4 +83,28 @@ public class CompositeEffect {
     public void setSmellsAfter(List<String> smellsAfter) {
         this.smellsAfter = smellsAfter;
     }
+
+    public CompositeRefactoring getComposite() {
+        return composite;
+    }
+
+    public void setComposite(CompositeRefactoring composite) {
+        this.composite = composite;
+    }
+
+    public List<CodeSmell> getCodeSmellsBefore() {
+        return codeSmellsBefore;
+    }
+
+    public void setCodeSmellsBefore(List<CodeSmell> codeSmellsBefore) {
+        this.codeSmellsBefore = codeSmellsBefore;
+    }
+
+    public List<CodeSmell> getCodeSmellsAfter() {
+        return codeSmellsAfter;
+    }
+
+    public void setCodeSmellsAfter(List<CodeSmell> codeSmellsAfter) {
+        this.codeSmellsAfter = codeSmellsAfter;
+    }
 }

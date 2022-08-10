@@ -1,12 +1,15 @@
 package inf.puc.rio.br.opus.collector.smells;
 
+import inf.puc.rio.br.opus.database.composites.CompositeRepository;
 import inf.puc.rio.br.opus.database.smells.SmellCollector;
+import inf.puc.rio.br.opus.database.smells.SmellRepository;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class SmellCollectorTest {
 
@@ -29,5 +32,36 @@ public class SmellCollectorTest {
 
         assertEquals(2174, smells.size());
     }
+
+    @Test
+    public void getMethodByNameRegex(){
+        String[] connection = new String[]{"mongodb://localhost:27017"};
+        SmellRepository repository = new SmellRepository(connection);
+
+        List<CodeSmell> smells = repository.getSmellsOfMethodByCommit("3355d0c99bb946a6441f08fe6fd1c9881a9ea96a",
+                "libcore.net.http.HttpURLConnectionImpl.getResponse");
+
+        assertNotEquals(smells.size(), 0);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 

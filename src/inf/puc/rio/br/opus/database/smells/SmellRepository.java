@@ -31,12 +31,9 @@ public class SmellRepository extends Repository {
     public List<CodeSmell> getSmellsOfMethodByCommit(String commit, String methodName) {
 
         BasicDBObject searchQuery = new BasicDBObject();
-        searchQuery.put("commit", commit);
 
-        BasicDBObject regexQuery = new BasicDBObject();
-        regexQuery.put("$regex", methodName);
-
-        searchQuery.put("codeElement", regexQuery);
+        searchQuery.append("codeElement", methodName);
+        searchQuery.append("commit", commit);
 
         FindIterable<CodeSmell> smellsIterable =  smells().find(searchQuery);
 

@@ -22,7 +22,10 @@ public class CompositeEffectTest {
         CompositeEffectCollector collector = new CompositeEffectCollector(connection);
 
         CompositeRefactoring composite = compositeRepository.getCompositeById("okhttp-1346");
+        CompositeEffect effect = collector.collectCompositeEffect(composite);
 
+        System.out.println(composite.getType());
+        /*
         //PreviousCommit
         CodeSmell smellPM1 = new CodeSmell("1b",
                 "FeatureEnvy",
@@ -61,7 +64,7 @@ public class CompositeEffectTest {
                 "libcore.net.http.HttpURLConnectionImpl.execute([boolean])",
                 "3355d0c99bb946a6441f08fe6fd1c9881a9ea96a",  "","", null);
 
-        CompositeEffect effect = collector.collectRefEffect(composite);
+
 
        // Mocar esses metodos getSmellsOfMethodByCommit
 
@@ -76,7 +79,7 @@ public class CompositeEffectTest {
         assertEquals(true, effect.getSmellsAfter().stream().filter(smellId -> smellId.equals("1b")));
         assertEquals(true, effect.getSmellsAfter().stream().filter(smellId -> smellId.equals("3b")));
         assertEquals(true, effect.getSmellsAfter().stream().filter(smellId -> smellId.equals("4a")));
-
+       */
     }
 
 }

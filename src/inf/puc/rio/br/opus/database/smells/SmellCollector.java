@@ -26,7 +26,7 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-        List<CodeSmell> smells = collector.getAllSmells("hikaricp", "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\Smells\\output-hikaricp");
+        List<CodeSmell> smells = collector.getAllSmells("okhttp", "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\Smells\\output-okhttp");
         collector.smellRepository.insertAllSmells(smells);
     }
 
