@@ -10,7 +10,10 @@ import inf.puc.rio.br.opus.model.refactoring.Refactoring;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import org.junit.Test;
 
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 public class CompositeEffectTest {
@@ -24,62 +27,20 @@ public class CompositeEffectTest {
         CompositeRefactoring composite = compositeRepository.getCompositeById("okhttp-1346");
         CompositeEffect effect = collector.collectCompositeEffect(composite);
 
-        System.out.println(composite.getType());
-        /*
-        //PreviousCommit
-        CodeSmell smellPM1 = new CodeSmell("1b",
-                "FeatureEnvy",
-                "okhttp",
-                "libcore.net.http.HttpURLConnectionImpl.getResponse()",
-                "f1eacbff7ec5912d041184e1b35aa4e5468ea4ba", "","", null);
+        assertEquals(effect.getId(), "effect-" + composite.getId());
+        assertEquals(effect.getCodeSmellsBefore().size(), 4);
+        assertEquals(effect.getCodeSmellsAfter().size(), 5);
 
-        CodeSmell smellPM2 = new CodeSmell("2b",
-                "LongMethod",
-                "okhttp",
-                "libcore.net.http.HttpURLConnectionImpl.getResponse()",
-                "f1eacbff7ec5912d041184e1b35aa4e5468ea4ba",  "","", null);
+        assertEquals(1, effect.getCodeSmellsBefore().stream().filter(smell -> smell.getName().equals("ComplexClass")).collect(Collectors.toList()).size());
+        assertEquals(1, effect.getCodeSmellsBefore().stream().filter(smell -> smell.getName().equals("FeatureEnvy")).collect(Collectors.toList()).size());
+        assertEquals(1, effect.getCodeSmellsBefore().stream().filter(smell -> smell.getName().equals("LongMethod")).collect(Collectors.toList()).size());
+        assertEquals(1, effect.getCodeSmellsBefore().stream().filter(smell -> smell.getName().equals("IntensiveCoupling")).collect(Collectors.toList()).size());
 
-        CodeSmell smellPM3 = new CodeSmell("3b",
-                "IntensiveCoupling",
-                "okhttp",
-                "libcore.net.http.HttpURLConnectionImpl.getResponse()",
-                "f1eacbff7ec5912d041184e1b35aa4e5468ea4ba",  "","", null);
+        assertEquals(1, effect.getCodeSmellsAfter().stream().filter(smell -> smell.getName().equals("ComplexClass")).collect(Collectors.toList()).size());
+        assertEquals(2, effect.getCodeSmellsAfter().stream().filter(smell -> smell.getName().equals("FeatureEnvy")).collect(Collectors.toList()).size());
+        assertEquals(1, effect.getCodeSmellsAfter().stream().filter(smell -> smell.getName().equals("LongParameterList")).collect(Collectors.toList()).size());
+        assertEquals(1, effect.getCodeSmellsAfter().stream().filter(smell -> smell.getName().equals("IntensiveCoupling")).collect(Collectors.toList()).size());
 
-        //CurrentCommit
-        CodeSmell smellCM1 = new CodeSmell("1b",
-                "FeatureEnvy",
-                "okhttp",
-                "libcore.net.http.HttpURLConnectionImpl.getResponse()",
-                "3355d0c99bb946a6441f08fe6fd1c9881a9ea96a", "","", null);
-
-        CodeSmell smellCM2 = new CodeSmell("3b",
-                "IntensiveCoupling",
-                "okhttp",
-                "libcore.net.http.HttpURLConnectionImpl.getResponse()",
-                "3355d0c99bb946a6441f08fe6fd1c9881a9ea96a",  "","", null);
-
-        CodeSmell smellCM3 = new CodeSmell("4a",
-                "FeatureEnvy",
-                "okhttp",
-                "libcore.net.http.HttpURLConnectionImpl.execute([boolean])",
-                "3355d0c99bb946a6441f08fe6fd1c9881a9ea96a",  "","", null);
-
-
-
-       // Mocar esses metodos getSmellsOfMethodByCommit
-
-        assertEquals(effect.getCompositeId(), composite.getId());
-        assertEquals(effect.getSmellsBefore(), 5);
-        assertEquals(effect.getSmellsAfter(), 4);
-
-        assertEquals(true, effect.getSmellsBefore().stream().filter(smellId -> smellId.equals("1b")));
-        assertEquals(true, effect.getSmellsBefore().stream().filter(smellId -> smellId.equals("2b")));
-        assertEquals(true, effect.getSmellsBefore().stream().filter(smellId -> smellId.equals("3b")));
-
-        assertEquals(true, effect.getSmellsAfter().stream().filter(smellId -> smellId.equals("1b")));
-        assertEquals(true, effect.getSmellsAfter().stream().filter(smellId -> smellId.equals("3b")));
-        assertEquals(true, effect.getSmellsAfter().stream().filter(smellId -> smellId.equals("4a")));
-       */
     }
 
 }

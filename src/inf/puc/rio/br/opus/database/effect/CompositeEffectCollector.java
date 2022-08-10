@@ -59,27 +59,17 @@ public class CompositeEffectCollector {
         }
 
         for (String methodName : methodsSet) {
-
             //Previous Commit
             List<CodeSmell> tempSmells = smellRepository.getSmellsOfMethodByCommit(previousCommit, methodName);
-            List<String> methodNames = tempSmells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
-            if( !AnalysisUtils.isSameCodeElementName(methodNames)){
-                return null;
-            }
             smellsOfPreviousCommit.addAll(tempSmells);
 
             //Current Commit
             tempSmells = smellRepository.getSmellsOfMethodByCommit(currentCommit, methodName);
-            methodNames = tempSmells.stream().map(CodeSmell::getCodeElement).collect(Collectors.toList());
-            if( !AnalysisUtils.isSameCodeElementName(methodNames)){
-                return null;
-            }
             smellsOfCurrentCommit.addAll(tempSmells);
-
         }
 
-        CompositeEffect effectDetailed = new CompositeEffect(null, composite, smellsOfPreviousCommit, smellsOfCurrentCommit);
-
+        String id = "effect-" + composite.getId();
+        CompositeEffect effectDetailed = new CompositeEffect(id, composite, smellsOfPreviousCommit, smellsOfCurrentCommit);
         return effectDetailed;
     }
 
@@ -88,7 +78,7 @@ public class CompositeEffectCollector {
         List<String> smellsBefore = effect.getCodeSmellsBefore().stream().map(CodeSmell::getSmellId).collect(Collectors.toList());
         List<String> smellsAfter = effect.getCodeSmellsAfter().stream().map(CodeSmell::getSmellId).collect(Collectors.toList());
 
-        CompositeEffect simplifiedEffect = new CompositeEffect(null, effect.getComposite().getId(), smellsBefore, smellsAfter);
+        CompositeEffect simplifiedEffect = new CompositeEffect(effect.getId(), effect.getComposite().getId(), smellsBefore, smellsAfter);
 
         return simplifiedEffect;
     }

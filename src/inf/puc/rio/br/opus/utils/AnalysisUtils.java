@@ -136,6 +136,10 @@ public class AnalysisUtils {
 
 		String methodNameParser = methodName + "(" + parameterTypes.toString() + ")";
 
+		if(methodNameParser.contains("([])")){
+			methodNameParser = methodNameParser.replace("([])", "");
+		}
+
 		return methodNameParser;
 	}
 
