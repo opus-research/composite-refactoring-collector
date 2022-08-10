@@ -1,6 +1,9 @@
 package inf.puc.rio.br.opus.model.effect;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import inf.puc.rio.br.opus.database.composites.CompositeRepository;
+import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
+import inf.puc.rio.br.opus.model.smell.CodeSmell;
 
 import java.util.List;
 
@@ -12,11 +15,20 @@ public class CompositeEffect {
     @JsonProperty("compositeId")
     private String compositeId;
 
+    @JsonProperty("composite")
+    private CompositeRefactoring composite;
+
     @JsonProperty("smellsBefore")
     private List<String> smellsBefore;
 
     @JsonProperty("smellsAfter")
     private List<String> smellsAfter;
+
+    @JsonProperty("codeSmellsBefore")
+    private List<CodeSmell> codeSmellsBefore;
+
+    @JsonProperty("codeSmellsAfter")
+    private List<CodeSmell> codeSmellsAfter;
 
 
     public CompositeEffect(String id,
@@ -27,6 +39,17 @@ public class CompositeEffect {
         this.compositeId = refactoringId;
         this.smellsBefore = smellsBefore;
         this.smellsAfter = smellsAfter;
+    }
+
+
+    public CompositeEffect(String id,
+                           CompositeRefactoring composite,
+                           List<CodeSmell> codeSmellsBefore,
+                           List<CodeSmell> codeSmellsAfter) {
+        this.id = id;
+        this.composite = composite;
+        this.codeSmellsBefore = codeSmellsBefore;
+        this.codeSmellsAfter = codeSmellsAfter;
     }
 
     public String getId() {

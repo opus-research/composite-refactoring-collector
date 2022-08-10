@@ -80,9 +80,11 @@ public class CompositeEffectCollector {
 
         List<String> smellsBefore = smellsOfPreviousCommit.stream().map(CodeSmell::getId).collect(Collectors.toList());
         List<String> smellsAfter = smellsOfCurrentCommit.stream().map(CodeSmell::getId).collect(Collectors.toList());
-        CompositeEffect effect = new CompositeEffect(null, composite.getId(), smellsBefore, smellsAfter);
-        return effect;
 
+        //TODO - Write composite effects
+        CompositeEffect effectDetailed = new CompositeEffect(null, composite, smellsOfPreviousCommit, smellsOfCurrentCommit);
+        CompositeEffect effectSimplified = new CompositeEffect(null, composite.getId(), smellsBefore, smellsAfter);
+        return effectDetailed;
     }
 
     private Map<String, String> getPreviousAndCurrentCommits(List<Refactoring> refactorings){
