@@ -5,7 +5,6 @@ import inf.puc.rio.br.opus.database.refactorings.RefactoringRepository;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
 import inf.puc.rio.br.opus.model.refactoring.Refactoring;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,7 +17,7 @@ public class CompositeAnalyzer {
     private Set<String> getCommitsOfComposites(String projectName){
         Set<String> commits = new HashSet<>();
         Set<String> refsIDs = new HashSet<>();
-        List<CompositeRefactoring> composites = compositeRepository.getAllComposites(projectName);
+        List<CompositeRefactoring> composites = compositeRepository.getCompositesByProject(projectName);
 
         composites.forEach(composite -> {
             refsIDs.addAll(composite.getRefactoringIDs());

@@ -1,5 +1,6 @@
 package inf.puc.rio.br.opus.database.effect;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import inf.puc.rio.br.opus.database.smells.SmellRepository;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
 import inf.puc.rio.br.opus.model.effect.CompositeEffect;
@@ -9,6 +10,8 @@ import inf.puc.rio.br.opus.model.refactoring.historic.Commit;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import inf.puc.rio.br.opus.utils.AnalysisUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -17,7 +20,31 @@ public class CompositeEffectCollector {
     private SmellRepository smellRepository;
 
     public CompositeEffectCollector(String[] args) {
+
         this.smellRepository = new SmellRepository(args);
+
+    }
+
+    public List<CompositeEffect> getAllCompositeEffects(List<CompositeRefactoring> composites){
+        List<CompositeEffect> compositeEffectList = new ArrayList<>();
+
+        for (CompositeRefactoring composite : composites) {
+
+            CompositeEffect effect = collectCompositeEffect(composite);
+            compositeEffectList.add(effect);
+        }
+
+        return compositeEffectList;
+    }
+
+    public List<CompositeEffect> getSimplifiedCompositeEffects(List<CompositeEffect> effectList){
+
+        List<CompositeEffect> simplifiedEffectList = new ArrayList<>();
+        for (CompositeEffect effect : effectList) {
+            simplifiedEffectList.add(effect);
+        }
+
+        return simplifiedEffectList;
     }
 
     public CompositeEffect collectCompositeEffect(CompositeRefactoring composite){
@@ -71,6 +98,18 @@ public class CompositeEffectCollector {
         String id = "effect-" + composite.getId();
         CompositeEffect effectDetailed = new CompositeEffect(id, composite, smellsOfPreviousCommit, smellsOfCurrentCommit);
         return effectDetailed;
+    }
+
+    private void writeEffectListToJson(String jsonName, List<CompositeEffect> compositeEffectList) {
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.writeValue(new File(jsonName), compositeEffectList);
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private CompositeEffect getSimplifiedEffect(CompositeEffect effect){

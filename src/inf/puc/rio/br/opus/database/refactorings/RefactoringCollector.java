@@ -24,7 +24,6 @@ public class RefactoringCollector {
     }
 
 
-
     private List<Refactoring> getAllRefactorings(){
         ObjectMapper mapper = new ObjectMapper();
         List<Refactoring> refList = new ArrayList<>();

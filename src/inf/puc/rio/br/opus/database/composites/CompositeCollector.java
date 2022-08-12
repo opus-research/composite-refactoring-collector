@@ -24,6 +24,20 @@ public class CompositeCollector {
         collector.compositeRepository.insertAllComposites(composites);
     }
 
+    private List<CompositeRefactoring> getAllCompositesByProject(String compositeFile){
+        ObjectMapper mapper = new ObjectMapper();
+        List<CompositeRefactoring> compositeList = new ArrayList<>();
+        CompositeRefactoring[] composites = new CompositeRefactoring[0];
+        try {
+             composites = mapper.readValue(new File(compositeFile), CompositeRefactoring[].class);
+             List<CompositeRefactoring> auxCompositeList = new ArrayList<>(Arrays.asList(composites));
+             auxCompositeList = prepareComposites(auxCompositeList);
+             compositeList.addAll(auxCompositeList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return compositeList;
+    }
 
 
     private List<CompositeRefactoring> getAllComposites(){
@@ -39,12 +53,6 @@ public class CompositeCollector {
                 auxCompositeList = prepareComposites(auxCompositeList);
                 compositeList.addAll(auxCompositeList);
             }
-
-
-            // composites = mapper.readValue(new File("okhttp-refactorings.json"), CompositeRefactoring[].class);
-            //
-            //  compositeList.addAll(Arrays.asList(composites));
-
         } catch (IOException e) {
             e.printStackTrace();
         }

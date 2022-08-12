@@ -27,13 +27,35 @@ public class CompositeRepository extends Repository {
 		composites().insertMany(compositeList);
 	}
 
-	public List<CompositeRefactoring> getAllComposites(String projectNames){
+	public List<CompositeRefactoring> getCompositesByProject(String projectName){
 
-		List<CompositeRefactoring> composites = composites().find().into(new ArrayList<CompositeRefactoring>());
+		List<CompositeRefactoring> composites = composites().find().into(new ArrayList<>());
+		List<CompositeRefactoring> compositesOfProject = new ArrayList<>();
 
-		return composites;
+		for (CompositeRefactoring composite : composites) {
+			List<Refactoring> refactorings = refactoringRepository.getRefactorings(composite.getRefactoringIDs());
+			System.out.println("size " + refactorings.size());
+
+			if(refactorings.get(0).getProject().equals(projectName)){
+				CompositeRefactoring compositeOfProject = composite;
+				compositeOfProject.setRefactorings(refactorings);
+				compositesOfProject.add(compositeOfProject);
+
+				System.out.println(refactorings.get(0).getProject());
+			}
+		}
+		return compositesOfProject;
 	}
 
+	public List<CompositeRefactoring> getAllComposites(){
+
+		List<CompositeRefactoring> composites = composites().find().into(new ArrayList<>());
+		for (CompositeRefactoring composite : composites) {
+			List<Refactoring> refactorings = refactoringRepository.getRefactorings(composite.getRefactoringIDs());
+			composite.setRefactorings(refactorings);
+		}
+		return composites;
+	}
 
 	public CompositeRefactoring getCompositeById(String compositeId){
 
