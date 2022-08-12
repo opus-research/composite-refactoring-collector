@@ -1,6 +1,7 @@
 package inf.puc.rio.br.opus.database.effect;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import inf.puc.rio.br.opus.database.composites.CompositeCollector;
 import inf.puc.rio.br.opus.database.smells.SmellRepository;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
 import inf.puc.rio.br.opus.model.effect.CompositeEffect;
@@ -23,6 +24,18 @@ public class CompositeEffectCollector {
 
         this.smellRepository = new SmellRepository(args);
 
+    }
+
+    public static void main(String[] args) {
+        CompositeEffectCollector effectCollector = new CompositeEffectCollector(args);
+        CompositeCollector collector = new CompositeCollector();
+        List<CompositeRefactoring> composites = collector.getAllCompositesByProject("composites\\hystrix-composite-rangebased.json");
+
+        List<CompositeEffect> effectList = effectCollector.getAllCompositeEffects(composites);
+        List<CompositeEffect> simplifiedEffectList = effectCollector.getSimplifiedCompositeEffects(effectList);
+
+        effectCollector.writeEffectListToJson("hystrix-composite-effect.json", effectList);
+        effectCollector.writeEffectListToJson("hystrix-composite-effect-simplified.json", simplifiedEffectList);
     }
 
     public List<CompositeEffect> getAllCompositeEffects(List<CompositeRefactoring> composites){

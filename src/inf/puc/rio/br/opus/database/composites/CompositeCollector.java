@@ -18,21 +18,25 @@ public class CompositeCollector {
     private CompositeCollector(String[] args){
         compositeRepository= new CompositeRepository(args);
     }
+
+    public CompositeCollector(){
+
+    }
+
     public static void main(String[] args) {
         CompositeCollector collector = new CompositeCollector(args);
         List<CompositeRefactoring> composites = collector.getAllComposites();
         collector.compositeRepository.insertAllComposites(composites);
     }
 
-    private List<CompositeRefactoring> getAllCompositesByProject(String compositeFile){
+    public List<CompositeRefactoring> getAllCompositesByProject(String compositeFile){
         ObjectMapper mapper = new ObjectMapper();
         List<CompositeRefactoring> compositeList = new ArrayList<>();
         CompositeRefactoring[] composites = new CompositeRefactoring[0];
         try {
              composites = mapper.readValue(new File(compositeFile), CompositeRefactoring[].class);
-             List<CompositeRefactoring> auxCompositeList = new ArrayList<>(Arrays.asList(composites));
-             auxCompositeList = prepareComposites(auxCompositeList);
-             compositeList.addAll(auxCompositeList);
+             compositeList = new ArrayList<>(Arrays.asList(composites));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
