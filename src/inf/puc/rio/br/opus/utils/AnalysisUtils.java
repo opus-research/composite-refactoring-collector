@@ -1,5 +1,6 @@
 package inf.puc.rio.br.opus.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,6 +31,10 @@ public class AnalysisUtils {
 
 	}
 
+	public static boolean exists(String path){
+		File f  = new File(path);
+		return  f.exists();
+	}
 	/**
 	 * @method 'getAllFileNames' generates a list of all files from a path
 	 * @param pathFiles path
@@ -57,7 +62,7 @@ public class AnalysisUtils {
 	public static String getOnlyFileNameFromPath(String path, String extension){
 
 		String fileName;
-		int indexSeparator = path.lastIndexOf("\\");
+		int indexSeparator = path.lastIndexOf("/");
 		int indexExtension = path.indexOf(extension);
 
 		fileName = path.substring(indexSeparator+1, indexExtension);

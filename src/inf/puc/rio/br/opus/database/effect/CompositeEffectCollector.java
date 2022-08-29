@@ -27,24 +27,33 @@ public class CompositeEffectCollector {
     }
 
     public static void main(String[] args) {
-        CompositeEffectCollector effectCollector = new CompositeEffectCollector(args);
+        String projectName = "netty";
+        String compositePath = "/home/opus/netty-composite-rangebased.json";
+
+        System.out.println("Evaluating " +  projectName);
+
+        String[] connection = new String[]{"mongodb://localhost:27017"};
+        CompositeEffectCollector effectCollector = new CompositeEffectCollector(connection);
+
         CompositeCollector collector = new CompositeCollector();
-        List<CompositeRefactoring> composites = collector.getAllCompositesByProject("composites\\hystrix-composite-rangebased.json");
+        List<CompositeRefactoring> composites = collector.getAllCompositesByProject(compositePath);
 
         List<CompositeEffect> effectList = effectCollector.getAllCompositeEffects(composites);
         List<CompositeEffect> simplifiedEffectList = effectCollector.getSimplifiedCompositeEffects(effectList);
 
-        effectCollector.writeEffectListToJson("hystrix-composite-effect.json", effectList);
-        effectCollector.writeEffectListToJson("hystrix-composite-effect-simplified.json", simplifiedEffectList);
+        effectCollector.writeEffectListToJson(projectName + "-composite-effect.json", effectList);
+        effectCollector.writeEffectListToJson(projectName + "-composite-effect-simplified.json", simplifiedEffectList);
     }
 
     public List<CompositeEffect> getAllCompositeEffects(List<CompositeRefactoring> composites){
         List<CompositeEffect> compositeEffectList = new ArrayList<>();
 
+        int count = 0;
         for (CompositeRefactoring composite : composites) {
-
+            System.out.println(count + "/" + composites.size());
             CompositeEffect effect = collectCompositeEffect(composite);
             compositeEffectList.add(effect);
+            count++;
         }
 
         return compositeEffectList;
@@ -60,6 +69,7 @@ public class CompositeEffectCollector {
         return simplifiedEffectList;
     }
 
+    //todo - SAVE PREVIOUS AND CURRENT COMMIT
     public CompositeEffect collectCompositeEffect(CompositeRefactoring composite){
 
         List<Refactoring> refs = composite.getRefactorings();

@@ -1,5 +1,7 @@
 package inf.puc.rio.br.opus.database.smells;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import inf.puc.rio.br.opus.database.composites.CompositeRepository;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
@@ -31,7 +33,9 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-        List<CodeSmell> smells = collector.getSmellsByComposites("hystrix", "composites\\hystrix-composite-rangebased.json");
+        List<CodeSmell> smells = collector.getSmellsByComposites("java-driver", "composites/java-driver-composite-rangebased.json");
+        System.out.println(smells.size());
+
         collector.smellRepository.insertAllSmells(smells);
     }
 
@@ -45,12 +49,16 @@ public class SmellCollector {
             List<String> smellFiles = new ArrayList<>();
             for (String commit : commitsOfComposites) {
 
-                String smellFile = "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\Smells\\output-" + projectName + "\\" + commit + ".json";
+                String smellFile = "/home/opus/output-" + projectName + "/" + commit + ".json";
                 smellFiles.add(smellFile);
             }
             return getAllSmells(projectName, smellFiles);
+        } catch (JsonParseException e) {
+            System.out.println("JsonParserException .. ignoring");
+        } catch (JsonMappingException e) {
+            System.out.println("JsonParserException .. ignoring");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("JsonParserException .. ignoring");
         }
         return null;
     }
@@ -75,19 +83,25 @@ public class SmellCollector {
         SmellParser parser = new SmellParser();
         List<CodeSmell> smellsOurModel = new ArrayList<>();
         try {
-            for (String smellFile : smellFiles) {
-                System.out.println(smellFile);
-                String commit = AnalysisUtils.getOnlyFileNameFromPath(smellFile, extensionName);
-                System.out.println(commit);
-                smells = mapper.readValue(new File(smellFile), OuputOrganic[].class);
-                List<OuputOrganic> smellOutputOrganic = new ArrayList<>(Arrays.asList(smells));
-                List<CodeSmell> smellsAuxOurModel = parser.parserOrganicSmellToOurSmellModel(smellOutputOrganic, projectName, commit);
-                smellsOurModel.addAll(smellsAuxOurModel);
-            }
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            for (int i = 0; i < smellFiles.size(); i++) {
+                    String smellFile = smellFiles.get(i);
+                    System.out.println(smellFile);
+                    if (AnalysisUtils.exists(smellFile)) {
+                        String commit = AnalysisUtils.getOnlyFileNameFromPath(smellFile, extensionName);
+                        System.out.println(commit);
+                        System.out.println(i);
+
+                        smells = mapper.readValue(new File(smellFile), OuputOrganic[].class);
+                        List<OuputOrganic> smellOutputOrganic = new ArrayList<>(Arrays.asList(smells));
+                        List<CodeSmell> smellsAuxOurModel = parser.parserOrganicSmellToOurSmellModel(smellOutputOrganic, projectName, commit);
+                        smellsOurModel.addAll(smellsAuxOurModel);
+                    }
+                }
+            } catch (IOException e) {
+            System.out.println("Ignoring Java Parser");
         }
+
         return smellsOurModel;
     }
 
