@@ -3,6 +3,8 @@ package inf.puc.rio.br.opus.database.smells;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.FindIterable;
 import inf.puc.rio.br.opus.database.composites.CompositeRepository;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
@@ -127,5 +129,33 @@ public class SmellCollector {
             e.printStackTrace();
         }
         return smellsOurModel;
+    }
+
+    public List<CodeSmell> getAllSmells(String smellFile){
+        ObjectMapper mapper = new ObjectMapper();
+        List<CodeSmell> smellList = new ArrayList<>();
+        CodeSmell[] smells = new CodeSmell[0];
+        try {
+            smells = mapper.readValue(new File(smellFile), CodeSmell[].class);
+            smellList = new ArrayList<>(Arrays.asList(smells));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return smellList;
+    }
+
+    public List<CodeSmell> getSmellsByCodeElementAndCommit(String commit, String codeElement, List<CodeSmell> smells) {
+
+        List<CodeSmell> smellsResult = new ArrayList<>();
+        for (CodeSmell smell : smells) {
+            if(smell.getCommit() != null && smell.getCodeElement()!= null){
+                if(smell.getCommit().equals(commit) && smell.getCodeElement().equals(codeElement)){
+                    smellsResult.add(smell);
+                }
+            }
+        }
+
+        return smellsResult;
     }
 }

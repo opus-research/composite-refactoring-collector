@@ -25,7 +25,7 @@ public class CompositeEffectTest {
         CompositeEffectCollector collector = new CompositeEffectCollector(connection);
 
         CompositeRefactoring composite = compositeRepository.getCompositeById("okhttp-1346");
-        CompositeEffect effect = collector.collectCompositeEffect(composite);
+        CompositeEffect effect = collector.collectCompositeEffect(composite, null);
 
         assertEquals(effect.getId(), "effect-" + composite.getId());
         assertEquals(effect.getCodeSmellsBefore().size(), 4);
