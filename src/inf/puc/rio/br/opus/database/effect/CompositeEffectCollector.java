@@ -30,8 +30,8 @@ public class CompositeEffectCollector {
     }
 
     public static void main(String[] args) {
-        String projectName = "geoserver";
-        String compositePath = "geoserver-composite-rangebased.json";
+        String projectName = "asynchttpclient";
+        String compositePath = "async-http-client-composite-rangebased.json";
 
         System.out.println("Evaluating " +  projectName);
 
@@ -39,7 +39,7 @@ public class CompositeEffectCollector {
         CompositeEffectCollector effectCollector = new CompositeEffectCollector(connection);
 
         CompositeCollector collector = new CompositeCollector();
-        List<CodeSmell> smells = effectCollector.smellCollector.getAllSmells("C:\\Users\\anaca\\Documents\\smells-geoserver.json");
+        List<CodeSmell> smells = effectCollector.smellCollector.getAllSmells("C:\\Users\\anaca\\Documents\\smells-asynchttpclient.json");
         List<CompositeRefactoring> composites = collector.getAllCompositesByProject(compositePath);
 
         List<CompositeEffect> effectList = effectCollector.getAllCompositeEffects(composites, smells);
@@ -124,6 +124,8 @@ public class CompositeEffectCollector {
 
         String id = "effect-" + composite.getId();
         CompositeEffect effectDetailed = new CompositeEffect(id, composite, smellsOfPreviousCommit, smellsOfCurrentCommit);
+        effectDetailed.setPreviousCommit(previousCommit);
+        effectDetailed.setCurrentCommit(currentCommit);
         return effectDetailed;
     }
 
