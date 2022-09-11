@@ -1,7 +1,14 @@
 package inf.puc.rio.br.opus.model.smell;
 
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import inf.puc.rio.br.opus.model.smell.organic.Metrics;
+import org.bson.types.ObjectId;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class CodeSmell {
 
@@ -14,6 +21,8 @@ public class CodeSmell {
     private String commit;
     private Metrics metrics;
 
+    @JsonIgnore
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public CodeSmell(String smellId,
                      String name,
@@ -99,5 +108,15 @@ public class CodeSmell {
 
     public void setMetrics(Metrics metrics) {
         this.metrics = metrics;
+    }
+
+    @JsonAnyGetter
+    public Map<String, Object> getAdditionalProperties() {
+        return this.additionalProperties;
+    }
+
+    @JsonAnySetter
+    public void setAdditionalProperty(String name, Object value) {
+        this.additionalProperties.put(name, value);
     }
 }

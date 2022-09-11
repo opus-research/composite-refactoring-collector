@@ -30,6 +30,11 @@ public class CompositeEffect {
     @JsonProperty("codeSmellsAfter")
     private List<CodeSmell> codeSmellsAfter;
 
+    @JsonProperty("previousCommit")
+    private String previousCommit;
+
+    @JsonProperty("currentCommit")
+    private String currentCommit;
 
     public CompositeEffect(String id,
                            String refactoringId,
@@ -106,5 +111,21 @@ public class CompositeEffect {
 
     public void setCodeSmellsAfter(List<CodeSmell> codeSmellsAfter) {
         this.codeSmellsAfter = codeSmellsAfter;
+    }
+
+    public String getPreviousCommit() {
+        return previousCommit;
+    }
+
+    public void setPreviousCommit(String previousCommit) {
+        this.previousCommit = previousCommit;
+    }
+
+    public String getCurrentCommit() {
+        return currentCommit;
+    }
+
+    public void setCurrentCommit(String currentCommit) {
+        this.currentCommit = currentCommit;
     }
 }

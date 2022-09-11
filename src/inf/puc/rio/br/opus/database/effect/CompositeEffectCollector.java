@@ -2,6 +2,7 @@ package inf.puc.rio.br.opus.database.effect;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import inf.puc.rio.br.opus.database.composites.CompositeCollector;
+import inf.puc.rio.br.opus.database.smells.SmellCollector;
 import inf.puc.rio.br.opus.database.smells.SmellRepository;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
 import inf.puc.rio.br.opus.model.effect.CompositeEffect;
@@ -19,17 +20,18 @@ import java.util.stream.Collectors;
 public class CompositeEffectCollector {
 
     private SmellRepository smellRepository;
+    private SmellCollector smellCollector;
 
     public CompositeEffectCollector(String[] args) {
 
         this.smellRepository = new SmellRepository(args);
+        this.smellCollector = new SmellCollector();
 
     }
 
-    public static void main(String[] args)
-    {
-        String projectName = "realmjava";
-        String compositePath = "realm-java-composite-rangebased.json";
+    public static void main(String[] args) {
+        String projectName = "asynchttpclient";
+        String compositePath = "async-http-client-composite-rangebased.json";
 
         System.out.println("Evaluating " +  projectName);
 
@@ -37,22 +39,23 @@ public class CompositeEffectCollector {
         CompositeEffectCollector effectCollector = new CompositeEffectCollector(connection);
 
         CompositeCollector collector = new CompositeCollector();
+        List<CodeSmell> smells = effectCollector.smellCollector.getAllSmells("C:\\Users\\anaca\\Documents\\smells-asynchttpclient.json");
         List<CompositeRefactoring> composites = collector.getAllCompositesByProject(compositePath);
 
-        List<CompositeEffect> effectList = effectCollector.getAllCompositeEffects(composites);
+        List<CompositeEffect> effectList = effectCollector.getAllCompositeEffects(composites, smells);
         List<CompositeEffect> simplifiedEffectList = effectCollector.getSimplifiedCompositeEffects(effectList);
 
         effectCollector.writeEffectListToJson(projectName + "-composite-effect.json", effectList);
         effectCollector.writeEffectListToJson(projectName + "-composite-effect-simplified.json", simplifiedEffectList);
     }
 
-    public List<CompositeEffect> getAllCompositeEffects(List<CompositeRefactoring> composites){
+    public List<CompositeEffect> getAllCompositeEffects(List<CompositeRefactoring> composites, List<CodeSmell> smells){
         List<CompositeEffect> compositeEffectList = new ArrayList<>();
 
         int count = 0;
         for (CompositeRefactoring composite : composites) {
             System.out.println(count + "/" + composites.size());
-            CompositeEffect effect = collectCompositeEffect(composite);
+            CompositeEffect effect = collectCompositeEffect(composite, smells);
             compositeEffectList.add(effect);
             count++;
         }
@@ -71,7 +74,7 @@ public class CompositeEffectCollector {
     }
 
     //todo - SAVE PREVIOUS AND CURRENT COMMIT
-    public CompositeEffect collectCompositeEffect(CompositeRefactoring composite){
+    public CompositeEffect collectCompositeEffect(CompositeRefactoring composite, List<CodeSmell> allSmellsByProject){
 
         List<Refactoring> refs = composite.getRefactorings();
 
@@ -105,22 +108,24 @@ public class CompositeEffectCollector {
         }
         // Conferir ClassSet e MethodSet
         for (String className : classesSet) {
-            smellsOfPreviousCommit.addAll(smellRepository.getSmellsOfClassByCommit(previousCommit, className));
-            smellsOfCurrentCommit.addAll(smellRepository.getSmellsOfClassByCommit(currentCommit, className));
+            smellsOfPreviousCommit.addAll(smellCollector.getSmellsByCodeElementAndCommit(previousCommit, className, allSmellsByProject));
+            smellsOfCurrentCommit.addAll(smellCollector.getSmellsByCodeElementAndCommit(currentCommit, className, allSmellsByProject));
         }
 
         for (String methodName : methodsSet) {
             //Previous Commit
-            List<CodeSmell> tempSmells = smellRepository.getSmellsOfMethodByCommit(previousCommit, methodName);
+            List<CodeSmell> tempSmells = smellCollector.getSmellsByCodeElementAndCommit(previousCommit, methodName, allSmellsByProject);
             smellsOfPreviousCommit.addAll(tempSmells);
 
             //Current Commit
-            tempSmells = smellRepository.getSmellsOfMethodByCommit(currentCommit, methodName);
+            tempSmells = smellCollector.getSmellsByCodeElementAndCommit(currentCommit, methodName, allSmellsByProject);
             smellsOfCurrentCommit.addAll(tempSmells);
         }
 
         String id = "effect-" + composite.getId();
         CompositeEffect effectDetailed = new CompositeEffect(id, composite, smellsOfPreviousCommit, smellsOfCurrentCommit);
+        effectDetailed.setPreviousCommit(previousCommit);
+        effectDetailed.setCurrentCommit(currentCommit);
         return effectDetailed;
     }
 
