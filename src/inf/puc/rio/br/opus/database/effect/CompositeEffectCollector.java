@@ -26,9 +26,10 @@ public class CompositeEffectCollector {
 
     }
 
-    public static void main(String[] args) {
-        String projectName = "netty";
-        String compositePath = "/home/opus/netty-composite-rangebased.json";
+    public static void main(String[] args)
+    {
+        String projectName = "realmjava";
+        String compositePath = "realm-java-composite-rangebased.json";
 
         System.out.println("Evaluating " +  projectName);
 

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import inf.puc.rio.br.opus.database.composites.CompositeRepository;
 import inf.puc.rio.br.opus.model.compositeref.CompositeRefactoring;
+import inf.puc.rio.br.opus.model.refactoring.Refactoring;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import inf.puc.rio.br.opus.model.smell.organic.OuputOrganic;
+import inf.puc.rio.br.opus.parser.main.RefactoringParserMain;
 import inf.puc.rio.br.opus.parser.smell.SmellParser;
 import inf.puc.rio.br.opus.utils.AnalysisUtils;
 import inf.puc.rio.br.opus.utils.CompositeUtils;
@@ -33,10 +35,13 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-        List<CodeSmell> smells = collector.getSmellsByComposites("java-driver", "composites/java-driver-composite-rangebased.json");
+        String projectName = "javadriver";
+        List<CodeSmell> smells = collector.getSmellsByComposites(projectName, "composites/" + "java-driver" +"-composite-rangebased.json");
         System.out.println(smells.size());
 
+        collector.writeSmellsToJson(smells, "smells-" + projectName + ".json");
         collector.smellRepository.insertAllSmells(smells);
+
     }
 
     private List<CodeSmell> getSmellsByComposites(String projectName, String pathComposite){
@@ -49,7 +54,7 @@ public class SmellCollector {
             List<String> smellFiles = new ArrayList<>();
             for (String commit : commitsOfComposites) {
 
-                String smellFile = "/home/opus/output-" + projectName + "/" + commit + ".json";
+                String smellFile = "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\Smells\\output-" + projectName + "\\" + commit + ".json";
                 smellFiles.add(smellFile);
             }
             return getAllSmells(projectName, smellFiles);
@@ -127,5 +132,19 @@ public class SmellCollector {
             e.printStackTrace();
         }
         return smellsOurModel;
+    }
+
+
+    private void writeSmellsToJson(List<CodeSmell> smells, String path) {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            mapper.writeValue(new File(path), smells);
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
