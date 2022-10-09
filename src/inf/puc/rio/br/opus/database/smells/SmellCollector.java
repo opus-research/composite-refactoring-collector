@@ -38,7 +38,7 @@ public class SmellCollector {
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
         String projectName = "javadriver";
-        List<CodeSmell> smells = collector.getSmellsByComposites(projectName, "composites/" + "java-driver" +"-composite-rangebased.json");
+        List<CodeSmell> smells = collector.getSmellsByComposites("meyercontrol", "composites/meyercontrol-composite-rangebased.json");
         System.out.println(smells.size());
 
         collector.writeSmellsToJson(smells, "smells-" + projectName + ".json");

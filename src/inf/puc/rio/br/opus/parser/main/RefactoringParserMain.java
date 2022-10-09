@@ -41,8 +41,8 @@ public class RefactoringParserMain {
     
 	public static void main(String[] args) {
 
-		String projectName = "realm-java";
-        String projectPath = "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\ICSE2023\\projects\\source-code\\projects\\realm-java";
+		String projectName = "meyer-control";
+        String projectPath = "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\ICSE2023\\projects\\source-code\\projects\\meyer-control";
 		RefactoringParserMain parserMain = new RefactoringParserMain(projectName, projectPath, "master");
 		
         List<Refactoring> refactorings = parserMain.getRefactoringsFromRefMinerJson("refactorings\\" + projectName + "-refactorings.json");
