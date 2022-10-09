@@ -30,8 +30,8 @@ public class CompositeEffectCollector {
     }
 
     public static void main(String[] args) {
-        String projectName = "asynchttpclient";
-        String compositePath = "async-http-client-composite-rangebased.json";
+        String projectName = "xabberandroid";
+        String compositePath = "composites\\" + projectName + "-composite-rangebased.json";
 
         System.out.println("Evaluating " +  projectName);
 
@@ -39,7 +39,7 @@ public class CompositeEffectCollector {
         CompositeEffectCollector effectCollector = new CompositeEffectCollector(connection);
 
         CompositeCollector collector = new CompositeCollector();
-        List<CodeSmell> smells = effectCollector.smellCollector.getAllSmells("C:\\Users\\anaca\\Documents\\smells-asynchttpclient.json");
+        List<CodeSmell> smells = effectCollector.smellCollector.getAllSmells("C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\SmellsParser\\smells-activiti.json");
         List<CompositeRefactoring> composites = collector.getAllCompositesByProject(compositePath);
 
         List<CompositeEffect> effectList = effectCollector.getAllCompositeEffects(composites, smells);

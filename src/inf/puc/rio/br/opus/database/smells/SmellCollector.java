@@ -35,10 +35,11 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-        List<CodeSmell> smells = collector.getSmellsByComposites("java-driver", "composites/java-driver-composite-rangebased.json");
+        List<CodeSmell> smells = collector.getSmellsByComposites("meyercontrol", "composites/meyercontrol-composite-rangebased.json");
         System.out.println(smells.size());
 
         collector.smellRepository.insertAllSmells(smells);
+
     }
 
     private List<CodeSmell> getSmellsByComposites(String projectName, String pathComposite){
@@ -51,7 +52,7 @@ public class SmellCollector {
             List<String> smellFiles = new ArrayList<>();
             for (String commit : commitsOfComposites) {
 
-                String smellFile = "/home/opus/output-" + projectName + "/" + commit + ".json";
+                String smellFile = "C:\\Users\\anaca\\OneDrive\\PUC-Rio\\OPUS\\CompositeRefactoring\\Dataset\\Smells\\output-" + projectName + "\\" + commit + ".json";
                 smellFiles.add(smellFile);
             }
             return getAllSmells(projectName, smellFiles);
@@ -86,7 +87,7 @@ public class SmellCollector {
         List<CodeSmell> smellsOurModel = new ArrayList<>();
         try {
 
-            for (int i = 0; i < smellFiles.size(); i++) {
+            for (int i = 0; i < 1500; i++) {
                     String smellFile = smellFiles.get(i);
                     System.out.println(smellFile);
                     if (AnalysisUtils.exists(smellFile)) {
