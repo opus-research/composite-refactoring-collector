@@ -4,7 +4,7 @@ package inf.puc.rio.br.opus.model.project;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.processing.Generated;
+
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -29,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "date",
         "numberOfModifiedFiles"
 })
-@Generated("jsonschema2pojo")
 public class Commit {
 
     @JsonProperty("authorName")

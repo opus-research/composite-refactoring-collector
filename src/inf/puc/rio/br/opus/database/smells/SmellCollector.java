@@ -37,9 +37,10 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-        String projectName = "javadriver";
+        String projectName = "meyercontrol";
         List<CodeSmell> smells = collector.getSmellsByComposites("meyercontrol", "composites/meyercontrol-composite-rangebased.json");
         System.out.println(smells.size());
+
 
         collector.writeSmellsToJson(smells, "smells-" + projectName + ".json");
         collector.smellRepository.insertAllSmells(smells);
@@ -108,6 +109,8 @@ public class SmellCollector {
             } catch (IOException e) {
             System.out.println("Ignoring Java Parser");
         }
+
+        parser.parserSmellID(projectName, smellsOurModel);
 
         return smellsOurModel;
     }

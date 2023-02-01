@@ -28,12 +28,10 @@ public class SmellParser{
             smells.addAll(getSmellsOfClass(detectorName, outputOrganic, projectName,commit));
 
         }
-
-        smells = parserSmellID(projectName, smells);
         return smells;
     }
 
-    private List<CodeSmell> parserSmellID(String projectName, List<CodeSmell> smells){
+    public List<CodeSmell> parserSmellID(String projectName, List<CodeSmell> smells){
 
 
         for (int i = 0; i < smells.size(); i++) {
