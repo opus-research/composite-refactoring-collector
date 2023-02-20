@@ -23,7 +23,7 @@ public class SmellMinerator {
         List<Commit> commits = collector.getCommits();
 
         for (Commit commit : commits) {
-            smellOrganic.colectSmells(commit.getCommit(), Constants.OUTPUT);
+            smellOrganic.collectSmells(commit.getCommit(), Constants.OUTPUT);
         }
 
     }

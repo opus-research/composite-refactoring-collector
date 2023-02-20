@@ -10,7 +10,7 @@ public class SmellOrganic {
     ProcessBuilder pb;
     // java -jar organic-OPT.jar -src dubbo/ -sf output.json
     // java -cp composite-refactoring-collector-1.0.jar inf.puc.rio.br.opus.minerator.smells.organic.SmellMinerator "couchbasejavaclient" "master" "output-couchbasejavaclient" "couchbase-java-client" "organic-1.0.2.jar"
-    public void colectSmells(String commit, String path) {
+    public void collectSmells(String commit, String path) {
         // ATUALIZA PARA O COMMIT EM QUESTÃO
         String commandGitCheckout[] = {"git", "checkout", "-f", commit};
         executeCommand(commandGitCheckout, Constants.FOLDER_PROJECT);
