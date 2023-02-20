@@ -39,12 +39,17 @@ public class SmellCollector {
         //Run PMD
         PMDMinerator mineratorPMD = new PMDMinerator();
         String project = "";
-        String commit = "";
-        String output = mineratorPMD.execute(project, commit);
-        //Save Duplicated Code in List
-        List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output, project, commit);
-        // Parser Duplicated Code
-        parser.parserPMDSmellToOurModel(duplicatedCodePMDs);
+
+        List<String> commitsFromLongMethods = AnalysisUtils.getCommitsFromLongMethods(project);
+        for (String commitsFromLongMethod : commitsFromLongMethods) {
+
+            String output = mineratorPMD.execute(project, commitsFromLongMethod);
+            //Save Duplicated Code in List
+            List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output, project, commitsFromLongMethod);
+            // Parser Duplicated Code
+            List<CodeSmell> duplicatedMethods = parser.parserPMDSmellToOurModel(duplicatedCodePMDs);
+        }
+
 
     }
 

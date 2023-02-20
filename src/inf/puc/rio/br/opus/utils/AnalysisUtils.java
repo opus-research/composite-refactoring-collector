@@ -20,6 +20,9 @@ public class AnalysisUtils {
 		AnalysisUtils.collectOrderFromCommitList();
 	}
 
+	public static List<String> getCommitsFromLongMethods(String project){
+		return new ArrayList<>();
+	}
 	public static String getLastNameFromURL(String projectURL){
 
 		String lastName = "";

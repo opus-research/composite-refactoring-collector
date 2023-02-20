@@ -12,7 +12,6 @@ import java.util.List;
 public class SmellParser{
 
 
-
     public List<CodeSmell> parserOrganicSmellToOurSmellModel(List<OuputOrganic> outputOrganicList,
                                                               String projectName, String commit){
 
