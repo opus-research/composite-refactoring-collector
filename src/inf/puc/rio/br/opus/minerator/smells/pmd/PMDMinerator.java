@@ -1,7 +1,5 @@
 package inf.puc.rio.br.opus.minerator.smells.pmd;
 
-import inf.puc.rio.br.opus.model.refactoring.historic.CodeElement;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +12,13 @@ import java.util.regex.Pattern;
 public class PMDMinerator {
 
 
-    public  List<DuplicatedCodePMD> findDuplicatedMethod(String path){
+    private SmellPMD smellPMD;
+
+    public PMDMinerator(){
+        smellPMD = new SmellPMD();
+    }
+
+    public List<DuplicatedCodePMD> getDuplicatedMethods(String outputPMD){
 
         String methodNameRegex = "\\s*(public|private|protected)?\\s+\\w+\\s+\\w+\\(.*\\)\\s*(throws\\s+\\w+)?\\s*\\{?\\s*";
 
@@ -23,7 +27,7 @@ public class PMDMinerator {
         DuplicatedCodePMD duplicatedCodePMD;
         List<DuplicatedCodePMD> duplicatedCodePMDs = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(outputPMD))) {
             String line;
             while ((line = br.readLine()) != null) {
 
@@ -96,5 +100,13 @@ public class PMDMinerator {
         }
 
         return methodName;
+    }
+
+    public String execute(String project) {
+
+        String pathProject = "result-" + project + ".txt";
+        smellPMD.collectSmells("", project, pathProject);
+
+        return pathProject;
     }
 }

@@ -11,16 +11,14 @@ public class SmellPMD {
 
 
     ProcessBuilder pb;
-    // java -jar organic-OPT.jar -src dubbo/ -sf output.json
-    // java -cp composite-refactoring-collector-1.0.jar inf.puc.rio.br.opus.minerator.smells.organic.SmellMinerator "couchbasejavaclient" "master" "output-couchbasejavaclient" "couchbase-java-client" "organic-1.0.2.jar"
-    public void colectSmells(String commit, String path) {
+
+    public void collectSmells(String commit, String path, String outputFileName) {
         // ATUALIZA PARA O COMMIT EM QUESTÃO
         String commandGitCheckout[] = {"git", "checkout", "-f", commit};
         executeCommand(commandGitCheckout, Constants.FOLDER_PROJECT);
 
-        // EXECUTA A ORGANIC
-        // java -jar organic-OPT.jar -src <CAMINHO_PRO_PROJETO> -sf <NOME_DO_ARQUIVO_DE_SAIDA>.json
-        String comando6[] = {"cpd.bat --minimum-tokens 30 --files " + path};
+        // EXECUTA O PMD
+        String comando6[] = {"cpd.bat --minimum-tokens 30 --files " + path + ">>" + outputFileName};
 
         executeCommand(comando6, Constants.FOLDER_PROJECT);
     }

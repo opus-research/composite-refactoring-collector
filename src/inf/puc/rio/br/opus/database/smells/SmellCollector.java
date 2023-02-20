@@ -1,6 +1,8 @@
 package inf.puc.rio.br.opus.database.smells;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import inf.puc.rio.br.opus.minerator.smells.pmd.DuplicatedCodePMD;
+import inf.puc.rio.br.opus.minerator.smells.pmd.PMDMinerator;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import inf.puc.rio.br.opus.model.smell.organic.OuputOrganic;
 import inf.puc.rio.br.opus.parser.smell.SmellParser;
@@ -15,9 +17,11 @@ import java.util.List;
 public class SmellCollector {
 
     private SmellRepository smellRepository;
+    private SmellParser parser;
 
     private SmellCollector(String[] args){
         smellRepository= new SmellRepository(args);
+        parser = new SmellParser();
     }
 
     public SmellCollector(){
@@ -28,6 +32,19 @@ public class SmellCollector {
         SmellCollector collector = new SmellCollector(args);
         List<CodeSmell> smells = collector.getAllSmells("sitewhere");
         collector.smellRepository.insertAllSmells(smells);
+    }
+
+    private void collectDuplicatedCode(){
+
+        //Run PMD
+        PMDMinerator mineratorPMD = new PMDMinerator();
+        String project = "";
+        String output = mineratorPMD.execute(project);
+        //Save Duplicated Code in List
+        List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output);
+        // Parser Duplicated Code
+        parser.parserPMDSmellToOurModel(duplicatedCodePMDs);
+
     }
 
     public List<CodeSmell> getAllSmells(String projectName){

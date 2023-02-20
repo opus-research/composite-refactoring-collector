@@ -1,5 +1,6 @@
 package inf.puc.rio.br.opus.parser.smell;
 
+import inf.puc.rio.br.opus.minerator.smells.pmd.DuplicatedCodePMD;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import inf.puc.rio.br.opus.model.smell.organic.CodeSmellOrganic;
 import inf.puc.rio.br.opus.model.smell.organic.MethodOrganic;
@@ -79,5 +80,44 @@ public class SmellParser{
             smells.add(smell);
         }
         return smells;
+    }
+
+
+    public void parserPMDSmellToOurModel(List<DuplicatedCodePMD> duplicatedCodePMDs) {
+
+        List<CodeSmell> smells = new ArrayList<>();
+        for (DuplicatedCodePMD duplicatedCodePMD : duplicatedCodePMDs) {
+
+            List<String> methodNames = getAbsoluteMethodNamesFromPMDOutput(duplicatedCodePMD);
+
+            for (String methodName : methodNames) {
+                CodeSmell smell = new CodeSmell();
+
+                smell.setCommit("");
+                smell.setProjectName("");
+                smell.setDetectorName("PMD");
+                smell.setCodeElement(methodName);
+                smells.add(smell);
+            }
+
+
+        }
+    }
+
+    private List<String> getAbsoluteMethodNamesFromPMDOutput(DuplicatedCodePMD duplicatedCodePMD) {
+
+        List<String> absoluteMethodNames = new ArrayList<>();
+
+        for (String methodName : duplicatedCodePMD.getMethodNames()) {
+
+
+            for (String className : duplicatedCodePMD.getClassNames()) {
+
+                String absoluteMethodName = className + "." + methodName;
+                absoluteMethodNames.add(absoluteMethodName);
+            }
+
+        }
+        return absoluteMethodNames;
     }
 }

@@ -19,4 +19,8 @@ public class DuplicatedCodePMD {
     public void setClassNames(List<String> classNames) {
         this.classNames = classNames;
     }
+
+    public List<String> getClassNames() {
+        return classNames;
+    }
 }
