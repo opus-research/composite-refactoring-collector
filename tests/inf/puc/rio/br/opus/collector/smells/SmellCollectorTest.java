@@ -1,6 +1,7 @@
 package inf.puc.rio.br.opus.collector.smells;
 
 import inf.puc.rio.br.opus.database.smells.SmellCollector;
+import inf.puc.rio.br.opus.minerator.smells.pmd.PMDMinerator;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import org.junit.Test;
 
@@ -28,6 +29,16 @@ public class SmellCollectorTest {
         assertEquals("org.apache.tools.ant.helper.ProjectHelperImpl2.hookSpecialTasks([Project])", smell2.getCodeElement());
 
         assertEquals(2174, smells.size());
+    }
+
+
+    @Test
+    public void getMethodNameFromPMDFormat(){
+
+        PMDMinerator mineratorPMD = new PMDMinerator();
+
+        mineratorPMD.parserMethodName( "  public void init(String tag, final PerfListener perfListener) {");
+
     }
 }
 
