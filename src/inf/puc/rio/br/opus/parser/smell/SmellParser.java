@@ -83,25 +83,26 @@ public class SmellParser{
     }
 
 
-    public void parserPMDSmellToOurModel(List<DuplicatedCodePMD> duplicatedCodePMDs) {
+    public List<CodeSmell> parserPMDSmellToOurModel(List<DuplicatedCodePMD> duplicatedCodePMDs) {
 
         List<CodeSmell> smells = new ArrayList<>();
         for (DuplicatedCodePMD duplicatedCodePMD : duplicatedCodePMDs) {
 
-            List<String> methodNames = getAbsoluteMethodNamesFromPMDOutput(duplicatedCodePMD);
+            List<String> absoluteMethodNames = getAbsoluteMethodNamesFromPMDOutput(duplicatedCodePMD);
 
-            for (String methodName : methodNames) {
+            for (String methodName : absoluteMethodNames) {
                 CodeSmell smell = new CodeSmell();
 
-                smell.setCommit("");
-                smell.setProjectName("");
+                smell.setCommit(duplicatedCodePMD.getCommit());
+                smell.setProjectName(duplicatedCodePMD.getProjectName());
                 smell.setDetectorName("PMD");
                 smell.setCodeElement(methodName);
                 smells.add(smell);
             }
 
-
         }
+
+        return smells;
     }
 
     private List<String> getAbsoluteMethodNamesFromPMDOutput(DuplicatedCodePMD duplicatedCodePMD) {
@@ -109,7 +110,6 @@ public class SmellParser{
         List<String> absoluteMethodNames = new ArrayList<>();
 
         for (String methodName : duplicatedCodePMD.getMethodNames()) {
-
 
             for (String className : duplicatedCodePMD.getClassNames()) {
 

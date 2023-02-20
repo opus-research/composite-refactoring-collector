@@ -18,7 +18,7 @@ public class PMDMinerator {
         smellPMD = new SmellPMD();
     }
 
-    public List<DuplicatedCodePMD> getDuplicatedMethods(String outputPMD){
+    public List<DuplicatedCodePMD> getDuplicatedMethods(String outputPMD, String project, String commit){
 
         String methodNameRegex = "\\s*(public|private|protected)?\\s+\\w+\\s+\\w+\\(.*\\)\\s*(throws\\s+\\w+)?\\s*\\{?\\s*";
 
@@ -33,8 +33,12 @@ public class PMDMinerator {
 
                 if(line.contains("====")){
                     duplicatedCodePMD = new DuplicatedCodePMD();
+
                     duplicatedCodePMD.setClassNames(classNames);
                     duplicatedCodePMD.setMethodNames(methodNames);
+                    duplicatedCodePMD.setCommit(commit);
+                    duplicatedCodePMD.setProjectName(project);
+
                     duplicatedCodePMDs.add(duplicatedCodePMD);
 
                     classNames = new ArrayList<String>();
@@ -92,8 +96,7 @@ public class PMDMinerator {
                             paramType = param.split("\\s+")[0];
                         }
                         return paramType;
-                    }
-                    );
+                    });
              methodName = methodName + "(" + params + ")";
              params.stream().forEach(System.out::println);
 
@@ -102,10 +105,10 @@ public class PMDMinerator {
         return methodName;
     }
 
-    public String execute(String project) {
+    public String execute(String project, String commit) {
 
         String pathProject = "result-" + project + ".txt";
-        smellPMD.collectSmells("", project, pathProject);
+        smellPMD.collectSmells(commit, project, pathProject);
 
         return pathProject;
     }
