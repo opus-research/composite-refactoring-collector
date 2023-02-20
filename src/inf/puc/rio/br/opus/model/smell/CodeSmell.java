@@ -35,6 +35,10 @@ public class CodeSmell {
         this.metrics = metrics;
     }
 
+    public CodeSmell(){
+
+    }
+
 
     public String getId() {
         return id;
