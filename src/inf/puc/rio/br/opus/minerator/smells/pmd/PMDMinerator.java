@@ -38,11 +38,13 @@ public class PMDMinerator {
                 }
 
                 if (line.contains(".java")) {
-                    classNames.add(line);
+                    String className = parserClassName("", line);
+                    classNames.add(className);
                 }
 
                 if (line.matches(methodNameRegex)) {
-                    methodNames.add(line);
+                    String methodName = parserMethodName(line);
+                    methodNames.add(methodName);
                 }
             }
         } catch (IOException e) {
@@ -64,13 +66,13 @@ public class PMDMinerator {
     }
 
 
-    public List<String> parserMethodName(String methodNameFromPMDFormat) {
+    public String parserMethodName(String methodNameFromPMDFormat) {
         Pattern pattern = Pattern.compile("\\s*public\\s+\\w+\\s+(\\w+)\\s*\\((.*?)\\)\\s*\\{.*");
         Matcher matcher = pattern.matcher(methodNameFromPMDFormat);
-
+        String methodName = "";
 
         if (matcher.find()) {
-            String methodName = matcher.group(1);
+            methodName = matcher.group(1);
             System.out.println(methodName);
 
             String paramList = matcher.group(2);
@@ -88,12 +90,11 @@ public class PMDMinerator {
                         return paramType;
                     }
                     );
+             methodName = methodName + "(" + params + ")";
+             params.stream().forEach(System.out::println);
 
-            params.stream().forEach(System.out::println);
-
-            return params;
         }
 
-        return null;
+        return methodName;
     }
 }
