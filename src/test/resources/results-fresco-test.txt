@@ -1,0 +1,265 @@
+Found a 129 line (1040 tokens) duplication in the following files: 
+Starting at line 57 of C:\Users\anaca\Documents\Projetos\fresco\imagepipeline\src\test\java\com\facebook\imagepipeline\producers\PriorityStarvingThrottlingProducerTest.java
+Starting at line 45 of C:\Users\anaca\Documents\Projetos\fresco\imagepipeline\src\test\java\com\facebook\imagepipeline\producers\ThrottlingProducerTest.java
+
+    for (int i = 0; i < 7; i++) {
+      mConsumers[i] = mock(Consumer.class);
+      mProducerContexts[i] = mock(ProducerContext.class);
+      mProducerListeners[i] = mock(ProducerListener2.class);
+      mResults[i] = mock(Object.class);
+      when(mProducerContexts[i].getProducerListener()).thenReturn(mProducerListeners[i]);
+      when(mProducerContexts[i].getId()).thenReturn(mRequestIds[i]);
+      final int iFinal = i;
+      doAnswer(
+              new Answer() {
+                @Override
+                public Object answer(InvocationOnMock invocation) throws Throwable {
+                  mThrottlerConsumers[iFinal] = (Consumer<Object>) invocation.getArguments()[0];
+                  return null;
+                }
+              })
+          .when(mInputProducer)
+          .produceResults(any(Consumer.class), eq(mProducerContexts[i]));
+    }
+  }
+
+  @Test
+  public void testThrottling() {
+    // First two requests are passed on immediately
+    mThrottlingProducer.produceResults(mConsumers[0], mProducerContexts[0]);
+    assertNotNull(mThrottlerConsumers[0]);
+    verify(mProducerListeners[0]).onProducerStart(mProducerContexts[0], PRODUCER_NAME);
+    verify(mProducerListeners[0])
+        .onProducerFinishWithSuccess(mProducerContexts[0], PRODUCER_NAME, null);
+
+    mThrottlingProducer.produceResults(mConsumers[1], mProducerContexts[1]);
+    assertNotNull(mThrottlerConsumers[1]);
+    verify(mProducerListeners[1]).onProducerStart(mProducerContexts[1], PRODUCER_NAME);
+    verify(mProducerListeners[1])
+        .onProducerFinishWithSuccess(mProducerContexts[1], PRODUCER_NAME, null);
+
+    // Third and fourth requests are queued up
+    mThrottlingProducer.produceResults(mConsumers[2], mProducerContexts[2]);
+    assertNull(mThrottlerConsumers[2]);
+    verify(mProducerListeners[2]).onProducerStart(mProducerContexts[2], PRODUCER_NAME);
+    verify(mProducerListeners[2], never())
+        .onProducerFinishWithSuccess(mProducerContexts[2], PRODUCER_NAME, null);
+
+    mThrottlingProducer.produceResults(mConsumers[3], mProducerContexts[3]);
+    assertNull(mThrottlerConsumers[3]);
+    verify(mProducerListeners[3]).onProducerStart(mProducerContexts[3], PRODUCER_NAME);
+    verify(mProducerListeners[3], never())
+        .onProducerFinishWithSuccess(mProducerContexts[3], PRODUCER_NAME, null);
+
+    // First request fails, third request is kicked off, fourth request remains in queue
+    mThrottlerConsumers[0].onFailure(mException);
+    verify(mConsumers[0]).onFailure(mException);
+    assertNotNull(mThrottlerConsumers[2]);
+    verify(mProducerListeners[2])
+        .onProducerFinishWithSuccess(mProducerContexts[2], PRODUCER_NAME, null);
+    assertNull(mThrottlerConsumers[3]);
+    verify(mProducerListeners[3], never())
+        .onProducerFinishWithSuccess(mProducerContexts[3], PRODUCER_NAME, null);
+
+    // Fifth request is queued up
+    mThrottlingProducer.produceResults(mConsumers[4], mProducerContexts[4]);
+    assertNull(mThrottlerConsumers[4]);
+    verify(mProducerListeners[4]).onProducerStart(mProducerContexts[4], PRODUCER_NAME);
+    verify(mProducerListeners[4], never())
+        .onProducerFinishWithSuccess(mProducerContexts[4], PRODUCER_NAME, null);
+
+    // Second request gives intermediate result, no new request is kicked off
+    Object intermediateResult = mock(Object.class);
+    mThrottlerConsumers[1].onNewResult(intermediateResult, Consumer.NO_FLAGS);
+    verify(mConsumers[1]).onNewResult(intermediateResult, Consumer.NO_FLAGS);
+    assertNull(mThrottlerConsumers[3]);
+    assertNull(mThrottlerConsumers[4]);
+
+    // Third request finishes, fourth request is kicked off
+    mThrottlerConsumers[2].onNewResult(mResults[2], Consumer.IS_LAST);
+    verify(mConsumers[2]).onNewResult(mResults[2], Consumer.IS_LAST);
+    assertNotNull(mThrottlerConsumers[3]);
+    verify(mProducerListeners[3])
+        .onProducerFinishWithSuccess(mProducerContexts[3], PRODUCER_NAME, null);
+    assertNull(mThrottlerConsumers[4]);
+
+    // Second request is cancelled, fifth request is kicked off
+    mThrottlerConsumers[1].onCancellation();
+    verify(mConsumers[1]).onCancellation();
+    assertNotNull(mThrottlerConsumers[4]);
+    verify(mProducerListeners[4])
+        .onProducerFinishWithSuccess(mProducerContexts[4], PRODUCER_NAME, null);
+
+    // Fourth and fifth requests finish
+    mThrottlerConsumers[3].onNewResult(mResults[3], Consumer.IS_LAST);
+    mThrottlerConsumers[4].onNewResult(mResults[4], Consumer.IS_LAST);
+  }
+
+  @Test
+  public void testNoThrottlingAfterRequestsFinish() {
+    // First two requests are passed on immediately
+    mThrottlingProducer.produceResults(mConsumers[0], mProducerContexts[0]);
+    assertNotNull(mThrottlerConsumers[0]);
+    verify(mProducerListeners[0]).onProducerStart(mProducerContexts[0], PRODUCER_NAME);
+    verify(mProducerListeners[0])
+        .onProducerFinishWithSuccess(mProducerContexts[0], PRODUCER_NAME, null);
+
+    mThrottlingProducer.produceResults(mConsumers[1], mProducerContexts[1]);
+    assertNotNull(mThrottlerConsumers[1]);
+    verify(mProducerListeners[1]).onProducerStart(mProducerContexts[1], PRODUCER_NAME);
+    verify(mProducerListeners[1])
+        .onProducerFinishWithSuccess(mProducerContexts[1], PRODUCER_NAME, null);
+
+    // First two requests finish
+    mThrottlerConsumers[0].onNewResult(mResults[3], Consumer.IS_LAST);
+    mThrottlerConsumers[1].onNewResult(mResults[4], Consumer.IS_LAST);
+
+    // Next two requests are passed on immediately
+    mThrottlingProducer.produceResults(mConsumers[2], mProducerContexts[2]);
+    assertNotNull(mThrottlerConsumers[2]);
+    verify(mProducerListeners[2]).onProducerStart(mProducerContexts[2], PRODUCER_NAME);
+    verify(mProducerListeners[2])
+        .onProducerFinishWithSuccess(mProducerContexts[2], PRODUCER_NAME, null);
+
+    mThrottlingProducer.produceResults(mConsumers[3], mProducerContexts[3]);
+    assertNotNull(mThrottlerConsumers[3]);
+    verify(mProducerListeners[3]).onProducerStart(mProducerContexts[3], PRODUCER_NAME);
+    verify(mProducerListeners[3])
+        .onProducerFinishWithSuccess(mProducerContexts[3], PRODUCER_NAME, null);
+
+    // Next two requests finish
+    mThrottlerConsumers[2].onNewResult(mResults[3], Consumer.IS_LAST);
+    mThrottlerConsumers[3].onNewResult(mResults[4], Consumer.IS_LAST);
+  }
+=====================================================================
+Found a 125 line (950 tokens) duplication in the following files: 
+Starting at line 70 of C:\Users\anaca\Documents\Projetos\fresco\memory-types\ashmem\src\test\java\com\facebook\imagepipeline\memory\MemoryPooledByteBufferOutputStreamTest.java
+Starting at line 70 of C:\Users\anaca\Documents\Projetos\fresco\memory-types\nativememory\src\test\java\com\facebook\imagepipeline\memory\MemoryPooledByteBufferOutputStreamTest.java
+Starting at line 70 of C:\Users\anaca\Documents\Projetos\fresco\memory-types\simple\src\test\java\com\facebook\imagepipeline\memory\MemoryPooledByteBufferOutputStreamTest.java
+
+    testWriteAfterToByteBuf(mAshmemPool);
+  }
+
+  private void testBasic_1(final MemoryChunkPool mPool, final PoolStats<byte[]> mStats)
+      throws Exception {
+    MemoryPooledByteBufferOutputStream os1 = new MemoryPooledByteBufferOutputStream(mPool);
+    MemoryPooledByteBuffer sb1 = doWrite(os1, mData);
+    Assert.assertEquals(16, sb1.getCloseableReference().get().getSize());
+    assertArrayEquals(mData, getBytes(sb1), mData.length);
+    mStats.refresh();
+    Assert.assertEquals(
+        ImmutableMap.of(
+            32, new IntPair(0, 0),
+            16, new IntPair(1, 0),
+            8, new IntPair(0, 1),
+            4, new IntPair(0, 1)),
+        mStats.getBucketStats());
+  }
+
+  private void testBasic_2(final MemoryChunkPool mPool, final PoolStats<byte[]> mStats)
+      throws Exception {
+    MemoryPooledByteBufferOutputStream os2 = new MemoryPooledByteBufferOutputStream(mPool, 8);
+    MemoryPooledByteBuffer sb2 = doWrite(os2, mData);
+    Assert.assertEquals(16, sb2.getCloseableReference().get().getSize());
+    assertArrayEquals(mData, getBytes(sb2), mData.length);
+    mStats.refresh();
+    Assert.assertEquals(
+        ImmutableMap.of(
+            32, new IntPair(0, 0),
+            16, new IntPair(1, 0),
+            8, new IntPair(0, 1),
+            4, new IntPair(0, 0)),
+        mStats.getBucketStats());
+  }
+
+  private void testBasic_3(final MemoryChunkPool mPool, final PoolStats<byte[]> mStats)
+      throws Exception {
+    MemoryPooledByteBufferOutputStream os3 = new MemoryPooledByteBufferOutputStream(mPool, 16);
+    MemoryPooledByteBuffer sb3 = doWrite(os3, mData);
+    Assert.assertEquals(16, sb3.getCloseableReference().get().getSize());
+    assertArrayEquals(mData, getBytes(sb3), mData.length);
+    mStats.refresh();
+    Assert.assertEquals(
+        ImmutableMap.of(
+            32, new IntPair(0, 0),
+            16, new IntPair(1, 0),
+            8, new IntPair(0, 0),
+            4, new IntPair(0, 0)),
+        mStats.getBucketStats());
+  }
+
+  private void testBasic_4(final MemoryChunkPool mPool, final PoolStats<byte[]> mStats)
+      throws Exception {
+    MemoryPooledByteBufferOutputStream os4 = new MemoryPooledByteBufferOutputStream(mPool, 32);
+    MemoryPooledByteBuffer sb4 = doWrite(os4, mData);
+    Assert.assertEquals(32, sb4.getCloseableReference().get().getSize());
+    assertArrayEquals(mData, getBytes(sb4), mData.length);
+    mStats.refresh();
+    Assert.assertEquals(
+        ImmutableMap.of(
+            32, new IntPair(1, 0),
+            16, new IntPair(0, 0),
+            8, new IntPair(0, 0),
+            4, new IntPair(0, 0)),
+        mStats.getBucketStats());
+  }
+
+  private static void testClose(final MemoryChunkPool mPool, final PoolStats<byte[]> mStats) {
+    MemoryPooledByteBufferOutputStream os = new MemoryPooledByteBufferOutputStream(mPool);
+    os.close();
+    mStats.refresh();
+    Assert.assertEquals(
+        ImmutableMap.of(
+            32, new IntPair(0, 0),
+            16, new IntPair(0, 0),
+            8, new IntPair(0, 0),
+            4, new IntPair(0, 1)),
+        mStats.getBucketStats());
+  }
+
+  private static void testToByteBufException(final MemoryChunkPool mPool) {
+    MemoryPooledByteBufferOutputStream os1 = new MemoryPooledByteBufferOutputStream(mPool);
+    os1.close();
+    os1.toByteBuffer();
+    Assert.fail();
+  }
+
+  private void testWriteAfterToByteBuf(final MemoryChunkPool mPool) throws Exception {
+    MemoryPooledByteBufferOutputStream os1 = new MemoryPooledByteBufferOutputStream(mPool);
+    MemoryPooledByteBuffer buf1 = doWrite(os1, Arrays.copyOf(mData, 9));
+    MemoryPooledByteBuffer buf2 = doWrite(os1, Arrays.copyOf(mData, 3));
+    Assert.assertEquals(12, buf2.size());
+
+    final CloseableReference<MemoryChunk> chunk = buf1.getCloseableReference();
+    Assert.assertEquals(3, chunk.getUnderlyingReferenceTestOnly().getRefCountTestOnly());
+    os1.close();
+    buf1.close();
+    buf2.close();
+    Assert.assertEquals(0, chunk.getUnderlyingReferenceTestOnly().getRefCountTestOnly());
+  }
+
+  // write out the contents of data into the output stream
+  private static MemoryPooledByteBuffer doWrite(MemoryPooledByteBufferOutputStream os, byte[] data)
+      throws Exception {
+    for (int i = 0; i < data.length; i++) {
+      os.write(data, i, 1);
+    }
+    return os.toByteBuffer();
+  }
+
+  // assert that the first 'length' bytes of expected are the same as those in 'actual'
+  private static void assertArrayEquals(byte[] expected, byte[] actual, int length) {
+    Assert.assertTrue(expected.length >= length);
+    Assert.assertTrue(actual.length >= length);
+    for (int i = 0; i < length; i++) {
+      Assert.assertEquals(expected[i], actual[i]);
+    }
+  }
+
+  private static byte[] getBytes(MemoryPooledByteBuffer bb) {
+    byte[] bytes = new byte[bb.size()];
+    bb.getCloseableReference().get().read(0, bytes, 0, bytes.length);
+    return bytes;
+  }
+}
+=====================================================================

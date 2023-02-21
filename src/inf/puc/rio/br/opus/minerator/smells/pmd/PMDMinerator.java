@@ -12,18 +12,19 @@ import java.util.regex.Pattern;
 public class PMDMinerator {
 
 
-    private SmellPMD smellPMD;
+    private final SmellPMD smellPMD;
 
     public PMDMinerator(){
         smellPMD = new SmellPMD();
     }
 
-    public List<DuplicatedCodePMD> getDuplicatedMethods(String outputPMD, String project, String commit){
+    public List<DuplicatedCodePMD> getDuplicatedMethods(String outputPMD, String projectName, String commit){
 
         String methodNameRegex = "\\s*(public|private|protected)?\\s+\\w+\\s+\\w+\\(.*\\)\\s*(throws\\s+\\w+)?\\s*\\{?\\s*";
+//        String methodNameRegex = "\\s*(static)?\\s*(public|private)\\s*\\w+\\s*(\\w+)\\s*(\\(\\s*\\w*(,?\\s*\\w+)*\\))?";
 
-        List<String> classNames = new ArrayList<String>();
-        List<String> methodNames = new ArrayList<String>();
+        List<String> classNames = new ArrayList<>();
+        List<String> methodNames = new ArrayList<>();
         DuplicatedCodePMD duplicatedCodePMD;
         List<DuplicatedCodePMD> duplicatedCodePMDs = new ArrayList<>();
 
@@ -37,22 +38,25 @@ public class PMDMinerator {
                     duplicatedCodePMD.setClassNames(classNames);
                     duplicatedCodePMD.setMethodNames(methodNames);
                     duplicatedCodePMD.setCommit(commit);
-                    duplicatedCodePMD.setProjectName(project);
+                    duplicatedCodePMD.setProjectName(projectName);
 
                     duplicatedCodePMDs.add(duplicatedCodePMD);
 
-                    classNames = new ArrayList<String>();
-                    methodNames = new ArrayList<String>();
+                    classNames = new ArrayList<>();
+                    methodNames = new ArrayList<>();
                 }
 
                 if (line.contains(".java")) {
-                    String className = parserClassName("", line);
+                    String className = parserClassName(projectName, line);
                     classNames.add(className);
                 }
 
                 if (line.matches(methodNameRegex)) {
                     String methodName = parserMethodName(line);
-                    methodNames.add(methodName);
+                    if (!methodName.equals("")) {
+                        methodNames.add(methodName);
+                    }
+
                 }
             }
         } catch (IOException e) {
@@ -62,20 +66,17 @@ public class PMDMinerator {
         return duplicatedCodePMDs;
     }
 
-    public String parserClassName(String projectPath, String classNamePMDFormat){
-
-        String className = "";
-        int javaIndex = classNamePMDFormat.lastIndexOf(".java");
-        classNamePMDFormat = classNamePMDFormat.substring(projectPath.length(), javaIndex);
-        classNamePMDFormat.replace("\\", ".");
-
-        return className;
-
+    public String parserClassName(String projectName, String classNamePMDFormat){
+        int start = classNamePMDFormat.indexOf(projectName);
+        int end = classNamePMDFormat.lastIndexOf(".java");
+        classNamePMDFormat = classNamePMDFormat.substring(start + projectName.length() + 1, end);
+        return classNamePMDFormat.replace("\\", ".");
     }
 
 
     public String parserMethodName(String methodNameFromPMDFormat) {
-        Pattern pattern = Pattern.compile("\\s*public\\s+\\w+\\s+(\\w+)\\s*\\((.*?)\\)\\s*\\{.*");
+        Pattern pattern = Pattern.compile("\\s*public|private|protected\\s+\\w+\\s+(\\w+)\\s*\\((.*?)\\)\\s*\\{.*");
+//        Pattern pattern = Pattern.compile("\\s*(static)?\\s*(public|private)\\s*\\w+\\s*(\\w+)\\s*(\\(\\s*\\w*(,?\\s*\\w+)*\\))?");
         Matcher matcher = pattern.matcher(methodNameFromPMDFormat);
         String methodName = "";
 
@@ -98,7 +99,7 @@ public class PMDMinerator {
                         return paramType;
                     });
              methodName = methodName + "(" + params + ")";
-             params.stream().forEach(System.out::println);
+             params.forEach(System.out::println);
 
         }
 
