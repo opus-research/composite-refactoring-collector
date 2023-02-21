@@ -40,6 +40,7 @@ public class SmellCollector {
         PMDMinerator mineratorPMD = new PMDMinerator();
         String project = "";
 
+        List<CodeSmell> duplicatedMethodsByProject = new ArrayList<>();
         List<String> commitsFromLongMethods = AnalysisUtils.getCommitsFromLongMethods(project);
         for (String commitsFromLongMethod : commitsFromLongMethods) {
 
@@ -48,8 +49,11 @@ public class SmellCollector {
             List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output, project, commitsFromLongMethod);
             // Parser Duplicated Code
             List<CodeSmell> duplicatedMethods = parser.parserPMDSmellToOurModel(duplicatedCodePMDs);
+            duplicatedMethodsByProject.addAll(duplicatedMethods);
+
         }
 
+        writeCodeSmellsAsJson(duplicatedMethodsByProject, "smells-" + project + ".json");
 
     }
 
@@ -75,5 +79,37 @@ public class SmellCollector {
         }
 
         return smellsOurModel;
+    }
+
+
+    public void writeCodeSmellsAsJson(List<CodeSmell> smells, String fileName) {
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File(fileName),  smells);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static List<CodeSmell> readSmellsFromJson(String path){
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<CodeSmell> smellsList = new ArrayList<>();
+        try {
+
+            CodeSmell[] smells = mapper.readValue(new File(path),
+                    CodeSmell[].class);
+
+           smellsList = new ArrayList<CodeSmell>(Arrays.asList(smells));
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return smellsList;
+
     }
 }

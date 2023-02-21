@@ -1,5 +1,6 @@
 package inf.puc.rio.br.opus.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,10 +8,13 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import inf.puc.rio.br.opus.database.smells.SmellCollector;
 import inf.puc.rio.br.opus.model.project.miner.CommitMiner;
 import inf.puc.rio.br.opus.model.project.miner.ProjectMiner;
 
 import inf.puc.rio.br.opus.model.refactoring.historic.collect.commit.CommitCollector;
+import inf.puc.rio.br.opus.model.smell.CodeSmell;
 
 public class AnalysisUtils {
 
@@ -21,8 +25,18 @@ public class AnalysisUtils {
 	}
 
 	public static List<String> getCommitsFromLongMethods(String project){
-		return new ArrayList<>();
+
+		List<CodeSmell> longMethods = SmellCollector.readSmellsFromJson("smells-" + project + ".json");
+
+		List<String> commits = new ArrayList<>();
+
+		for (CodeSmell longMethod : longMethods) {
+			commits.add(longMethod.getCommit());
+		}
+
+		return commits;
 	}
+
 	public static String getLastNameFromURL(String projectURL){
 
 		String lastName = "";
@@ -120,6 +134,9 @@ public class AnalysisUtils {
 
 		return methodName;
 	}
+
+
+
 
 	public static boolean isSameCodeElementName(List<String> codeElements){
        Set<String> elementSet = new HashSet<>(codeElements);
