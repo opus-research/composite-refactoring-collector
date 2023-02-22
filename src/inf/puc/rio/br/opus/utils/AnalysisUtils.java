@@ -117,15 +117,19 @@ public class AnalysisUtils {
 		int accessIndex = 0;
 		String methodName = "";
 
+		int beginIndex = 0;
 		if(methodSignature.contains("public ")){
+			beginIndex = methodSignature.indexOf("public ");
 			accessIndex = "public ".length();
 		}
 		else
 			if(methodSignature.contains("private ")){
+				beginIndex = methodSignature.indexOf("private ");
 				accessIndex = "private ".length();
 			}
 		else
 			if(methodSignature.contains("protected ")){
+				beginIndex = methodSignature.indexOf("protected ");
 				accessIndex = "protected ".length();
 			}
 		else {
@@ -133,12 +137,18 @@ public class AnalysisUtils {
 			}
 
 		int separatorIndex = methodSignature.indexOf("(");
-		methodName = methodSignature.substring(accessIndex-1, separatorIndex);
-
+		methodName = methodSignature.substring(beginIndex + (accessIndex-1), separatorIndex);
+        if(methodName.contains(" ")){
+			methodName = removeReturnType(methodName);
+		}
 		return methodName;
 	}
 
+	private static String removeReturnType(String methodNameTemp) {
 
+		String[] terms = methodNameTemp.trim().split("\\s+");
+		return terms[1];
+	}
 
 
 	public static boolean isSameCodeElementName(List<String> codeElements){
