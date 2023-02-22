@@ -1,5 +1,7 @@
 package inf.puc.rio.br.opus.minerator.smells.pmd;
 
+import inf.puc.rio.br.opus.utils.AnalysisUtils;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,12 +37,14 @@ public class PMDMinerator {
                 if(line.contains("====")){
                     duplicatedCodePMD = new DuplicatedCodePMD();
 
-                    duplicatedCodePMD.setClassNames(classNames);
-                    duplicatedCodePMD.setMethodNames(methodNames);
-                    duplicatedCodePMD.setCommit(commit);
-                    duplicatedCodePMD.setProjectName(projectName);
+                    if(!classNames.isEmpty() && !methodNames.isEmpty()) {
+                        duplicatedCodePMD.setClassNames(classNames);
+                        duplicatedCodePMD.setMethodNames(methodNames);
+                        duplicatedCodePMD.setCommit(commit);
+                        duplicatedCodePMD.setProjectName(projectName);
 
-                    duplicatedCodePMDs.add(duplicatedCodePMD);
+                        duplicatedCodePMDs.add(duplicatedCodePMD);
+                    }
 
                     classNames = new ArrayList<>();
                     methodNames = new ArrayList<>();
@@ -52,8 +56,8 @@ public class PMDMinerator {
                 }
 
                 if (line.matches(methodNameRegex)) {
-                    String methodName = parserMethodName(line);
-                    if (!methodName.equals("")) {
+                    String methodName = AnalysisUtils.parserToMethodNameSmellFormat(line);
+                    if (methodName!=null) {
                         methodNames.add(methodName);
                     }
 
@@ -75,8 +79,8 @@ public class PMDMinerator {
 
 
     public String parserMethodName(String methodNameFromPMDFormat) {
+        System.out.println(methodNameFromPMDFormat);
         Pattern pattern = Pattern.compile("\\s*public|private|protected\\s+\\w+\\s+(\\w+)\\s*\\((.*?)\\)\\s*\\{.*");
-//        Pattern pattern = Pattern.compile("\\s*(static)?\\s*(public|private)\\s*\\w+\\s*(\\w+)\\s*(\\(\\s*\\w*(,?\\s*\\w+)*\\))?");
         Matcher matcher = pattern.matcher(methodNameFromPMDFormat);
         String methodName = "";
 

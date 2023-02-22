@@ -128,6 +128,9 @@ public class AnalysisUtils {
 			if(methodSignature.contains("protected ")){
 				accessIndex = "protected ".length();
 			}
+		else {
+			return null;
+			}
 
 		int separatorIndex = methodSignature.indexOf("(");
 		methodName = methodSignature.substring(accessIndex-1, separatorIndex);
@@ -147,11 +150,18 @@ public class AnalysisUtils {
 	public static String parserToMethodNameSmellFormat(String methodSignature) {
 
 		String methodName = getMethodName(methodSignature);
-		List<String> parameterTypes = getParametersAsAList(methodSignature);
 
-		String methodNameParser = methodName + "(" + parameterTypes.toString() + ")";
+		if(methodName != null){
+			if(!methodName.isEmpty()) {
+				List<String> parameterTypes = getParametersAsAList(methodSignature);
 
-		return methodNameParser;
+				String methodNameParser = methodName + "(" + parameterTypes.toString() + ")" ;
+
+				return methodNameParser;
+			}
+		}
+		return null;
+
 	}
 
 	public static List<String> getParametersAsAList(String methodSignature){
