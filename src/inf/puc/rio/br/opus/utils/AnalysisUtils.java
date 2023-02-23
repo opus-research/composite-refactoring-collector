@@ -184,12 +184,17 @@ public class AnalysisUtils {
 		String parameterTypesAsText = methodSignature.substring(separatorOpenIndex+1, separatorCloseIndex);
 		parameterTypes = new ArrayList<>(Arrays.asList(parameterTypesAsText.split(",")));
 
-		for (int i = 0; i < parameterTypes.size(); i++) {
-			String parameterType = parameterTypes.get(i).trim();
-			int spaceIndex = parameterType.indexOf(" ");
-			parameterType = parameterType.substring(spaceIndex+1);
 
-			parameterTypes.set(i, parameterType);
+		for (int i = 0; i < parameterTypes.size(); i++) {
+			String[] parameterType = parameterTypes.get(i).trim().split("\\s+");
+			if(parameterType.length == 2) {
+				//In case "Message log, capturing Message"
+				parameterTypes.set(i, parameterType[0]);
+			}
+			if(parameterType.length == 3) {
+				//In case "final Message log, capturing Message"
+				parameterTypes.set(i, parameterType[1]);
+			}
 
 		}
 
