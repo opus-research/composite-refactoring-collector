@@ -14,20 +14,22 @@ public class SmellPMD {
 
     public void collectSmells(String commit, String path, String outputFileName) {
         // ATUALIZA PARA O COMMIT EM QUESTÃO
-        String commandGitCheckout[] = {"git", "checkout", "-f", commit};
-        executeCommand(commandGitCheckout, Constants.FOLDER_PROJECT);
 
+        //String commandGitCheckout[] = {"git", "checkout", "-f", commit};
+        //executeCommand(commandGitCheckout, path);
+
+        System.out.println(path);
         // EXECUTA O PMD
-        String comando6[] = {"cpd.bat --minimum-tokens 30 --files " + path + ">>" + outputFileName};
+        String comando6[] = {".\\cpd.bat", "--minimum-tokens", "30", "--files", path, ">>", outputFileName};
 
-        executeCommand(comando6, Constants.FOLDER_PROJECT);
+        executeCommand(comando6, "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin");
     }
 
 
-    public  void executeCommand(String[] command, String folder) {
+    public  void executeCommand(String[] command, String path) {
         try {
             pb = new ProcessBuilder(command);
-            pb.directory(new File(folder));
+            pb.directory(new File(path));
             pb.redirectErrorStream(true);
             Process p = pb.start();
             BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));

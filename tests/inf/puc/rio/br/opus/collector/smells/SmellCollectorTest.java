@@ -3,6 +3,7 @@ package inf.puc.rio.br.opus.collector.smells;
 import inf.puc.rio.br.opus.database.smells.SmellCollector;
 import inf.puc.rio.br.opus.minerator.smells.pmd.DuplicatedCodePMD;
 import inf.puc.rio.br.opus.minerator.smells.pmd.PMDMinerator;
+import inf.puc.rio.br.opus.minerator.smells.pmd.SmellPMD;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import org.junit.Test;
 
@@ -13,6 +14,12 @@ import static org.junit.Assert.assertEquals;
 public class SmellCollectorTest {
 
 
+    @Test
+    public void collectSmellFromPMD(){
+        SmellPMD pmd = new SmellPMD();
+
+        pmd.collectSmells("fe764dadac081c9ce33d110dd3f813f7642c3d31", "C:\\Users\\anaca\\Documents\\Projetos\\fresco", "results-fresco.txt");
+    }
     @Test
     public void getAllSmellsTest(){
         SmellCollector collector = new SmellCollector();
