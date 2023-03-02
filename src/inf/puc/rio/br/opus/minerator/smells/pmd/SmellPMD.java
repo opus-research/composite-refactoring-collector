@@ -18,10 +18,11 @@ public class SmellPMD {
         String commandGitCheckout[] = {"git", "checkout", "-f", commit};
         executeCommand(commandGitCheckout, path);
 
+        String PMDPath = "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin\\";
         // EXECUTA O PMD
-        String commandToRunPMD[] = {"cmd.exe", "/C", "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin\\cpd.bat", "--minimum-tokens", "30", "--files", path, ">>", outputFileName};
+        String commandToRunPMD[] = {"cmd.exe", "/C",  PMDPath + "cpd.bat", "--minimum-tokens", "30", "--files", path, ">>", outputFileName};
 
-        executeCommand(commandToRunPMD, "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin");
+        executeCommand(commandToRunPMD, PMDPath);
     }
 
 
