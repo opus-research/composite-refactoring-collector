@@ -16,11 +16,12 @@ public class SmellPMD {
         // ATUALIZA PARA O COMMIT EM QUESTÃO
 
         //String commandGitCheckout[] = {"git", "checkout", "-f", commit};
-        //executeCommand(commandGitCheckout, path);
+       // String comando6[] = {"java", "-version"};
+        // executeCommand(comando6, "C:/Users/anaca/Desktop/pmd/bin");
 
         System.out.println(path);
         // EXECUTA O PMD
-        String comando6[] = {".\\cpd.bat", "--minimum-tokens", "30", "--files", path, ">>", outputFileName};
+        String comando6[] = {"cmd.exe", "/C", "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin\\cpd.bat", "--minimum-tokens", "30", "--files", path, ">>", outputFileName};
 
         executeCommand(comando6, "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin");
     }
