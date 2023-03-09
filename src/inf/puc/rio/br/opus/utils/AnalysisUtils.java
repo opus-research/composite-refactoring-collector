@@ -1,6 +1,5 @@
 package inf.puc.rio.br.opus.utils;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import inf.puc.rio.br.opus.database.smells.SmellCollector;
 import inf.puc.rio.br.opus.model.project.miner.CommitMiner;
 import inf.puc.rio.br.opus.model.project.miner.ProjectMiner;
@@ -18,17 +16,19 @@ import inf.puc.rio.br.opus.model.smell.CodeSmell;
 
 public class AnalysisUtils {
 
-	
+
+	public static String PROJECT_PATH = "C:\\Users\\anaca\\Documents\\Projetos\\";
+	public static String PMD_PATH = "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin\\";
 	public static void main(String[] args) {
 		
 		AnalysisUtils.collectOrderFromCommitList();
 	}
 
-	public static List<String> getCommitsFromLongMethods(String project){
+	public static Set<String> getCommitsFromLongMethods(String project){
 
-		List<CodeSmell> longMethods = SmellCollector.readSmellsFromJson("smells-" + project + ".json");
+		List<CodeSmell> longMethods = SmellCollector.readSmellsFromJson("smelly_methods_" + project + ".json");
 
-		List<String> commits = new ArrayList<>();
+		Set<String> commits = new HashSet<>();
 
 		for (CodeSmell longMethod : longMethods) {
 			commits.add(longMethod.getCommit());
@@ -139,7 +139,11 @@ public class AnalysisUtils {
 		int separatorIndex = methodSignature.indexOf("(");
 		methodName = methodSignature.substring(beginIndex + (accessIndex-1), separatorIndex);
         if(methodName.contains(" ")){
-			methodName = removeReturnType(methodName);
+			String methodNameTemp = removeReturnType(methodName);
+
+			if(!methodNameTemp.isEmpty()){
+				methodName = methodNameTemp;
+			}
 		}
 		return methodName;
 	}
@@ -147,7 +151,10 @@ public class AnalysisUtils {
 	private static String removeReturnType(String methodNameTemp) {
 
 		String[] terms = methodNameTemp.trim().split("\\s+");
-		return terms[1];
+		if(terms.length > 1){
+			return terms[1];
+		}
+		return "";
 	}
 
 
@@ -242,7 +249,7 @@ public class AnalysisUtils {
 	    
 	    commitList.forEach( commit -> {
 	    	int order = commitCollector.getOrderCommit(commit);
-	    	System.out.println(order);
+
 	    });
 	    
 	}

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class SmellCollector {
 
@@ -41,9 +42,8 @@ public class SmellCollector {
         String project = "";
 
         List<CodeSmell> duplicatedMethodsByProject = new ArrayList<>();
-        List<String> commitsFromLongMethods = AnalysisUtils.getCommitsFromLongMethods(project);
+        Set<String> commitsFromLongMethods = AnalysisUtils.getCommitsFromLongMethods(project);
         for (String commitsFromLongMethod : commitsFromLongMethods) {
-
             String output = mineratorPMD.execute(project, commitsFromLongMethod);
             //Save Duplicated Code in List
             List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output, project, commitsFromLongMethod);
@@ -66,7 +66,7 @@ public class SmellCollector {
         List<CodeSmell> smellsOurModel = new ArrayList<>();
         try {
             for (String smellFile : smellFiles) {
-                System.out.println(smellFile);
+
                 String commit = AnalysisUtils.getOnlyFileNameFromPath(smellFile, extensionName);
                 smells = mapper.readValue(new File(smellFile), OuputOrganic[].class);
                 List<OuputOrganic> smellOutputOrganic = new ArrayList<>(Arrays.asList(smells));

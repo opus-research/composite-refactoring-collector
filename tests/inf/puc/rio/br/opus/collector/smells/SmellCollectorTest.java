@@ -5,11 +5,14 @@ import inf.puc.rio.br.opus.minerator.smells.pmd.DuplicatedCodePMD;
 import inf.puc.rio.br.opus.minerator.smells.pmd.PMDMinerator;
 import inf.puc.rio.br.opus.minerator.smells.pmd.SmellPMD;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
+import inf.puc.rio.br.opus.parser.smell.SmellParser;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class SmellCollectorTest {
 
@@ -20,6 +23,29 @@ public class SmellCollectorTest {
 
         pmd.collectSmells("fe764dadac081c9ce33d110dd3f813f7642c3d31", "C:\\Users\\anaca\\Documents\\Projetos\\fresco", "results-fresco.txt");
     }
+
+    @Test
+    public void collectDuplicatedCodeFromPMD(){
+        PMDMinerator mineratorPMD = new PMDMinerator();
+        String project = "activiti";
+        String commit1 = "0b9636b3d7f0d2d8112bbbb8822d5ac08e15606d";
+
+        SmellParser parser = new SmellParser();
+
+        String output = mineratorPMD.execute(project, commit1);
+
+        //Save Duplicated Code in List
+        List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output, project, commit1);
+
+        assertNotNull(duplicatedCodePMDs);
+
+        // Parser Duplicated Code
+        List<CodeSmell> duplicatedMethods = parser.parserPMDSmellToOurModel(duplicatedCodePMDs);
+        assertNotNull(duplicatedMethods);
+
+    }
+
+
     @Test
     public void getAllSmellsTest(){
         SmellCollector collector = new SmellCollector();

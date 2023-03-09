@@ -1,6 +1,7 @@
 package inf.puc.rio.br.opus.minerator.smells.pmd;
 
 import inf.puc.rio.br.opus.minerator.smells.organic.Constants;
+import inf.puc.rio.br.opus.utils.AnalysisUtils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,11 +19,10 @@ public class SmellPMD {
         String commandGitCheckout[] = {"git", "checkout", "-f", commit};
         executeCommand(commandGitCheckout, path);
 
-        String PMDPath = "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin\\";
         // EXECUTA O PMD
-        String commandToRunPMD[] = {"cmd.exe", "/C",  PMDPath + "cpd.bat", "--minimum-tokens", "30", "--files", path, ">>", outputFileName};
+        String commandToRunPMD[] = {"cmd.exe", "/C", AnalysisUtils.PMD_PATH + "cpd.bat", "--minimum-tokens", "30", "--files", path, ">>", outputFileName};
 
-        executeCommand(commandToRunPMD, PMDPath);
+        executeCommand(commandToRunPMD, AnalysisUtils.PMD_PATH);
     }
 
 

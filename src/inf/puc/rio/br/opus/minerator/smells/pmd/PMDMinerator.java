@@ -30,7 +30,7 @@ public class PMDMinerator {
         DuplicatedCodePMD duplicatedCodePMD;
         List<DuplicatedCodePMD> duplicatedCodePMDs = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(outputPMD))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(AnalysisUtils.PMD_PATH + outputPMD))) {
             String line;
             while ((line = br.readLine()) != null) {
 
@@ -79,14 +79,14 @@ public class PMDMinerator {
 
 
     public String parserMethodName(String methodNameFromPMDFormat) {
-        System.out.println(methodNameFromPMDFormat);
+
         Pattern pattern = Pattern.compile("\\s*public|private|protected\\s+\\w+\\s+(\\w+)\\s*\\((.*?)\\)\\s*\\{.*");
         Matcher matcher = pattern.matcher(methodNameFromPMDFormat);
         String methodName = "";
 
         if (matcher.find()) {
             methodName = matcher.group(1);
-            System.out.println(methodName);
+
 
             String paramList = matcher.group(2);
             List<String> params = Arrays.asList(paramList.split("\\s*,\\s*"));
@@ -113,7 +113,7 @@ public class PMDMinerator {
     public String execute(String project, String commit) {
 
         String outputPMDPerProject = "result-" + project + ".txt";
-        smellPMD.collectSmells(commit, project, outputPMDPerProject);
+        smellPMD.collectSmells(commit, AnalysisUtils.PROJECT_PATH + project, outputPMDPerProject);
 
         return outputPMDPerProject;
     }
