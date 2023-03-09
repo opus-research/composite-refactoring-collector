@@ -112,9 +112,9 @@ public class PMDMinerator {
 
     public String execute(String project, String commit) {
 
-        String pathProject = "result-" + project + ".txt";
-        smellPMD.collectSmells(commit, project, pathProject);
+        String outputPMDPerProject = "result-" + project + ".txt";
+        smellPMD.collectSmells(commit, project, outputPMDPerProject);
 
-        return pathProject;
+        return outputPMDPerProject;
     }
 }
