@@ -45,17 +45,18 @@ public class SmellCollector {
         List<CodeSmell> longSignedClones = new ArrayList<CodeSmell>();
 
         int countID = 0;
-        for (CodeSmell duplicatedMethod : duplicatedMethods) {
 
-            for (CodeSmell longMethod : longMethods) {
+        for (CodeSmell longMethod : longMethods) {
 
+            for (CodeSmell duplicatedMethod : duplicatedMethods) {
 
                 if(duplicatedMethod.getCommit() != null & longMethod.getCommit() != null
-                    && !duplicatedMethod.getCommit().isEmpty() & !longMethod.getCommit().isEmpty()
-                    &&  duplicatedMethod.getCodeElement() != null & longMethod.getCodeElement() != null
-                    && !duplicatedMethod.getCodeElement().isEmpty() & !longMethod.getCodeElement().isEmpty()
-                    &&   duplicatedMethod.getCommit().equals(longMethod.getCommit()) &&
+                        && (!duplicatedMethod.getCommit().isEmpty()) && (!longMethod.getCommit().isEmpty())
+                        &&  duplicatedMethod.getCodeElement() != null && longMethod.getCodeElement() != null
+                        && (!duplicatedMethod.getCodeElement().isEmpty()) && (!longMethod.getCodeElement().isEmpty())
+                   && duplicatedMethod.getCommit().equals(longMethod.getCommit()) &&
                    duplicatedMethod.getCodeElement().equals(longMethod.getCodeElement())){
+
                    String id = "lsc-" + countID;
 
                     CodeSmell smell = new CodeSmell(id,
@@ -71,7 +72,6 @@ public class SmellCollector {
 
                     countID ++;
                 }
-
             }
         }
 
@@ -87,16 +87,22 @@ public class SmellCollector {
 
         Set<String> commitsFromLongMethods = AnalysisUtils.getSmellyCommits(longMethods);
 
+        List<DuplicatedCodePMD> duplicatedCodePMDByProject = new ArrayList<>();
+
        for (String commitFromLongMethod : commitsFromLongMethods) {
+
             String output = mineratorPMD.execute(project, commitFromLongMethod);
             //Save Duplicated Code in List
             List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output, project, commitFromLongMethod);
+            duplicatedCodePMDByProject.addAll(duplicatedCodePMDs);
+
             // Parser Duplicated Code
             List<CodeSmell> duplicatedMethods = parser.parserPMDSmellToOurModel(duplicatedCodePMDs);
             duplicatedMethodsByProject.addAll(duplicatedMethods);
 
         }
 
+        writeDuplicatedMethodsAsJson(duplicatedCodePMDByProject, "duplicated-methods.json");
         writeCodeSmellsAsJson(duplicatedMethodsByProject, "duplicated-methods-" + project + ".json");
         return duplicatedMethodsByProject;
 
@@ -138,6 +144,16 @@ public class SmellCollector {
         }
     }
 
+    public void writeDuplicatedMethodsAsJson(List<DuplicatedCodePMD> smells, String fileName) {
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File(fileName),  smells);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static List<CodeSmell> readSmellsFromJson(String path){
 
