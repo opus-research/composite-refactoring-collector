@@ -5,6 +5,7 @@ import inf.puc.rio.br.opus.model.smell.CodeSmell;
 import inf.puc.rio.br.opus.model.smell.organic.CodeSmellOrganic;
 import inf.puc.rio.br.opus.model.smell.organic.MethodOrganic;
 import inf.puc.rio.br.opus.model.smell.organic.OuputOrganic;
+import inf.puc.rio.br.opus.utils.AnalysisUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +96,7 @@ public class SmellParser{
                 smell.setCommit(duplicatedCodePMD.getCommit());
                 smell.setProjectName(duplicatedCodePMD.getProjectName());
                 smell.setDetectorName("PMD");
+                methodName = AnalysisUtils.parserToMethodNamePerPackage(methodName);
                 smell.setCodeElement(methodName);
                 smells.add(smell);
             }

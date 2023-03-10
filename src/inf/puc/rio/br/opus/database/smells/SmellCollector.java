@@ -1,6 +1,9 @@
 package inf.puc.rio.br.opus.database.smells;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import inf.puc.rio.br.opus.minerator.smells.pmd.DuplicatedCodePMD;
 import inf.puc.rio.br.opus.minerator.smells.pmd.PMDMinerator;
 import inf.puc.rio.br.opus.model.smell.CodeSmell;
@@ -31,29 +34,71 @@ public class SmellCollector {
 
     public static void main(String[] args) {
         SmellCollector collector = new SmellCollector(args);
-       // List<CodeSmell> smells = collector.getAllSmells("sitewhere");
-       /// collector.smellRepository.insertAllSmells(smells);
+        collector.collectLongSignedClone(AnalysisUtils.PROJECT_NAME);
     }
 
-    private void collectDuplicatedCode(){
+    public void collectLongSignedClone(String project){
+        List<CodeSmell> longMethods = SmellCollector.readSmellsFromJson("smelly_methods_" + project + ".json");
+        longMethods = AnalysisUtils.fixCommits(longMethods);
+
+        List<CodeSmell> duplicatedMethods = collectDuplicatedCodeFromLongMethods(longMethods, project);
+        List<CodeSmell> longSignedClones = new ArrayList<CodeSmell>();
+
+        int countID = 0;
+        for (CodeSmell duplicatedMethod : duplicatedMethods) {
+
+            for (CodeSmell longMethod : longMethods) {
+
+
+                if(duplicatedMethod.getCommit() != null & longMethod.getCommit() != null
+                    && !duplicatedMethod.getCommit().isEmpty() & !longMethod.getCommit().isEmpty()
+                    &&  duplicatedMethod.getCodeElement() != null & longMethod.getCodeElement() != null
+                    && !duplicatedMethod.getCodeElement().isEmpty() & !longMethod.getCodeElement().isEmpty()
+                    &&   duplicatedMethod.getCommit().equals(longMethod.getCommit()) &&
+                   duplicatedMethod.getCodeElement().equals(longMethod.getCodeElement())){
+                   String id = "lsc-" + countID;
+
+                    CodeSmell smell = new CodeSmell(id,
+                    "LongSignedClone",
+                    project,
+                    duplicatedMethod.getCodeElement(),
+                    longMethod.getCommit(),
+                    "SmellDetector",
+                    "",
+                    null);
+
+                    longSignedClones.add(smell);
+
+                    countID ++;
+                }
+
+            }
+        }
+
+        writeCodeSmellsAsJson(longSignedClones, "lsc-" + project + ".json");
+    }
+
+    private List<CodeSmell> collectDuplicatedCodeFromLongMethods(List<CodeSmell> longMethods, String project){
 
         //Run PMD
         PMDMinerator mineratorPMD = new PMDMinerator();
-        String project = "";
 
         List<CodeSmell> duplicatedMethodsByProject = new ArrayList<>();
-        Set<String> commitsFromLongMethods = AnalysisUtils.getCommitsFromLongMethods(project);
-        for (String commitsFromLongMethod : commitsFromLongMethods) {
-            String output = mineratorPMD.execute(project, commitsFromLongMethod);
+
+        Set<String> commitsFromLongMethods = AnalysisUtils.getSmellyCommits(longMethods);
+
+       for (String commitFromLongMethod : commitsFromLongMethods) {
+            String output = mineratorPMD.execute(project, commitFromLongMethod);
             //Save Duplicated Code in List
-            List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output, project, commitsFromLongMethod);
+            List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output, project, commitFromLongMethod);
             // Parser Duplicated Code
             List<CodeSmell> duplicatedMethods = parser.parserPMDSmellToOurModel(duplicatedCodePMDs);
             duplicatedMethodsByProject.addAll(duplicatedMethods);
 
         }
 
-        writeCodeSmellsAsJson(duplicatedMethodsByProject, "smells-" + project + ".json");
+        writeCodeSmellsAsJson(duplicatedMethodsByProject, "duplicated-methods-" + project + ".json");
+        return duplicatedMethodsByProject;
 
     }
 
@@ -99,6 +144,9 @@ public class SmellCollector {
         ObjectMapper mapper = new ObjectMapper();
         List<CodeSmell> smellsList = new ArrayList<>();
         try {
+
+            mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+            mapper.setVisibility(VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
 
             CodeSmell[] smells = mapper.readValue(new File(path),
                     CodeSmell[].class);

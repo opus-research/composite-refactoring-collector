@@ -25,6 +25,27 @@ public class SmellCollectorTest {
     }
 
     @Test
+    public void compareDuplicatedCodeWithLongMethod(){
+        PMDMinerator mineratorPMD = new PMDMinerator();
+        String project = "activiti";
+        String commit1 = "0b9636b3d7f0d2d8112bbbb8822d5ac08e15606d";
+
+        SmellParser parser = new SmellParser();
+
+        String output = mineratorPMD.execute(project, commit1);
+
+        //Save Duplicated Code in List
+        List<DuplicatedCodePMD> duplicatedCodePMDs = mineratorPMD.getDuplicatedMethods(output, project, commit1);
+
+        assertNotNull(duplicatedCodePMDs);
+
+        // Parser Duplicated Code
+        List<CodeSmell> duplicatedMethods = parser.parserPMDSmellToOurModel(duplicatedCodePMDs);
+        assertNotNull(duplicatedMethods);
+
+    }
+
+    @Test
     public void collectDuplicatedCodeFromPMD(){
         PMDMinerator mineratorPMD = new PMDMinerator();
         String project = "activiti";

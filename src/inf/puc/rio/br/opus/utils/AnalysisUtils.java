@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
-import inf.puc.rio.br.opus.database.smells.SmellCollector;
 import inf.puc.rio.br.opus.model.project.miner.CommitMiner;
 import inf.puc.rio.br.opus.model.project.miner.ProjectMiner;
 
@@ -19,22 +18,34 @@ public class AnalysisUtils {
 
 	public static String PROJECT_PATH = "C:\\Users\\anaca\\Documents\\Projetos\\";
 	public static String PMD_PATH = "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin\\";
+
+	public static String PROJECT_NAME = "restassured";
+
 	public static void main(String[] args) {
 		
 		AnalysisUtils.collectOrderFromCommitList();
 	}
 
-	public static Set<String> getCommitsFromLongMethods(String project){
-
-		List<CodeSmell> longMethods = SmellCollector.readSmellsFromJson("smelly_methods_" + project + ".json");
+	public static Set<String> getSmellyCommits(List<CodeSmell> codeSmells){
 
 		Set<String> commits = new HashSet<>();
 
-		for (CodeSmell longMethod : longMethods) {
-			commits.add(longMethod.getCommit());
+		for (CodeSmell codeSmell : codeSmells) {
+			commits.add(codeSmell.getCommit());
 		}
 
 		return commits;
+	}
+
+	public static List<CodeSmell> fixCommits(List<CodeSmell> codeSmells){
+
+		for (CodeSmell codeSmell : codeSmells) {
+			int endSeparator = codeSmell.getCommit().lastIndexOf("/");
+			String fixedCommit = codeSmell.getCommit().substring(endSeparator+1);
+			codeSmell.setCommit(fixedCommit);
+
+		}
+		return codeSmells;
 	}
 
 	public static String getLastNameFromURL(String projectURL){
@@ -80,6 +91,19 @@ public class AnalysisUtils {
 		fileName = path.substring(indexSeparator+1, indexExtension);
 
 		return fileName;
+	}
+
+	public static String parserToMethodNamePerPackage(String methodName) {
+		String JAVA_INDICATOR = ".java.";
+		if(methodName.contains(JAVA_INDICATOR)){
+			int indexJavaIndicator = methodName.indexOf(JAVA_INDICATOR);
+			methodName = methodName.substring(indexJavaIndicator + JAVA_INDICATOR.length());
+
+			if(methodName.contains("([])")){
+				methodName = methodName.replace("([])", "");
+			}
+		}
+		return methodName;
 	}
 
 
