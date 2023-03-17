@@ -19,7 +19,7 @@ public class AnalysisUtils {
 	public static String PROJECT_PATH = "C:\\Users\\anaca\\Documents\\Projetos\\";
 	public static String PMD_PATH = "C:\\Users\\anaca\\Documents\\pmd-bin-6.54.0\\bin\\";
 
-	public static String PROJECT_NAME = "bytebuddy";
+	public static String PROJECT_NAME = "javadriver";
 
 	public static void main(String[] args) {
 		

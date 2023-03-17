@@ -76,8 +76,9 @@ public class PMDMinerator {
     public String parserClassName(String projectName, String classNamePMDFormat){
         int start = classNamePMDFormat.indexOf(projectName);
         int end = classNamePMDFormat.lastIndexOf(".java");
-        if(end > start) {
-            classNamePMDFormat = classNamePMDFormat.substring(start + projectName.length() + 1, end);
+        int begin = start + projectName.length() + 1;
+        if(end > begin) {
+            classNamePMDFormat = classNamePMDFormat.substring(begin, end);
             return classNamePMDFormat.replace("\\", ".");
         }
         return null;
